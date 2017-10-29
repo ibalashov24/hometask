@@ -1,3 +1,3 @@
 # hometask
 
-Homeworks in the group of Yuri Lytvinov (first semester, 2017).
+Homeworks in the group of Yurii Litvinov (first semester, 2017).
