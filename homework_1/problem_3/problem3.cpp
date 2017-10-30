@@ -58,7 +58,7 @@ int main()
     cout << "The answer is: " << endl;
     printArray(x, 1, m+n);
 
-    delete [] x;
+    delete[] x;
 
     return 0;
 }
