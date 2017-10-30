@@ -10,11 +10,13 @@ int main()
     cin >> a >> b;
 
     bool isNegative = false;
-    if (a < 0) {
+    if (a < 0) 
+    {
         a = -a;
         isNegative = true;
     }
-    if (b < 0) {
+    if (b < 0)
+    {
         b = -b;
     }
 
