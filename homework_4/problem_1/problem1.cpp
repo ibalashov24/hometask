@@ -7,11 +7,11 @@ using namespace std;
 
 const int ADDITIONAL_CODE_BASE = 16;    // 16 binary digits
 
-/*  string reverse_copy(string::const_iterator begin, string::const_iterator end)
+string reverseCopy(string::const_iterator begin, string::const_iterator end)
 {
     auto temp = string(begin, end);
     auto left = temp.begin();
-    auto right = temp.end();
+    auto right = temp.end() - 1;
     while (left < right)
     {
         iter_swap(left++, right--);
@@ -19,6 +19,10 @@ const int ADDITIONAL_CODE_BASE = 16;    // 16 binary digits
     return temp;
 }
 
+string reverseCopy(const std::string &outString)
+{
+    return reverseCopy(outString.begin(), outString.end());
+}
 
 int convertToAdditionalCode(int binaryNumber)
 {
@@ -97,7 +101,8 @@ int main()
     auto secondNumberBin = decToBin(secondNumber);
 
     cout << "Двоичное представление этих чисел в дополнительном коде: " << endl;
-    cout << decToBin(firstNumber) << ' ' << decToBin(secondNumber) << endl;
+    cout << reverseCopy(decToBin(firstNumber)) << ' ';
+    cout << reverseCopy(decToBin(secondNumber)) << endl;
 
     bool isNeedReverse = false;
     if (firstNumber < 0 && secondNumber < 0)
@@ -119,7 +124,7 @@ int main()
     }
 
     cout << "Сумма в двоичном формате: ";
-    cout << sumBinary << endl;
+    cout << reverseCopy(sumBinary.begin(), sumBinary.end()) << endl;
 
     cout << "Сумма в десятичном формате: ";
     cout << sumDecimal << endl;
