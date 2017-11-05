@@ -7,24 +7,22 @@ using namespace std;
 
 const int ADDITIONAL_CODE_BASE = 16;    // 16 binary digits
 
-/*string reverse_copy(string::const_iterator begin, string::const_iterator end)
+/*  string reverse_copy(string::const_iterator begin, string::const_iterator end)
 {
     auto temp = string(begin, end);
-
     auto left = temp.begin();
     auto right = temp.end();
-
     while (left < right)
     {
         iter_swap(left++, right--);
     }
-
     return temp;
-}*/
+}
+
 
 int convertToAdditionalCode(int binaryNumber)
 {
-    return (static_cast<int>(pow(2, ADDITIONAL_CODE_BASE)) + binaryNumber);
+    return ((1 << ADDITIONAL_CODE_BASE) + binaryNumber);
 }
 
 string decToBin(int number)
@@ -42,7 +40,7 @@ string decToBin(int number)
         number /= 2;
     }
 
-    while (result.size() < ADDITIONAL_CODE_BASE - 1)
+    while (result.size() < ADDITIONAL_CODE_BASE)
     {
         result += '0';
     }
@@ -72,10 +70,10 @@ int binToDec(const string &binaryNumber)
 
 string sumBinaryNumbers(const string &a, const string &b)
 {
-    string tempString(ADDITIONAL_CODE_BASE - 1, '0');
+    string tempString(ADDITIONAL_CODE_BASE, '0');
 
     short carry = 0;
-    for (int i = 0; i < ADDITIONAL_CODE_BASE - 1; i++)
+    for (int i = 0; i < ADDITIONAL_CODE_BASE; i++)
     {
         short currentDigit = (a[i] - '0') + (b[i] - '0') + carry;
 
@@ -98,7 +96,7 @@ int main()
     auto firstNumberBin = decToBin(firstNumber);
     auto secondNumberBin = decToBin(secondNumber);
 
-    cout << "Двочное представление этих чисел в дополнительном коде:" << endl;
+    cout << "Двоичное представление этих чисел в дополнительном коде: " << endl;
     cout << decToBin(firstNumber) << ' ' << decToBin(secondNumber) << endl;
 
     bool isNeedReverse = false;
