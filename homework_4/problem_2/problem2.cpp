@@ -2,12 +2,40 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <iterator>
-#include <algorithm>
 
 #include "sort.h"
 
 using namespace std;
+
+int findMostFrequent(vector<int>::iterator begin,
+                     vector<int>::iterator end)
+{
+    int mostFrequent = *begin;
+    int maxFrequency = 0;
+    int currentFrequency = 1;
+    for (auto pos = begin + 1; pos < end; ++pos)
+    {
+        if (*pos != *(pos - 1))
+        {
+            if (currentFrequency > maxFrequency)
+            {
+                mostFrequent = *(pos - 1);
+                maxFrequency = currentFrequency;
+            }
+
+            currentFrequency = 0;
+        }
+
+        currentFrequency++;
+    }
+
+    if (currentFrequency > maxFrequency)
+    {
+        mostFrequent = *(end - 1);
+    }
+
+    return mostFrequent;
+}
 
 int main()
 {
@@ -26,10 +54,10 @@ int main()
 
     inputFile.close();
 
-    Sorting::quicksort(inputVector.begin(), inputVector.end());
+    sorting::quicksort(inputVector.begin(), inputVector.end());
 
-    cout << "Sorted array from " << inputFileName << ':' << endl;
-    copy(inputVector.begin(), inputVector.end(), ostream_iterator<int>(cout, " "));
+    cout << "The most frequent element is: ";
+    cout << findMostFrequent(inputVector.begin(), inputVector.end()) << endl;
 
     return 0;
 }
