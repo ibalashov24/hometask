@@ -29,6 +29,11 @@ int findMostFrequent(vector<int>::iterator begin,
         currentFrequency++;
     }
 
+    if (currentFrequency > maxFrequency)
+    {
+        mostFrequent = *(end - 1);
+    }
+
     return mostFrequent;
 }
 
@@ -45,7 +50,7 @@ int main()
         cin >> e;
     }
 
-    Sorting::quicksort(elements.begin(), elements.end());
+    sorting::quicksort(elements.begin(), elements.end());
 
     cout << "The most frequent elements is: ";
     cout << findMostFrequent(elements.begin(), elements.end()) << endl;
