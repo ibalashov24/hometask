@@ -17,7 +17,7 @@ int main()
         cin >> e;
     }
 
-    Sorting::quicksort(elements.begin(), elements.end());
+    sorting::quicksort(elements.begin(), elements.end());
 
     cout << "Result: ";
     for (int e : elements)

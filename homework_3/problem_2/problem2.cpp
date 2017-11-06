@@ -4,8 +4,6 @@
 
 using namespace std;
 
-const int MAX_ELEMENT = 1000000001;
-
 bool isIncludes(vector<int>::const_iterator begin,
                 vector<int>::const_iterator end,
                 int element)
@@ -40,13 +38,13 @@ void generateRandom(vector<int> &container)
 {
     for (int &e : container)
     {
-        e = rand() % MAX_ELEMENT;
+        e = rand();
     }
 }
 
 int main()
 {
-   // srand(time(nullptr));
+    srand(time(nullptr));
 
     int n = 0;
     int k = 0;
@@ -65,7 +63,7 @@ int main()
     cout << "Checklist: ";
     printVector(checkList);
 
-    Sorting::quicksort(elements.begin(), elements.end());
+    sorting::quicksort(elements.begin(), elements.end());
 
     cout << "First array includes: ";
     bool isEmpty = true;

@@ -2,7 +2,7 @@
 
 #include <utility>
 
-void Sorting::insertionSort(std::vector<int>::iterator begin,
+void sorting::insertionSort(std::vector<int>::iterator begin,
                             std::vector<int>::iterator end)
 {
     for (auto pos_i = begin + 1; pos_i != end; ++pos_i)
@@ -17,7 +17,7 @@ void Sorting::insertionSort(std::vector<int>::iterator begin,
     }
 }
 
-std::vector<int>::iterator Sorting::_partition(std::vector<int>::iterator begin,
+std::vector<int>::iterator partition(std::vector<int>::iterator begin,
                                               std::vector<int>::iterator end)
 {
     int median = *(begin + (end - begin) / 2);
@@ -35,7 +35,7 @@ std::vector<int>::iterator Sorting::_partition(std::vector<int>::iterator begin,
     return insertionPos;
 }
 
-void Sorting::quicksort(std::vector<int>::iterator begin,
+void sorting::quicksort(std::vector<int>::iterator begin,
                         std::vector<int>::iterator end)
 {
     if (end - begin <= 1)
@@ -49,7 +49,7 @@ void Sorting::quicksort(std::vector<int>::iterator begin,
         return;
     }
 
-    auto median = _partition(begin, end);
+    auto median = partition(begin, end);
 
     quicksort(begin, median - 1);
     quicksort(median, end);
