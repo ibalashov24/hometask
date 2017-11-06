@@ -9,7 +9,7 @@ long long fibonacciIterative(long long number)
 
     for (long long i = 2; i <= number; i++)
     {
-        long long temp = current;
+        const long long temp = current;
         current = lastNumber + current;
         lastNumber = temp;
     }
@@ -22,15 +22,15 @@ long long fibonacciRecursive(long long number)
     if (number == 1 || number == 2)
         return 1;
 
-    return (fibonacciRecursive(number - 1) + fibonacciRecursive(number - 2));
+    return fibonacciRecursive(number - 1) + fibonacciRecursive(number - 2);
 }
 
 long long getFibonacci(int number, bool isUseIterative = true)
 {
     if (isUseIterative)
-        return (fibonacciIterative(number));
+        return fibonacciIterative(number);
     else
-        return (fibonacciRecursive(number));
+        return fibonacciRecursive(number);
 }
 
 int main()
@@ -40,10 +40,10 @@ int main()
     cin >> n;
 
     cout << "F(n) = " << endl;
-    long long fibonacciFirst = getFibonacci(n, true);
+    const long long fibonacciFirst = getFibonacci(n, true);
     cout << "Iterative algorithm: " << fibonacciFirst << endl;
 
-    long long fibonacciSecond = getFibonacci(n, false);
+    const long long fibonacciSecond = getFibonacci(n, false);
     cout << "Recursive algorithm: " << fibonacciSecond << endl;
 
     // Feeling the difference here

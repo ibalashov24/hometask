@@ -10,7 +10,7 @@ int main()
 
     std::cout << "Enter non-empty array with this size: ";
     int *array = new int[size];
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; ++i)
     {
         std::cin >> array[i];
     }
@@ -20,13 +20,21 @@ int main()
     std::cin >> isBubbleSort;
 
     if (isBubbleSort)
-        Sorting::bubbleSort(array, size);
+    {
+        sorting::bubbleSort(array, size);
+    }
     else
-        Sorting::countingSort(array, size);
+    {
+        sorting::countingSort(array, size);
+    }
 
     std::cout << "Result: ";
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; ++i)
+    {
         std::cout << array[i] << ' ';
+    }
 
     delete [] array;
+
+    return 0;
 }
