@@ -16,6 +16,7 @@ int main()
     }
     if (b < 0) {
         b = -b;
+        isNegative = !isNegative;
     }
 
     int result = 0;
@@ -26,7 +27,7 @@ int main()
     }
 
     cout << "Неполное частное от деления a на b: ";
-    cout << (isNegative ? result - b : result) << endl;
+    cout << (isNegative ? -result : result) << endl;
 
     return 0;
 }
