@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1509552337 source:/home/ilya/Github/hometask/homework_4/problem1/problem1.cpp
+	<iostream>
+	<string>
+	<algorithm>
+	<cmath>
+
+1510011808 source:/home/ilya/Github/hometask/homework_4/problem_1/problem1.cpp
+	<iostream>
+	<algorithm>
+	<cmath>
+	<vector>
+	<string>
+
