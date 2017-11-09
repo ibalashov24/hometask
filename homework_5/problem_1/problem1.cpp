@@ -21,7 +21,7 @@ void actionDeleteValue(listStuff::SortedList &list)
     cout << "Enter value to delete: ";
     cin >> value;
 
-    listStuff::delete(list, value);
+    listStuff::deleteList(list, value);
 }
 
 void actionPrintList(const listStuff::SortedList &list)
@@ -77,6 +77,8 @@ int main()
             }
         }
     } while (true);
+
+    listStuff::clearList(list);
 
     cout << "Good Bye!" << endl;
 
