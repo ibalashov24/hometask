@@ -13,11 +13,6 @@ struct listStuff::ListVertex
 **/
 listStuff::ListVertex *findPosition(const listStuff::SortedList &list, int value)
 {
-    if (list.size == 0)
-    {
-        return nullptr;
-    }
-
     listStuff::ListVertex *currentPos = nullptr;
     auto nextPos = list.top;
 
@@ -59,10 +54,6 @@ void listStuff::insert(SortedList &list, int value)
 void listStuff::deleteList(SortedList &list, int value)
 {
     auto prevPosition = findPosition(list, value);
-    if (prevPosition != nullptr && prevPosition->next == nullptr)
-    {
-        return;
-    }
 
     if (prevPosition == nullptr)
     {
@@ -77,7 +68,7 @@ void listStuff::deleteList(SortedList &list, int value)
     }
     else
     {
-        if (prevPosition->next->value != value)
+        if (prevPosition->next->value != value || prevPosition->next == nullptr)
         {
             return;
         }
