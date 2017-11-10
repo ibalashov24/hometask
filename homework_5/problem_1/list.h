@@ -1,19 +1,18 @@
 namespace listStuff
 {
     struct ListVertex;
-    struct SortedList
-    {
-        ListVertex *top = nullptr;
-        int size = 0;
-    };
+    struct SortedList;
+
+    // Constructs empty list
+    SortedList *makeList();
 
     // Inserts element into sorted `list`
-    void insert(SortedList &list, int value);
+    void insert(SortedList *list, int value);
     // Deletes element from sorted `list`
-    void deleteList(SortedList &list, int value);
+    void deleteListElement(SortedList *list, int value);
     // Prints content of `list` to `cout`
-    void printList(const SortedList &list);
+    void printList(SortedList const *list);
 
     // Clears all memory allocated to list
-    void clearList(SortedList &list);
+    void deleteList(SortedList *list);
 }

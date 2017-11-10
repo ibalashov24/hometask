@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void actionInsertValue(listStuff::SortedList &list)
+void actionInsertValue(listStuff::SortedList *list)
 {
     int value = 0;
     cout << "Enter value to insert: ";
@@ -15,16 +15,16 @@ void actionInsertValue(listStuff::SortedList &list)
     listStuff::insert(list, value);
 }
 
-void actionDeleteValue(listStuff::SortedList &list)
+void actionDeleteValue(listStuff::SortedList *list)
 {
     int value = 0;
     cout << "Enter value to delete: ";
     cin >> value;
 
-    listStuff::deleteList(list, value);
+    listStuff::deleteListElement(list, value);
 }
 
-void actionPrintList(const listStuff::SortedList &list)
+void actionPrintList(listStuff::SortedList const *list)
 {
     cout << "Full list:" << endl;
     listStuff::printList(list);
@@ -41,7 +41,7 @@ void printHelp()
 
 int main()
 {
-    listStuff::SortedList list;
+    listStuff::SortedList *list = listStuff::makeList();
 
     int action = 0;
     do
@@ -78,7 +78,7 @@ int main()
         }
     } while (true);
 
-    listStuff::clearList(list);
+    listStuff::deleteList(list);
 
     cout << "Good Bye!" << endl;
 

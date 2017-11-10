@@ -8,13 +8,26 @@ struct listStuff::ListVertex
     int value;
 };
 
+struct listStuff::SortedList
+{
+    ListVertex *top = nullptr;
+    int size = 0;
+};
+
+listStuff::SortedList *listStuff::makeList()
+{
+    SortedList *newList = new SortedList;
+
+    return newList;
+}
+
 /**
     Finds the pointer to last position `pos` where (value[pos] < value)
 **/
-listStuff::ListVertex *findPosition(const listStuff::SortedList &list, int value)
+listStuff::ListVertex *findPosition(listStuff::SortedList *list, int value)
 {
     listStuff::ListVertex *currentPos = nullptr;
-    auto nextPos = list.top;
+    auto nextPos = list->top;
 
     while (nextPos != nullptr)
     {
@@ -30,7 +43,7 @@ listStuff::ListVertex *findPosition(const listStuff::SortedList &list, int value
     return currentPos;
 }
 
-void listStuff::insert(SortedList &list, int value)
+void listStuff::insert(SortedList *list, int value)
 {
     ListVertex *newVertex = new ListVertex;
     newVertex->value = value;
@@ -39,8 +52,8 @@ void listStuff::insert(SortedList &list, int value)
 
     if (prevPosition == nullptr)
     {
-        newVertex->next = list.top;
-        list.top = newVertex;
+        newVertex->next = list->top;
+        list->top = newVertex;
     }
     else
     {
@@ -48,23 +61,23 @@ void listStuff::insert(SortedList &list, int value)
         prevPosition->next = newVertex;
     }
 
-    ++list.size;
+    ++list->size;
 }
 
-void listStuff::deleteList(SortedList &list, int value)
+void listStuff::deleteListElement(SortedList *list, int value)
 {
     auto prevPosition = findPosition(list, value);
 
     if (prevPosition == nullptr)
     {
-        if (list.size == 0 || list.top->value != value)
+        if (list->size == 0 || list->top->value != value)
         {
             return;
         }
 
-        auto newTop = list.top->next;
-        delete list.top;
-        list.top = newTop;
+        auto newTop = list->top->next;
+        delete list->top;
+        list->top = newTop;
     }
     else
     {
@@ -78,17 +91,17 @@ void listStuff::deleteList(SortedList &list, int value)
         delete deleteVertex;
     }
 
-    --list.size;
+    --list->size;
 }
 
-void listStuff::printList(const SortedList &list)
+void listStuff::printList(SortedList const *list)
 {
-    if (list.size == 0)
+    if (list->size == 0)
     {
         std::cout << "nothing";
     }
 
-    auto currentVertex = list.top;
+    auto currentVertex = list->top;
     while (currentVertex != nullptr)
     {
         std::cout << currentVertex->value << ' ';
@@ -97,13 +110,15 @@ void listStuff::printList(const SortedList &list)
     std::cout << std::endl;
 }
 
-void listStuff::clearList(SortedList &list)
+void listStuff::deleteList(listStuff::SortedList *list)
 {
-    auto currentVertex = list.top;
+    auto currentVertex = list->top;
     while (currentVertex != nullptr)
     {
         auto tempVertex = currentVertex;
         currentVertex = currentVertex->next;
         delete tempVertex;
     }
+
+    delete list;
 }
