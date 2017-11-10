@@ -10,16 +10,17 @@ int main()
     int n, m;
     cin >> n >> m;
 
-    listStuff::CyclicList list;
+    auto list = listStuff::makeCyclicList();
     for (int i = 1; i <= n; ++i)
     {
         listStuff::insertToCyclicList(list, i);
     }
 
     int fromLastCount = 1;
-    auto prevSoldier = list.top;   // Last soldier (last + 1 == first)s
+    // Last soldier (last + 1 == first)
+    auto prevSoldier = listStuff::getListTop(list);
 
-    while (list.size > 1)
+    while (getListSize(list) > 1)
     {
         if (fromLastCount == m)
         {
@@ -29,11 +30,12 @@ int main()
         else
         {
             fromLastCount++;
-            prevSoldier = prevSoldier->next;
+            prevSoldier = listStuff::getNextVertex(prevSoldier);
         }
     }
 
-    cout << "The last position is: " << list.top->value << endl;
+    cout << "The last position is: ";
+    cout << listStuff::getVertexValue(listStuff::getListTop(list)) << endl;
 
     listStuff::clearCyclicList(list);
 
