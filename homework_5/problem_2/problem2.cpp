@@ -17,23 +17,23 @@ int main()
     }
 
     int fromLastCount = 1;
-    auto currentSoldier = list.top->next;   // First soldier
+    auto prevSoldier = list.top;   // Last soldier (last + 1 == first)s
+
     while (list.size > 1)
     {
         if (fromLastCount == m)
         {
             fromLastCount = 1;
-            listStuff::deleteFromCyclicList(list, currentSoldier);
+            listStuff::deleteFromCyclicList(list, prevSoldier);
         }
         else
         {
             fromLastCount++;
+            prevSoldier = prevSoldier->next;
         }
-
-        currentSoldier = currentSoldier->next;
     }
 
-    cout << "The position is: " << list.top->value << endl;
+    cout << "The last position is: " << list.top->value << endl;
 
     listStuff::clearCyclicList(list);
 
