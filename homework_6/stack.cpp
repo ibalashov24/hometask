@@ -30,6 +30,17 @@ bool stackStuff::isEmpty(const Stack *inputStack)
     return (inputStack->size == 0);
 }
 
+int stackStuff::top(const Stack *inputStack)
+{
+    if (isEmpty(inputStack))
+    {
+        std::cerr << "The stack is empty!!!" << std::endl;
+        return -1;
+    }
+
+    return inputStack->storage[inputStack->size - 1];
+}
+
 void stackStuff::push(Stack *inputStack, int value)
 {
     if (inputStack->size == inputStack->capacity)
