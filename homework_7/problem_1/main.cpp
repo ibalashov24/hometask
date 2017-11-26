@@ -1,11 +1,10 @@
 #include <iostream>
-#include <cstdint>
 
 #include "set.h"
 
 using namespace std;
 
-using command = uint8_t;
+using command = int;
 const command COMMAND_EXIT = 0;
 const command COMMAND_ADD = 1;
 const command COMMAND_FIND = 2;
