@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1511708583 source:/home/ilya/Github/hometask/homework_7/problem_2/main.cpp
+	<iostream>
+	<fstream>
+	"operationTree.h"
+
+1511708414 /home/ilya/Github/hometask/homework_7/problem_2/operationTree.h
+
+1511708520 source:/home/ilya/Github/hometask/homework_7/problem_2/operationTree.cpp
+	"operationTree.h"
+	<iostream>
+
