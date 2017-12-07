@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="input.txt" />
+		<Unit filename="main.cpp" />
+		<Unit filename="operationTree.cpp" />
+		<Unit filename="operationTree.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
