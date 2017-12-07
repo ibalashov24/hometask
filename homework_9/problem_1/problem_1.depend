@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1512685490 source:/home/ilya/Github/hometask/homework_9/problem_1/hash.cpp
+	"hash.h"
+	"list.h"
+	<vector>
+
+1512683120 /home/ilya/Github/hometask/homework_9/problem_1/hash.h
+	<string>
+
+1512685601 /home/ilya/Github/hometask/homework_9/problem_1/list.h
+	<string>
+
+1512685587 source:/home/ilya/Github/hometask/homework_9/problem_1/list.cpp
+	"list.h"
+
