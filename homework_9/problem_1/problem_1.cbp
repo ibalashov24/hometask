@@ -33,6 +33,7 @@
 		</Compiler>
 		<Unit filename="hash.cpp" />
 		<Unit filename="hash.h" />
+		<Unit filename="input.txt" />
 		<Unit filename="list.cpp" />
 		<Unit filename="list.h" />
 		<Unit filename="main.cpp" />

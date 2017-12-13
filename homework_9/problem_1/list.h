@@ -17,7 +17,11 @@ namespace listStuff
                 const std::pair<std::string, int> &value,
                 ListVertex *previousVertex = nullptr);
 
+    // Returns value of `element` in the list
     std::pair<std::string, int> &getValue(ListVertex *element);
+
+    // Returns size of the list
+    int getSize(const List *list);
 
     // Returns first element of `list`
     ListVertex *iterate(const List *list);

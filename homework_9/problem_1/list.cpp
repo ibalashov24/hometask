@@ -69,3 +69,8 @@ listStuff::ListVertex *listStuff::iterate(const ListVertex *vertex)
 {
     return vertex->next;
 }
+
+int listStuff::getSize(const List *list)
+{
+    return (list == nullptr ? 0 : list->size);
+}

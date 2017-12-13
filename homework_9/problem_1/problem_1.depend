@@ -1,15 +1,23 @@
 # depslib dependency file v1.0
-1512685490 source:/home/ilya/Github/hometask/homework_9/problem_1/hash.cpp
+1513145041 source:/home/ilya/Github/hometask/homework_9/problem_1/hash.cpp
 	"hash.h"
-	"list.h"
 	<vector>
+	<algorithm>
+	<iostream>
 
-1512683120 /home/ilya/Github/hometask/homework_9/problem_1/hash.h
+1513144996 /home/ilya/Github/hometask/homework_9/problem_1/hash.h
 	<string>
-
-1512685601 /home/ilya/Github/hometask/homework_9/problem_1/list.h
-	<string>
-
-1512685587 source:/home/ilya/Github/hometask/homework_9/problem_1/list.cpp
 	"list.h"
+
+1513036380 /home/ilya/Github/hometask/homework_9/problem_1/list.h
+	<string>
+
+1513065352 source:/home/ilya/Github/hometask/homework_9/problem_1/list.cpp
+	"list.h"
+
+1513144512 source:/home/ilya/Github/hometask/homework_9/problem_1/main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	"hash.h"
 
