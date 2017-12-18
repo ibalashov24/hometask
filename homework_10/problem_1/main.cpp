@@ -62,6 +62,8 @@ pair<AdjacencyMatrix, int> initializeMatrix()
 
         matrix[capital - 1].country = i;
     }
+    
+    inputFile.close();
 
     return make_pair(matrix, countryCount);
 }
