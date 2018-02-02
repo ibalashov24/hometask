@@ -68,9 +68,10 @@ vector<bool> sumBinaryNumbers(const vector<bool> &a, const vector<bool> &b)
 string toString(const vector<bool> &input)
 {
     string result = "";
-    for (auto e : input)
+    for (bool e : input)
     {
-        result.push_back(e + '0');
+    	// Variable 'e' == 1 or 0 ;)
+        result.push_back(static_cast<char>(e) + '0');
     }
 
     return result;
@@ -90,7 +91,7 @@ int main()
 
     cout << "Двоичное представление этих чисел в дополнительном коде: " << endl;
     cout << toString(reverseCopy(decToBin(firstNumber))) << ' ';
-    cout << toString(decToBin(secondNumber)) << endl;
+    cout << toString(reverseCopy(decToBin(secondNumber))) << endl;
 
     bool isNeedReverse = false;
     if (firstNumber < 0 && secondNumber < 0)
