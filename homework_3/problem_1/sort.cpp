@@ -5,13 +5,13 @@
 void sorting::insertionSort(std::vector<int>::iterator begin,
                             std::vector<int>::iterator end)
 {
-    for (auto pos_i = begin + 1; pos_i != end; ++pos_i)
+    for (auto posI = begin + 1; posI != end; ++posI)
     {
-        for (auto pos_j = pos_i; pos_j >= begin + 1; --pos_j)
+        for (auto posJ = posI; posJ >= begin + 1; --posJ)
         {
-            if (*pos_j < *(pos_j - 1))
+            if (*posJ < *(posJ - 1))
             {
-                std::iter_swap(pos_j, pos_j - 1);
+                std::iter_swap(posJ, posJ - 1);
             }
         }
     }
@@ -20,7 +20,7 @@ void sorting::insertionSort(std::vector<int>::iterator begin,
 std::vector<int>::iterator partition(std::vector<int>::iterator begin,
                                               std::vector<int>::iterator end)
 {
-    int median = *(begin + (end - begin) / 2);
+    const int median = *(begin + (end - begin) / 2);
 
     auto insertionPos = begin;
     for (auto pos = begin; pos != end; ++pos)
