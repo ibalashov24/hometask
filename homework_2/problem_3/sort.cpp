@@ -37,11 +37,7 @@ void sorting::countingSort(int *array, int size)
         }
     }
 
-    int *repeats = new int[maxElement - minElement + 1];
-    for (int i = 0; i < maxElement - minElement + 1; ++i)
-    {
-        repeats[i] = 0;
-    }
+    int *repeats = new int[maxElement - minElement + 1] {};
 
     for (int i = 0; i < size; ++i)
     {
