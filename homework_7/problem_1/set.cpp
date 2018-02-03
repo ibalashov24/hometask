@@ -17,9 +17,7 @@ struct setStuff::CustomSet
 
 setStuff::CustomSet *setStuff::createSet()
 {
-    auto newSet = new CustomSet;
-
-    return newSet;
+    return new CustomSet;
 }
 
 void clearTree(TreeVertex *vertex)

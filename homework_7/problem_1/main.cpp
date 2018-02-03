@@ -4,13 +4,16 @@
 
 using namespace std;
 
-using command = int;
-const command COMMAND_EXIT = 0;
-const command COMMAND_ADD = 1;
-const command COMMAND_FIND = 2;
-const command COMMAND_DELETE = 3;
-const command COMMAND_PRINT_ASC = 4;
-const command COMMAND_PRINT_DESC = 5;
+// Available commands (see printHelp() body)
+enum command
+{
+	COMMAND_EXIT,
+	COMMAND_ADD,
+	COMMAND_FIND,
+	COMMAND_DELETE,
+	COMMAND_PRINT_ASC,
+	COMMAND_PRINT_DESC
+};
 
 void printHelp()
 {
@@ -24,6 +27,14 @@ void printHelp()
     cout << "or enter something else to print this help" << endl;
 }
 
+command getNextCommand()
+{
+	int nextCommand = 0;
+	cin >> nextCommand;
+
+	return static_cast<command>(nextCommand);
+}
+
 int main()
 {
     auto set = setStuff::createSet();
@@ -31,7 +42,7 @@ int main()
     printHelp();
 
     command currentCommand = COMMAND_EXIT;
-    cin >> currentCommand;
+    currentCommand = getNextCommand();
     while (currentCommand != COMMAND_EXIT)
     {
         switch (currentCommand)
@@ -84,7 +95,7 @@ int main()
             }
         }
 
-        cin >> currentCommand;
+        currentCommand = getNextCommand();
     }
 
     return 0;
