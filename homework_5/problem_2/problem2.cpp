@@ -7,7 +7,9 @@ using namespace std;
 int main()
 {
     cout << "Enter n and m: ";
-    int n, m;
+
+    int n = 0;
+    int m = 0;
     cin >> n >> m;
 
     auto list = listStuff::makeCyclicList();
