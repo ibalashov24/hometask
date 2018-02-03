@@ -82,7 +82,7 @@ string convertToPostfix(istream &inputStream)
 
 int main()
 {
-    cout << "Enter expression in prefix form: ";
+    cout << "Enter expression in infix form: ";
 
     auto postfixExpression = convertToPostfix(cin);
 
