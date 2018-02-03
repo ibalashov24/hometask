@@ -5,7 +5,19 @@
 
 using namespace std;
 
-void main_loop()
+void printHelp()
+{
+	cout << "Available commands: \n"
+			"0 - exit \n"
+			"1 - add new entry \n"
+			"2 - print all entries \n"
+			"3 - find phone by name \n"
+			"4 - find name by phone \n"
+			"5 - dump phonebook to file \n";
+	cout << endl;
+}
+
+void mainLoop()
 {
     int currentCommand = 0;
     Guide::PhoneGuide guide;
@@ -15,6 +27,8 @@ void main_loop()
     cin >> fileName;
 
     Guide::initializeGuide(guide, fileName);
+
+    printHelp();
 
     do
     {
@@ -80,7 +94,7 @@ void main_loop()
 
 int main()
 {
-    main_loop();
+    mainLoop();
 
     cout << "Good bye!" << endl;
 
