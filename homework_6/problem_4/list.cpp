@@ -71,11 +71,18 @@ void listStuff::eraseElement(PairStringList *list, ListVertex *vertex)
     if (vertex == list->begin)
     {
         list->begin = nextElement;
-        nextElement->prev = nullptr;
+
+        if (nextElement != nullptr)
+        {
+        	nextElement->prev = nullptr;
+        }
     }
     else
     {
-        nextElement->prev = prevElement;
+    	if (nextElement != nullptr)
+    	{
+    		nextElement->prev = prevElement;
+    	}
         prevElement->next = nextElement;
     }
 
