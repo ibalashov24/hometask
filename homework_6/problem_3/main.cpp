@@ -2,7 +2,7 @@
 #include <string>
 #include <cctype>
 
-#include "../stack.h"
+#include "stack.h"
 
 using namespace std;
 
@@ -18,8 +18,10 @@ bool isOperation(const char token)
  */
 bool hasNotLowerPriority(char left, char right)
 {
-    return ((left == '*' || left == '/') ||
-            ((left == '+' || left == '-') && (right == '+' || right == '-')));
+	const int leftPriority = (left == '*' || left == '/') ? 1 : 0;
+	const int rightPriority = (right == '*' || right == '/') ? 1 : 0;
+
+	return leftPriority >= rightPriority;
 }
 
 void putIntoResult(string &resultString, char token)
@@ -46,7 +48,9 @@ string convertToPostfix(istream &inputStream)
         }
         else if (isOperation(token))
         {
-            while (hasNotLowerPriority(stackStuff::top(tokenStack), token))
+            while (!stackStuff::isEmpty(tokenStack) &&
+            		isOperation(stackStuff::top(tokenStack)) &&
+            		hasNotLowerPriority(stackStuff::top(tokenStack), token))
             {
                 putIntoResult(result, stackStuff::pop(tokenStack));
             }
