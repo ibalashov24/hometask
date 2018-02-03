@@ -1,12 +1,14 @@
 #include "sort.h"
 
+#include <functional>
+
 /**
  * Merges (both) sorted `sourceList` into `destList`
  */
 void merge(listStuff::PairStringList *destList,
            listStuff::PairStringList *sourceList,
-           bool (*cmp)(const std::pair<std::string, std::string> &,
-                       const std::pair<std::string, std::string> &))
+		   std::function<bool(const std::pair<std::string, std::string> &,
+                   	   	   	  const std::pair<std::string, std::string> &)> cmp)
 {
     auto nextToPush = listStuff::ejectFirst(sourceList);
     decltype(nextToPush) previousElement = nullptr;
