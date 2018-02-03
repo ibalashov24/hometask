@@ -1,7 +1,5 @@
 #include "sort.h"
 
-#include <functional>
-
 /**
  * Merges (both) sorted `sourceList` into `destList`
  */
@@ -54,8 +52,8 @@ listStuff::PairStringList *split(listStuff::PairStringList *inputList,
 }
 
 void sortingStuff::mergeSort(listStuff::PairStringList *list,
-                             bool (*cmp)(const std::pair<std::string, std::string> &,
-                                         const std::pair<std::string, std::string> &))
+							 std::function<bool(const std::pair<std::string, std::string> &,
+		                   	   	   	  	  	    const std::pair<std::string, std::string> &)> cmp)
 {
     auto newList = split(list, listStuff::getSize(list) / 2);
 
