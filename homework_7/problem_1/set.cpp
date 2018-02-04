@@ -33,10 +33,12 @@ void clearTree(TreeVertex *vertex)
     delete vertex;
 }
 
-void setStuff::deleteSet(CustomSet *set)
+void setStuff::deleteSet(CustomSet * &set)
 {
     clearTree(set->top);
     delete set;
+
+    set = nullptr;
 }
 
 /**
