@@ -42,8 +42,8 @@ int main()
     cout << "Statistics: " << endl;
 
     auto stats = hashStuff::getStatistics(set);
-    cout << "Max size of bucket: " << stats.first << endl;
-    cout << "Average size of bucket: " << stats.second << endl;
+    cout << "Max size of bucket: " << stats.setSize << endl;
+    cout << "Average size of bucket: " << stats.avgBucketSize << endl;
 
     cout << "Coefficient: " << static_cast<double>(hashStuff::getSize(set)) /
                                     hashStuff::getCapacity(set) << endl;

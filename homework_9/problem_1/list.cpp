@@ -1,10 +1,13 @@
 #include "list.h"
 
+using std::string;
+using std::pair;
+
 struct listStuff::ListVertex
 {
     ListVertex *next;
 
-    std::pair<std::string, int> value;
+    pair<string, int> value;
 };
 
 struct listStuff::List
@@ -35,7 +38,7 @@ void listStuff::deleteList(List *list)
 }
 
 void listStuff::insert(List *list,
-                       const std::pair<std::string, int> &value,
+                       const pair<string, int> &value,
                        ListVertex *previousVertex)
 {
     ListVertex *newVertex = new ListVertex;
@@ -55,7 +58,7 @@ void listStuff::insert(List *list,
     ++list->size;
 }
 
-std::pair<std::string, int> &listStuff::getValue(ListVertex *element)
+pair<string, int> &listStuff::getValue(ListVertex *element)
 {
     return element->value;
 }

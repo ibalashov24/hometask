@@ -40,7 +40,7 @@ int hashStuff::getSize(const HashSet *set)
     return set->size;
 }
 
-std::pair<int, double> hashStuff::getStatistics(const HashSet *set)
+hashStuff::HashSetStats hashStuff::getStatistics(const HashSet *set)
 {
     int maxSize = 0;
     int nonEmptyCount = 0;
@@ -55,10 +55,10 @@ std::pair<int, double> hashStuff::getStatistics(const HashSet *set)
 
     if (nonEmptyCount == 0)
     {
-        return std::make_pair(0, 0);
+        return HashSetStats{0, 0.0};
     }
-    return std::make_pair(maxSize,
-                          set->size / static_cast<double>(nonEmptyCount));
+    return HashSetStats{maxSize,
+                          set->size / static_cast<double>(nonEmptyCount)};
 }
 
 const unsigned int MODULO = 1190494759; // Prime number #60000000
@@ -99,7 +99,6 @@ int &hashStuff::value(HashSet *set, const std::string &key)
         set->size++;
         currentPosition = listStuff::iterate(set->bucket[hash]);
     }
-//    auto t = listStuff::getValue(currentPosition).second;
 
     return std::get<1>(listStuff::getValue(currentPosition));
 }

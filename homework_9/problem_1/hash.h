@@ -9,6 +9,11 @@ namespace hashStuff
     const int DEFAULT_CAPACITY = 100;
 
     struct HashSet;
+    struct HashSetStats
+    {
+    	int setSize;
+    	double avgBucketSize;
+    };
 
     HashSet *createHashSet(int capacity = DEFAULT_CAPACITY);
     void deleteHashSet(HashSet *set);
@@ -20,7 +25,7 @@ namespace hashStuff
     int getSize(const HashSet *set);
 
     // Returns max and average size of bucket in `set`
-    std::pair<int, double> getStatistics(const HashSet *set);
+    HashSetStats getStatistics(const HashSet *set);
 
     // Pointer to the position in set
     struct HashSetPosition
