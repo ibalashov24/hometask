@@ -221,7 +221,7 @@ void treeStuff::insert(SplayTree *tree,
     splay(tree, insertPosition);
 }
 
-bool treeStuff::isInTree(const SplayTree *tree,
+bool treeStuff::isInTree(SplayTree *tree,
                          const std::string &key)
 {
     auto parentPosition = findParent(tree, key);
@@ -237,9 +237,14 @@ bool treeStuff::isInTree(const SplayTree *tree,
                          parentPosition->rightSon : parentPosition->leftSon);
 
         isSon = checkSon != nullptr && checkSon->key == key;
+
+        if (isSon)
+        {
+        	splay(tree, checkSon);
+        }
     }
 
-    return isTop || isSon;
+    return (isSon || isTop);
 }
 
 std::string treeStuff::getValue(SplayTree *tree,
@@ -267,6 +272,8 @@ std::string treeStuff::getValue(SplayTree *tree,
     }
     else
     {
+    	// In order to speed up next "bad" search
+    	splay(tree, parentPosition);
     	return "";
     }
 }

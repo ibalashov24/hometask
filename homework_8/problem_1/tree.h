@@ -14,7 +14,7 @@ namespace treeStuff
     void insert(SplayTree *tree,
                 const std::string &key,
                 const std::string &value);
-    bool isInTree(const SplayTree *tree,
+    bool isInTree(SplayTree *tree,
                   const std::string &key);
     std::string getValue(SplayTree *tree,
                          const std::string &key);
