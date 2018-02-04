@@ -45,8 +45,15 @@ treeStuff::TreeVertex *parseInputTree(ifstream &input)
 int main()
 {
     ifstream inputFile("input.txt");
+    if (!inputFile.is_open())
+    {
+    	cerr << "Unknown file!!!" << endl;
+    	return 1;
+    }
 
     auto topOfNewTree = parseInputTree(inputFile);
+    inputFile.close();
+
     auto operationTree = treeStuff::createTree(topOfNewTree);
 
     cout << "Parsed tree:" << endl;
@@ -54,8 +61,9 @@ int main()
     cout << endl;
 
     cout << "Calculation result: ";
-    cout << treeStuff::calculateExpression(operationTree, true) << endl;
-    // We have to recalculate all cache according to the problem
+    cout << treeStuff::calculateExpression(operationTree) << endl;
+
+    treeStuff::deleteTree(operationTree);
 
     return 0;
 }

@@ -11,8 +11,7 @@ namespace treeStuff
     // Creates leaf (sons == nullptr)
     TreeVertex *constructVertex(double value);
 
-    double calculateExpression(const Tree *operationTree,
-                          bool needRevalidateCache = false);
+    double calculateExpression(const Tree *operationTree);
     void printTree(const Tree *operationTree);
 
     void deleteTree(Tree *tree);

@@ -71,27 +71,10 @@ treeStuff::TreeVertex *treeStuff::constructVertex(double value)
     return newVertex;
 }
 
-void revalidateCache(treeStuff::TreeVertex *currentVertex)
+double treeStuff::calculateExpression(const Tree *operationTree)
 {
-    if (currentVertex->rightSon == nullptr || currentVertex->leftSon == nullptr)
-    {
-        return;
-    }
-
-    revalidateCache(currentVertex->rightSon);
-    revalidateCache(currentVertex->leftSon);
-}
-
-double treeStuff::calculateExpression(const Tree *operationTree,
-                                      bool needRevalidateCahce)
-{
-    if (needRevalidateCahce)
-    {
-        revalidateCache(operationTree->top);
-    }
-
     return (operationTree->top == nullptr ? 0 :
-                                            operationTree->top->cachedValue);
+    										operationTree->top->cachedValue);
 }
 
 void printOperand(const treeStuff::TreeVertex *currentOperand)
@@ -136,4 +119,5 @@ void deleteVertex(treeStuff::TreeVertex *vertex)
 void treeStuff::deleteTree(Tree *tree)
 {
     deleteVertex(tree->top);
+    delete tree;
 }
