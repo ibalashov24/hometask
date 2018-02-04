@@ -5,20 +5,27 @@
 
 using namespace std;
 
+struct Road
+{
+	int destinationCity;
+	int length;
+};
+
 struct RoadsFromCity
 {
     // Iterator points to the first road to non-used city
-    vector<pair<int, int> >::iterator firstNonUsed;
+    vector<Road>::iterator firstNonUsed;
     // Destination / Length
-    vector<pair<int, int> > roads;
+    vector<Road> roads;
     int country = -1;    // Neutral
 };
 using AdjacencyMatrix = vector<RoadsFromCity>;
 
-class BadFileException
+class BadFileException : public exception
 {
 };
 
+// Return pair <adjacency matrix / city count>
 pair<AdjacencyMatrix, int> initializeMatrix()
 {
     ifstream inputFile("input.txt");
@@ -39,8 +46,8 @@ pair<AdjacencyMatrix, int> initializeMatrix()
         int length = 0;
         inputFile >> firstCity >> secondCity >> length;
 
-        matrix[firstCity - 1].roads.push_back(make_pair(secondCity - 1, length));
-        matrix[secondCity - 1].roads.push_back(make_pair(firstCity - 1, length));
+        matrix[firstCity - 1].roads.push_back(Road{secondCity - 1, length});
+        matrix[secondCity - 1].roads.push_back(Road{firstCity - 1, length});
     }
 
     for (auto &city : matrix)
@@ -49,7 +56,7 @@ pair<AdjacencyMatrix, int> initializeMatrix()
         sort(city.roads.begin(), city.roads.end(), [](auto a, auto b)
                                                      {
                                                          // Sort by the length of way
-                                                         return (a.second < b.second);
+                                                         return (a.length < b.length);
                                                      });
     }
 
@@ -101,17 +108,20 @@ void markBorders(AdjacencyMatrix &matrix, int countryCount)
             int nearestNeighbourCity = -1;
             for (unsigned int i = 0; i < country.size(); ++i)
             {
+            	auto currentCity = matrix[country[i]];
+
+            	auto targetCity = currentCity.firstNonUsed->destinationCity;
                 // Choose first non-used (it can be invalidated after last iter.)
-                while (matrix[country[i]].firstNonUsed != matrix[country[i]].roads.end() &&
-                       matrix[matrix[country[i]].firstNonUsed->first].country != -1)
+                while (currentCity.firstNonUsed != currentCity.roads.end() &&
+                       matrix[targetCity].country != -1)
                 {
-                    ++matrix[country[i]].firstNonUsed;
+                    ++currentCity.firstNonUsed;
                 }
 
-                if (matrix[country[i]].firstNonUsed != matrix[country[i]].roads.end() &&
+                if (currentCity.firstNonUsed != currentCity.roads.end() &&
                     (nearestNeighbourCity == -1 ||
-                     matrix[country[i]].firstNonUsed->second <
-                     matrix[nearestNeighbourCity].firstNonUsed->second))
+                     currentCity.firstNonUsed->length <
+                     matrix[nearestNeighbourCity].firstNonUsed->length))
                 {
                     nearestNeighbourCity = country[i];
                 }
@@ -119,9 +129,11 @@ void markBorders(AdjacencyMatrix &matrix, int countryCount)
 
             if (nearestNeighbourCity != -1)
             {
-                country.push_back(matrix[nearestNeighbourCity].firstNonUsed->first);
-                matrix[matrix[nearestNeighbourCity].firstNonUsed->first].country =
-                                            matrix[nearestNeighbourCity].country;
+            	auto targetCity = matrix[nearestNeighbourCity].firstNonUsed->destinationCity;
+
+                country.push_back(targetCity);
+
+                matrix[targetCity].country = matrix[nearestNeighbourCity].country;
 
                 ++matrix[nearestNeighbourCity].firstNonUsed;
                 --neutralCities;
@@ -132,12 +144,13 @@ void markBorders(AdjacencyMatrix &matrix, int countryCount)
 
 int main()
 {
+	// matrix / country count
     pair<AdjacencyMatrix, int> countryMap;
     try
     {
         countryMap = initializeMatrix();
     }
-    catch (BadFileException)
+    catch (BadFileException const &e)
     {
         cout << "Unknown File!!!" << endl;
         return -1;
