@@ -7,7 +7,7 @@ struct SplayTreeElement
     SplayTreeElement *leftSon = nullptr;
     SplayTreeElement *rightSon = nullptr;
 
-    unsigned int keyHash;
+    const std::string key;
     std::string value;
 };
 
@@ -42,22 +42,6 @@ void treeStuff::deleteSplayTree(SplayTree *tree)
         recursiveDelete(tree->top);
         delete tree;
     }
-}
-
-unsigned int getHash(const std::string &input)
-{
-    const unsigned int MODULO = 1190494759; // Prime number #60000000
-    const unsigned int PRIME = 541; // Prime number #100
-
-    unsigned int result = 0;
-    unsigned int power = 1;
-    for (auto e : input)
-    {
-        result = (result + ((power * e) % MODULO)) % MODULO;
-        power = (power * PRIME) % MODULO;
-    }
-
-    return result;
 }
 
 void makeZig(SplayTreeElement *a, SplayTreeElement *b)
@@ -122,22 +106,17 @@ performRotates(treeStuff::SplayTree *tree,
         return std::make_pair(endElement, nullptr);
     }
 
-    auto nextElement = (endElement->keyHash > currentElement->keyHash ?
+    auto nextElement = (endElement->key > currentElement->key ?
                         currentElement->rightSon : currentElement->leftSon);
-
     auto nextTwo = performRotates(tree, nextElement, endElement);
 
     // It means that some rotate was performed at last step
     if (nextTwo.second == nullptr)
     {
-        if (endElement->keyHash > currentElement->keyHash)
-        {
-            currentElement->rightSon = endElement;
-        }
-        else
-        {
-            currentElement->leftSon = endElement;
-        }
+    	auto &newSon = (endElement->key > currentElement->key ?
+    						currentElement->rightSon :
+							currentElement->leftSon);
+        newSon = endElement;
     }
 
     if (currentElement == tree->top && nextTwo.first == endElement)
@@ -179,19 +158,19 @@ void splay(treeStuff::SplayTree *tree,
 // Returns parent of the element
 // (`nullptr` if tree is empty or element == top)
 SplayTreeElement *findParent(const treeStuff::SplayTree *tree,
-                             unsigned int hash)
+                             const std::string &key)
 {
     auto nextElement = tree->top;
     decltype(nextElement) currentElement = nullptr;
-    while (nextElement != nullptr && nextElement->keyHash != hash)
+    while (nextElement != nullptr && nextElement->key != key)
     {
         currentElement = nextElement;
 
-        if (hash > nextElement->keyHash)
+        if (key > nextElement->key)
         {
             nextElement = nextElement->rightSon;
         }
-        else if (hash < nextElement->keyHash)
+        else if (key < nextElement->key)
         {
             nextElement = nextElement->leftSon;
         }
@@ -200,7 +179,7 @@ SplayTreeElement *findParent(const treeStuff::SplayTree *tree,
     return currentElement;
 }
 
-SplayTreeElement *createNewElement(unsigned int key,
+SplayTreeElement *createNewElement(const std::string &key,
                                    const std::string &value)
 {
     auto newElement = new SplayTreeElement{nullptr, nullptr, key, value};
@@ -211,14 +190,13 @@ void treeStuff::insert(SplayTree *tree,
                        const std::string &key,
                        const std::string &value)
 {
-    auto hash = getHash(key);
-    auto parentPosition = findParent(tree, hash);
+    auto parentPosition = findParent(tree, key);
 
     if (parentPosition == nullptr)
     {
         if (tree->top == nullptr)
         {
-            tree->top = createNewElement(hash, value);
+            tree->top = createNewElement(key, value);
         }
         else
         {
@@ -228,12 +206,12 @@ void treeStuff::insert(SplayTree *tree,
         return;
     }
 
-    auto &insertPosition = (hash > parentPosition->keyHash ?
+    auto &insertPosition = (key > parentPosition->key ?
                             parentPosition->rightSon : parentPosition->leftSon);
 
     if (insertPosition == nullptr)
     {
-        insertPosition = createNewElement(hash, value);
+        insertPosition = createNewElement(key, value);
     }
     else
     {
@@ -246,49 +224,51 @@ void treeStuff::insert(SplayTree *tree,
 bool treeStuff::isInTree(const SplayTree *tree,
                          const std::string &key)
 {
-    auto hash = getHash(key);
-    auto parentPosition = findParent(tree, hash);
+    auto parentPosition = findParent(tree, key);
 
-    bool isTop =    parentPosition == nullptr && tree->top != nullptr &&
-                    tree->top->keyHash == hash;
+    bool isTop = (parentPosition == nullptr &&
+    			  tree->top != nullptr &&
+                  tree->top->key == key);
 
     bool isSon = false;
     if (parentPosition != nullptr)
     {
-        auto &checkSon =    (hash > parentPosition->keyHash ?
-                            parentPosition->rightSon : parentPosition->leftSon);
+        auto &checkSon = (key > parentPosition->key ?
+                         parentPosition->rightSon : parentPosition->leftSon);
 
-        isSon = checkSon != nullptr && checkSon->keyHash == hash;
+        isSon = checkSon != nullptr && checkSon->key == key;
     }
 
     return isTop || isSon;
 }
 
-std::string treeStuff::getValue(const SplayTree *tree,
+std::string treeStuff::getValue(SplayTree *tree,
                                 const std::string &key)
 {
-    auto hash = getHash(key);
-    auto parentPosition = findParent(tree, hash);
+    auto parentPosition = findParent(tree, key);
 
-    std::string result = "";
+    SplayTreeElement *result = nullptr;
 
     if (parentPosition == nullptr && tree->top != nullptr)
     {
-        result = tree->top->value;
+        result = tree->top;
     }
 
     if (parentPosition != nullptr)
     {
-        auto &resultSon = (hash > parentPosition->keyHash ?
-                           parentPosition->rightSon : parentPosition->leftSon);
-
-        if (resultSon != nullptr)
-        {
-            result = resultSon->value;
-        }
+        result = (key > parentPosition->key ?
+                  parentPosition->rightSon : parentPosition->leftSon);
     }
 
-    return result;
+    if (result)
+    {
+    	splay(tree, result);
+    	return result->value;
+    }
+    else
+    {
+    	return "";
+    }
 }
 
 /**
@@ -296,54 +276,52 @@ std::string treeStuff::getValue(const SplayTree *tree,
 */
 SplayTreeElement *prepareSubstituteVertex(SplayTreeElement *erasedElement)
 {
-    auto currentElement = erasedElement;
-    auto lastElement = currentElement;
+	auto currentElement = erasedElement;
 
-    if (currentElement->leftSon != nullptr)
-    {
-        currentElement = currentElement->leftSon;
-        while (currentElement->rightSon != nullptr)
-        {
-            lastElement = currentElement;
-            currentElement = currentElement->rightSon;
-        }
+	if (currentElement->leftSon == nullptr &&
+		currentElement->rightSon == nullptr)
+	{
+		return nullptr;
+	}
 
-        if (erasedElement == lastElement)
-        {
-            lastElement->leftSon = currentElement->leftSon;
-        }
-        else
-        {
-            lastElement->rightSon = currentElement->leftSon;
-        }
-    }
-    else if (currentElement->rightSon != nullptr)
-    {
-        currentElement = currentElement->rightSon;
-        while (currentElement->leftSon != nullptr)
-        {
-            lastElement = currentElement;
-            currentElement = currentElement->leftSon;
-        }
+	if (currentElement->leftSon == nullptr)
+	{
+		return currentElement->rightSon;
+	}
+	else if (currentElement->rightSon == nullptr)
+	{
+		return currentElement->leftSon;
+	}
+	else
+	{
+		auto lastElement = currentElement;
+		currentElement = currentElement->leftSon;
+		while (currentElement->rightSon != nullptr)
+		{
+			lastElement = currentElement;
+			currentElement = currentElement->rightSon;
+		}
 
-        if (erasedElement == lastElement)
-        {
-            lastElement->rightSon = currentElement->rightSon;
-        }
-        else
-        {
-            lastElement->leftSon = currentElement->rightSon;
-        }
-    }
+		if (erasedElement == lastElement)
+		{
+			lastElement->leftSon = currentElement->leftSon;
+		}
+		else
+		{
+			lastElement->rightSon = currentElement->leftSon;
+		}
 
-    return currentElement;
+		currentElement->leftSon = erasedElement->leftSon;
+		currentElement->rightSon = erasedElement->rightSon;
+
+		return currentElement;
+	}
 }
 
 void treeStuff::deleteElement(SplayTree *tree,
                               const std::string &key)
 {
-    auto hash = getHash(key);
-    auto erasedElementParent = findParent(tree, hash);
+    auto erasedElementParent = findParent(tree, key);
     auto erasedElement = erasedElementParent;
     if (erasedElementParent == nullptr)
     {
@@ -351,40 +329,30 @@ void treeStuff::deleteElement(SplayTree *tree,
     }
     else
     {
-        erasedElement = (hash > erasedElementParent->keyHash) ?
+        erasedElement = (key > erasedElementParent->key) ?
                                         erasedElementParent->rightSon:
                                         erasedElementParent->leftSon;
     }
 
-    if (erasedElement == nullptr || erasedElement->keyHash != hash)
+    if (erasedElement == nullptr || erasedElement->key != key)
     {
         return;
     }
 
     auto currentElement = prepareSubstituteVertex(erasedElement);
 
-    if (currentElement == erasedElement)
-    {
-        currentElement = nullptr;
-    }
-    else
-    {
-        currentElement->rightSon = erasedElement->rightSon;
-        currentElement->leftSon = erasedElement->leftSon;
-    }
-
     if (erasedElementParent == nullptr)
-    {
-        tree->top = currentElement;
-    }
-    else if (erasedElement->keyHash > erasedElementParent->keyHash)
-    {
-        erasedElementParent->rightSon = currentElement;
-    }
-    else
-    {
-        erasedElementParent->leftSon = currentElement;
-    }
+	{
+    	tree->top = currentElement;
+	}
+	else if (erasedElement->value > erasedElementParent->value)
+	{
+		erasedElementParent->rightSon = currentElement;
+	}
+	else
+	{
+		erasedElementParent->leftSon = currentElement;
+	}
 
     delete erasedElement;
 

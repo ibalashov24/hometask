@@ -16,7 +16,7 @@ namespace treeStuff
                 const std::string &value);
     bool isInTree(const SplayTree *tree,
                   const std::string &key);
-    std::string getValue(const SplayTree *tree,
+    std::string getValue(SplayTree *tree,
                          const std::string &key);
     void deleteElement(SplayTree *tree,
                        const std::string &key);
