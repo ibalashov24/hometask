@@ -147,10 +147,24 @@ void setStuff::printSet(const CustomSet *set, bool isAscendingOrder)
 TreeVertex *prepareSubstituteVertex(TreeVertex *erasedElement)
 {
     auto currentElement = erasedElement;
-    auto lastElement = currentElement;
 
-    if (currentElement->leftSon != nullptr)
+    if (currentElement->leftSon == nullptr &&
+    	currentElement->rightSon == nullptr)
     {
+    	return nullptr;
+    }
+
+    if (currentElement->leftSon == nullptr)
+    {
+    	return currentElement->rightSon;
+    }
+    else if (currentElement->rightSon == nullptr)
+    {
+    	return currentElement->leftSon;
+    }
+    else
+    {
+    	auto lastElement = currentElement;
         currentElement = currentElement->leftSon;
         while (currentElement->rightSon != nullptr)
         {
@@ -166,27 +180,12 @@ TreeVertex *prepareSubstituteVertex(TreeVertex *erasedElement)
         {
             lastElement->rightSon = currentElement->leftSon;
         }
-    }
-    else if (currentElement->rightSon != nullptr)
-    {
-        currentElement = currentElement->rightSon;
-        while (currentElement->leftSon != nullptr)
-        {
-            lastElement = currentElement;
-            currentElement = currentElement->leftSon;
-        }
 
-        if (erasedElement == lastElement)
-        {
-            lastElement->rightSon = currentElement->rightSon;
-        }
-        else
-        {
-            lastElement->leftSon = currentElement->rightSon;
-        }
-    }
+        currentElement->leftSon = erasedElement->leftSon;
+        currentElement->rightSon = erasedElement->rightSon;
 
-    return currentElement;
+        return currentElement;
+    }
 }
 
 void setStuff::deleteElement(CustomSet *set, int value)
@@ -210,16 +209,6 @@ void setStuff::deleteElement(CustomSet *set, int value)
     }
 
     auto currentElement = prepareSubstituteVertex(erasedElement);
-
-    if (currentElement == erasedElement)
-    {
-        currentElement = nullptr;
-    }
-    else
-    {
-        currentElement->rightSon = erasedElement->rightSon;
-        currentElement->leftSon = erasedElement->leftSon;
-    }
 
     if (erasedElementParent == nullptr)
     {
