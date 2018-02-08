@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1513547416 source:/home/ilya/Github/hometask/homework_10/problem_1/main.cpp
+	<iostream>
+	<vector>
+	<fstream>
+	<algorithm>
+
