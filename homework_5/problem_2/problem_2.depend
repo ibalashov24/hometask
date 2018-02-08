@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1510340429 source:/home/ilya/Github/hometask/homework_5/problem_2/cycleList.cpp
+	"cycleList.h"
+
+1510340332 /home/ilya/Github/hometask/homework_5/problem_2/cycleList.h
+
+1510340409 source:/home/ilya/Github/hometask/homework_5/problem_2/problem2.cpp
+	<iostream>
+	"cycleList.h"
+
