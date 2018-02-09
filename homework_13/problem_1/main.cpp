@@ -10,7 +10,6 @@ const int END_STATE = -2;
 bool isRealNumber(const string &example)
 {
 	int currentState = 0;
-	bool isReal = false;
 
 	for (auto ch : example)
 	{
@@ -57,7 +56,7 @@ bool isRealNumber(const string &example)
 			}
 			else
 			{
-				currentState == NOT_CORRECT;
+				currentState = NOT_CORRECT;
 			}
 			break;
 		}
@@ -92,13 +91,13 @@ bool isRealNumber(const string &example)
 		}
 		}
 
-		isReal = (currentState != NOT_CORRECT);
-		if (!isReal)
+		if (currentState == NOT_CORRECT)
 		{
 			break;
 		}
 	}
 
+	bool isReal = true;
 	if (currentState != 5 && currentState != 6)
 	{
 		isReal = false;
