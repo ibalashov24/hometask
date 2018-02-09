@@ -1,6 +1,15 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
+
+int MAX_VALUE = 100000;
+int MIN_VALUE = -100000;
+
+bool isInRange(int r, int b)
+{
+	return (r >= 0 && r < abs(b));
+}
 
 int main()
 {
@@ -9,26 +18,44 @@ int main()
     cout << "Введите целые a и b: ";
     cin >> a >> b;
 
-    bool isNegative = false;
-    if (a < 0) 
+    if (b == 0 && a != 0)
     {
-        a = -a;
-        isNegative = true;
-    }
-    if (b < 0)
-    {
-        b = -b;
+    	cout << "Нет ответа" << endl;
+    	return 0;
     }
 
-    int result = 0;
-    while (a >= b)
+    int left = MIN_VALUE;
+    int right = MAX_VALUE;
+    int r_left = a - left * b;
+    int r_right = a - right * b;
+
+    while (!isInRange(r_left, b) && !isInRange(r_right, b))
     {
-        a -= b;
-        result++;
+    	const int q = (left + right) / 2;
+    	const int r = a - q * b;
+
+    	if ((b > 0 && r >= b) || (b < 0 && r < 0))
+    	{
+    		left = q;
+    	}
+    	else
+    	{
+    		right = q;
+    	}
+
+    	r_left = a - left * b;
+    	r_right = a - right * b;
     }
 
-    cout << "Неполное частное от деления a на b: ";
-    cout << (isNegative ? result - b : result) << endl;
+    cout << "Остаток от деления: ";
+    if (isInRange(r_left, b))
+    {
+    	cout << r_left << endl;
+    }
+    else
+    {
+    	cout << r_right << endl;
+    }
 
     return 0;
 }
