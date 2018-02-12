@@ -3,59 +3,37 @@
 
 using namespace std;
 
-int MAX_VALUE = 100000;
-int MIN_VALUE = -100000;
-
-bool isInRange(int r, int b)
-{
-	return (r >= 0 && r < abs(b));
-}
-
 int main()
 {
-    int a = 0;
-    int b = 0;
-    cout << "Введите целые a и b: ";
-    cin >> a >> b;
+	int a = 0;
+	int b = 0;
+	cout << "Enter operands: ";
+	cin >> a >> b;
 
-    if (b == 0 && a != 0)
-    {
-    	cout << "Нет ответа" << endl;
-    	return 0;
-    }
+	if (b == 0)
+	{
+		cout << (a == 0 ? "a div b == 0" : "No answer") << endl;
+		return 0;
+	}
 
-    int left = MIN_VALUE;
-    int right = MAX_VALUE;
-    int r_left = a - left * b;
-    int r_right = a - right * b;
+	// a == q * b + r
+	int q = 0;
+	while ((q + 1) * abs(b) <= abs(a))
+	{
+		++q;
+	}
 
-    while (!isInRange(r_left, b) && !isInRange(r_right, b))
-    {
-    	const int q = (left + right) / 2;
-    	const int r = a - q * b;
+	if (a < 0 && abs(a) != q * abs(b))
+	{
+		++q;
+	}
 
-    	if ((b > 0 && r >= b) || (b < 0 && r < 0))
-    	{
-    		left = q;
-    	}
-    	else
-    	{
-    		right = q;
-    	}
+	if ((a < 0 && b > 0) || (a > 0 && b < 0))
+	{
+		q = -q;
+	}
 
-    	r_left = a - left * b;
-    	r_right = a - right * b;
-    }
+	cout << "a div b == " << q << endl;
 
-    cout << "Остаток от деления: ";
-    if (isInRange(r_left, b))
-    {
-    	cout << r_left << endl;
-    }
-    else
-    {
-    	cout << r_right << endl;
-    }
-
-    return 0;
+	return 0;
 }
