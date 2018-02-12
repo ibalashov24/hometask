@@ -4,101 +4,113 @@
 
 using namespace std;
 
-const int NOT_CORRECT = -1;
-const int END_STATE = -2;
+enum struct State
+{
+	NOT_CORRECT,
+	BEGIN_POINT,
+	INTEGER_PART,
+	DECIMAL_POINT,
+	EXPONENT_SIGN,
+	PLUS_MINUS_SIGN,
+	EXPONENT_PART,
+	REAL_PART
+};
 
 bool isRealNumber(const string &example)
 {
-	int currentState = 0;
+	State currentState = State::BEGIN_POINT;
 
 	for (auto ch : example)
 	{
 		switch (currentState)
 		{
-		case 0:
+		case State::BEGIN_POINT:
 		{
-			currentState = isdigit(ch) ? 1 : NOT_CORRECT;
+			currentState = isdigit(ch) ? State::INTEGER_PART : State::NOT_CORRECT;
 			break;
 		}
-		case 1:
+		case State::INTEGER_PART:
 		{
 			if (ch == 'E')
 			{
-				currentState = 3;
+				currentState = State::EXPONENT_SIGN;
 			}
 			else if (ch == '.')
 			{
-				currentState = 2;
-			} else if (isdigit(ch))
+				currentState = State::DECIMAL_POINT;
+			} /*else if (isdigit(ch))
 			{
-				currentState = 5;
-			}
-			else
+				currentState = State::EXPONENT_PART;
+			}*/
+			else if (!isdigit(ch))
 			{
-				currentState = NOT_CORRECT;
+				currentState = State::NOT_CORRECT;
 			}
 			break;
 		}
-		case 2:
+		case State::DECIMAL_POINT:
 		{
-			currentState = isdigit(ch) ? 6 : NOT_CORRECT;
+			currentState = isdigit(ch) ? State::REAL_PART : State::NOT_CORRECT;
 			break;
 		}
-		case 3:
+		case State::EXPONENT_SIGN:
 		{
 			if (ch == '+' || ch == '-')
 			{
-				currentState = 4;
+				currentState = State::PLUS_MINUS_SIGN;
 			}
 			else if (isdigit(ch))
 			{
-				currentState = 5;
+				currentState = State::EXPONENT_PART;
 			}
 			else
 			{
-				currentState = NOT_CORRECT;
+				currentState = State::NOT_CORRECT;
 			}
 			break;
 		}
-		case 4:
+		case State::PLUS_MINUS_SIGN:
 		{
-			currentState = isdigit(ch) ? 5 : NOT_CORRECT;
+			currentState = isdigit(ch) ? State::EXPONENT_PART
+							: State::NOT_CORRECT;
 			break;
 		}
-		case 5:
+		case State::EXPONENT_PART:
 		{
 			if (!isdigit(ch))
 			{
-				currentState = NOT_CORRECT;
+				currentState = State::NOT_CORRECT;
 			}
 			break;
 		}
-		case 6:
+		case State::REAL_PART:
 		{
 			if (ch == 'E')
 			{
-				currentState = 3;
+				currentState = State::EXPONENT_SIGN;
 			}
 			else if (!isdigit(ch))
 			{
-				currentState = NOT_CORRECT;
+				currentState = State::NOT_CORRECT;
 			}
 			break;
 		}
 		default:
 		{
-			currentState = NOT_CORRECT;
+			currentState = State::NOT_CORRECT;
 		}
 		}
 
-		if (currentState == NOT_CORRECT)
+		if (currentState == State::NOT_CORRECT)
 		{
 			break;
 		}
 	}
 
 	bool isReal = true;
-	if (currentState != 5 && currentState != 6)
+	if (currentState != State::EXPONENT_PART
+			&& currentState != State::REAL_PART
+			&& currentState != State::INTEGER_PART)
 	{
 		isReal = false;
 	}
