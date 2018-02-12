@@ -4,7 +4,7 @@
 
 struct stackStuff::Stack
 {
-    int *storage;
+    int *storage = nullptr;
 
     int size = 0;
     int capacity = 0;
@@ -49,7 +49,8 @@ void stackStuff::push(Stack *inputStack, int value)
         return;
     }
 
-    inputStack->storage[inputStack->size++] = value;
+    inputStack->storage[inputStack->size] = value;
+    inputStack->size++;
 }
 
 int stackStuff::pop(Stack *inputStack)

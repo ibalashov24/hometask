@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "../stack.h"
+#include "stack.h"
 
 using namespace std;
 
@@ -27,6 +27,11 @@ char getOpeningBracket(char c)
         {
             return '(';
         }
+    default:
+		{
+			// Equal to "false"
+			return 0;
+		}
     }
 }
 
