@@ -75,7 +75,7 @@ void listStuff::deleteListElement(SortedList *list, int value)
             return;
         }
 
-        auto newTop = list->top->next;
+        const auto newTop = list->top->next;
         delete list->top;
         list->top = newTop;
     }
@@ -86,7 +86,7 @@ void listStuff::deleteListElement(SortedList *list, int value)
             return;
         }
 
-        auto deleteVertex = prevPosition->next;
+        const auto deleteVertex = prevPosition->next;
         prevPosition->next = deleteVertex->next;
         delete deleteVertex;
     }
@@ -94,7 +94,7 @@ void listStuff::deleteListElement(SortedList *list, int value)
     --list->size;
 }
 
-void listStuff::printList(SortedList const *list)
+void listStuff::printList(SortedList const * const list)
 {
     if (list->size == 0)
     {
