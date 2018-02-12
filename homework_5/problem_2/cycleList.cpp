@@ -1,5 +1,11 @@
 #include "cycleList.h"
 
+struct listStuff::ListVertex
+{
+	ListVertex *next;
+	int value;
+};
+
 struct listStuff::CyclicList
 {
     ListVertex *top = nullptr;

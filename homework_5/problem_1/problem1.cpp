@@ -53,6 +53,9 @@ int main()
         {
         case 0:
             {
+            	listStuff::deleteList(list);
+            	cout << "Good Bye!" << endl;
+
                 return 0;
             }
         case 1:
@@ -77,10 +80,6 @@ int main()
             }
         }
     } while (true);
-
-    listStuff::deleteList(list);
-
-    cout << "Good Bye!" << endl;
 
     return 0;
 }
