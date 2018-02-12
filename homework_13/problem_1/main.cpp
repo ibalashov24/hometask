@@ -38,10 +38,7 @@ bool isRealNumber(const string &example)
 			else if (ch == '.')
 			{
 				currentState = State::DECIMAL_POINT;
-			} /*else if (isdigit(ch))
-			{
-				currentState = State::EXPONENT_PART;
-			}*/
+			}
 			else if (!isdigit(ch))
 			{
 				currentState = State::NOT_CORRECT;
