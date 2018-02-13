@@ -1,0 +1,1 @@
+/home/ilya/Github/hometask/homework_6/stack.cpp

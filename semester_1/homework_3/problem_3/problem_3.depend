@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1510006981 source:/home/ilya/Github/hometask/homework_3/problem_3/problem3.cpp
+	<iostream>
+	"sort.h"
+
+1510006268 /home/ilya/Github/hometask/homework_3/problem_3/sort.h
+	<vector>
+
+1510006260 source:/home/ilya/Github/hometask/homework_3/problem_3/sort.cpp
+	"sort.h"
+	<utility>
+
+1509294143 source:/home/ilya/Github/hometask/homework_3/problem_2/problem2.cpp
+	<iostream>
+	"../problem_3/sort.h"
+

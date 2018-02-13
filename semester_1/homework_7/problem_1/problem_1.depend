@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1511697607 source:/home/ilya/Github/hometask/homework_7/problem_1/main.cpp
+	<iostream>
+	"set.h"
+
+1511560997 /home/ilya/Github/hometask/homework_7/problem_1/set.h
+
+1511700064 source:/home/ilya/Github/hometask/homework_7/problem_1/set.cpp
+	"set.h"
+	<iostream>
+

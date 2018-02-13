@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1510338288 source:/home/ilya/Github/hometask/homework_5/problem_1/list.cpp
+	<iostream>
+	"list.h"
+
+1510338273 /home/ilya/Github/hometask/homework_5/problem_1/list.h
+
+1510338293 source:/home/ilya/Github/hometask/homework_5/problem_1/problem1.cpp
+	<iostream>
+	"list.h"
+

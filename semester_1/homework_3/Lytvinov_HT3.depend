@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1509240756 source:/home/ilya/lytvinovHT/hometask/Lytvinov_HT3/problem1.cpp
+	<iostream>
+	<vector>
+	<utility>
+
+1509242682 source:/home/ilya/lytvinovHT/hometask/Lytvinov_HT3/problem2.cpp
+	<iostream>
+	<vector>
+	<utility>
+
+1510006051 source:/home/ilya/Github/hometask/homework_3/problem_1/problem1.cpp
+	<iostream>
+	"sort.h"
+
+1510006105 /home/ilya/Github/hometask/homework_3/problem_1/sort.h
+	<vector>
+
+1510006466 source:/home/ilya/Github/hometask/homework_3/problem_2/problem2.cpp
+	<iostream>
+	"sort.h"
+
+1510006271 /home/ilya/Github/hometask/homework_3/problem_2/sort.h
+	<vector>
+
+1510006256 source:/home/ilya/Github/hometask/homework_3/problem_2/sort.cpp
+	"sort.h"
+	<utility>
+

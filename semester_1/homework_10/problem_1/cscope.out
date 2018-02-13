@@ -1,0 +1,576 @@
+cscope 15 $HOME/Github/hometask/homework_10/problem_1               0000003114
+	@/home/ilya/Github/hometask/homework_10/problem_1/input.txt
+
+	@/home/ilya/Github/hometask/homework_10/problem_1/main.cpp
+
+1 
+	~<io¡»am
+>
+
+2 
+	~<veùÜ
+>
+
+3 
+	~<f¡»am
+>
+
+4 
+	~<®gÜ™hm
+>
+
+6 
+usšg
+ 
+Çme¥aû
+ 
+	g¡d
+;
+
+8 
+	sRßdsFromC™y
+
+
+11 
+	mveùÜ
+<
+	m·œ
+<, > >::
+™”©Ü
+ 
+fœ¡NÚU£d
+;
+
+13 
+	mveùÜ
+<
+	m·œ
+<, > > 
+	mrßds
+;
+
+14 
+	mcouÁry
+ = -1;
+
+16 
+usšg
+ 
+	gAdjaûncyM©rix
+ = 
+veùÜ
+<
+RßdsFromC™y
+>;
+
+18 þas 
+	cBadFžeExû±iÚ
+
+
+22 
+	g·œ
+<
+	gAdjaûncyM©rix
+, > 
+	$š™ŸlizeM©rix
+()
+
+24 
+if¡»am
+ 
+	`šputFže
+("input.txt");
+
+25 ià(!
+šputFže
+.
+	`is_Ý’
+())
+
+27 
+throw
+ 
+	`BadFžeExû±iÚ
+();
+
+30 
+c™›sCouÁ
+ = 0;
+
+31 
+rßdsCouÁ
+ = 0;
+
+32 
+šputFže
+ >> 
+c™›sCouÁ
+ >> 
+rßdsCouÁ
+;
+
+33 
+AdjaûncyM©rix
+ 
+	`m©rix
+(
+c™›sCouÁ
+);
+
+35 
+i
+ = 0; i < 
+rßdsCouÁ
+; i++)
+
+37 
+fœ¡C™y
+ = 0;
+
+38 
+£cÚdC™y
+ = 0;
+
+39 
+Ëngth
+ = 0;
+
+40 
+šputFže
+ >> 
+fœ¡C™y
+ >> 
+£cÚdC™y
+ >> 
+Ëngth
+;
+
+42 
+m©rix
+[
+fœ¡C™y
+ - 1].
+rßds
+.
+	`push_back
+(
+	`make_·œ
+(
+£cÚdC™y
+ - 1, 
+Ëngth
+));
+
+43 
+m©rix
+[
+£cÚdC™y
+ - 1].
+rßds
+.
+	`push_back
+(
+	`make_·œ
+(
+fœ¡C™y
+ - 1, 
+Ëngth
+));
+
+46 autØ&
+c™y
+ : 
+m©rix
+)
+
+49 
+	`sÜt
+(
+c™y
+.
+rßds
+.
+	`begš
+(), c™y.rßds.
+	`’d
+());
+
+50 
+c™y
+.
+fœ¡NÚU£d
+ = c™y.
+rßds
+.
+	`begš
+();
+
+53 
+couÁryCouÁ
+ = 0;
+
+54 
+šputFže
+ >> 
+couÁryCouÁ
+;
+
+55 
+i
+ = 0; i < 
+couÁryCouÁ
+; ++i)
+
+57 
+ÿp™®
+ = 0;
+
+58 
+šputFže
+ >> 
+ÿp™®
+;
+
+60 
+m©rix
+[
+ÿp™®
+ - 1].
+couÁry
+ = 
+i
+;
+
+63  
+	`make_·œ
+(
+m©rix
+, 
+couÁryCouÁ
+);
+
+64 
+	}
+}
+
+66 
+	$´štCouÁr›s
+(cÚ¡ 
+AdjaûncyM©rix
+ &
+m©rix
+)
+
+68 
+cout
+ << "CouÁr›s:" << 
+’dl
+;
+
+69 
+i
+ = 0; i < 
+m©rix
+.
+	`size
+(); ++i)
+
+71 
+cout
+ << "C­™® oàcouÁry oàc™y " << 
+i
+ + 1 << " is ";
+
+72 
+cout
+ << 
+m©rix
+[
+i
+].
+couÁry
+ << 
+’dl
+;
+
+74 
+	}
+}
+
+76 
+	$m¬kBÜd”s
+(
+AdjaûncyM©rix
+ &
+m©rix
+, 
+couÁryCouÁ
+)
+
+78 
+ÃuŒ®C™›s
+ = 
+m©rix
+.
+	`size
+(è- 
+couÁryCouÁ
+;
+
+79 
+veùÜ
+<veùÜ<> > 
+	`couÁr›s
+(
+couÁryCouÁ
+);
+
+80 
+i
+ = 0; i < 
+m©rix
+.
+	`size
+(); ++i)
+
+82 ià(
+m©rix
+[
+i
+].
+couÁry
+ != 0)
+
+84 
+couÁr›s
+[
+m©rix
+[
+i
+].
+couÁry
+].
+	`push_back
+(i);
+
+88 
+ÃuŒ®C™›s
+ != 0)
+
+90 autØ&
+couÁry
+ : 
+couÁr›s
+)
+
+92 
+Ã¬e¡NeighbourC™y
+ = -1;
+
+93 
+i
+ = 0; i < 
+couÁry
+.
+	`size
+(); ++i)
+
+96 
+m©rix
+[
+couÁry
+[
+i
+]].
+fœ¡NÚU£d
+ !ðm©rix[couÁry[i]].
+rßds
+.
+	`’d
+() &&
+
+97 
+m©rix
+[m©rix[
+couÁry
+[
+i
+]].
+fœ¡NÚU£d
+->
+fœ¡
+].country != 0)
+
+99 ++
+m©rix
+[
+couÁry
+[
+i
+]].
+fœ¡NÚU£d
+;
+
+102 ià(
+m©rix
+[
+couÁry
+[
+i
+]].
+fœ¡NÚU£d
+ !ðm©rix[couÁry[i]].
+rßds
+.
+	`’d
+() &&
+
+103 (
+Ã¬e¡NeighbourC™y
+ == -1 ||
+
+104 
+m©rix
+[
+couÁry
+[
+i
+]].
+fœ¡NÚU£d
+->
+£cÚd
+ <
+
+105 
+m©rix
+[
+Ã¬e¡NeighbourC™y
+].
+fœ¡NÚU£d
+->
+£cÚd
+))
+
+107 
+Ã¬e¡NeighbourC™y
+ = 
+couÁry
+[
+i
+];
+
+111 
+couÁry
+.
+	`push_back
+(
+m©rix
+[
+Ã¬e¡NeighbourC™y
+].
+fœ¡NÚU£d
+->
+fœ¡
+);
+
+112 
+m©rix
+[m©rix[
+Ã¬e¡NeighbourC™y
+].
+fœ¡NÚU£d
+->
+fœ¡
+].
+couÁry
+ =
+
+113 
+m©rix
+[
+Ã¬e¡NeighbourC™y
+].
+couÁry
+;
+
+115 ++
+m©rix
+[
+Ã¬e¡NeighbourC™y
+].
+fœ¡NÚU£d
+;
+
+116 --
+ÃuŒ®C™›s
+;
+
+119 
+	}
+}
+
+121 
+	$maš
+()
+
+123 
+·œ
+<
+AdjaûncyM©rix
+, > 
+couÁryM­
+;
+
+124 
+Œy
+
+
+126 
+couÁryM­
+ = 
+	`š™ŸlizeM©rix
+();
+
+128 
+	`ÿtch
+ (
+BadFžeExû±iÚ
+)
+
+130 
+cout
+ << "UnknowÀFže!!!" << 
+’dl
+;
+
+134 
+	`m¬kBÜd”s
+(
+couÁryM­
+.
+fœ¡
+, couÁryM­.
+£cÚd
+);
+
+136 
+	`´štCouÁr›s
+(
+couÁryM­
+.
+fœ¡
+);
+
+139 
+	}
+}
+
+	@
+1
+.
+1
+/usr/include
+2
+117
+/home/ilya/Github/hometask/homework_10/problem_1/input.txt
+/home/ilya/Github/hometask/homework_10/problem_1/main.cpp
