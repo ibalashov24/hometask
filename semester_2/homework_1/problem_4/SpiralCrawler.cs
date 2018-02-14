@@ -6,7 +6,7 @@ namespace MatrixCrawler
     {
         public static void Main()
         {
-            Console.Write("Enter size of matrix (N): ");
+            Console.Write("Enter odd size of matrix (N): ");
             var n = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Enter matrix with size {0}x{0}:", n);
