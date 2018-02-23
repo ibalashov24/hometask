@@ -1,12 +1,14 @@
 ﻿namespace StackStuff
 {
+    using System;
+
     public class Stack<T> : IStack<T>
     {
         // Size of the stack
         private int size = 0;
 
         // Reference to the top element of the stack
-        private StackElement top = default(StackElement);
+        private StackElement top = null;
 
         public Stack()
         {
@@ -23,8 +25,7 @@
         {
             if (this.IsEmpty())
             {
-                // TODO: Replace with exception
-                return default(T);
+                throw new InvalidOperationException("Stack is empty!!!");
             }
             else
             {
