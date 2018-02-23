@@ -1,4 +1,4 @@
-﻿namespace Program
+﻿namespace Problem2
 {
     using System;
 
