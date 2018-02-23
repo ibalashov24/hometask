@@ -4,7 +4,7 @@
     {
         // Size of the stack
         private int size = 0;
-        
+
         // Reference to the top element of the stack
         private StackElement top = default(StackElement);
 
