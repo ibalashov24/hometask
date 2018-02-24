@@ -4,7 +4,7 @@
 
     internal class Program
     {
-        private static readonly Command[] Commands = new Command[]
+        private static readonly Command[] Commands = 
         {
             new Command(CommandNumbers.Help, "print this help"),
             new Command(CommandNumbers.Push, "push element to the stack"),
@@ -29,7 +29,11 @@
             while (true)
             {
                 Console.Write("Enter command: ");
-                var enteredCommand = int.Parse(Console.ReadLine());
+                if (!int.TryParse(Console.ReadLine(), out int enteredCommand))
+                {
+                    Console.WriteLine("Command must be integer number!");
+                    continue;
+                }
 
                 if (CommandNumbers.IsDefined(typeof(CommandNumbers), enteredCommand))
                 {

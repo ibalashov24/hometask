@@ -5,20 +5,13 @@
     public class Stack<T> : IStack<T>
     {
         // Size of the stack
-        private int size = 0;
+        private int size;
 
         // Reference to the top element of the stack
-        private StackElement top = null;
-
-        public Stack()
-        {
-        }
+        private StackElement top;
 
         // Checks if stack is empty
-        public bool IsEmpty()
-        {
-            return this.size == 0;
-        }
+        public bool IsEmpty() => this.size == 0;
 
         // Returns top element of the stack (and deletes it)
         public T Pop()
@@ -27,15 +20,13 @@
             {
                 throw new InvalidOperationException("Stack is empty!!!");
             }
-            else
-            {
-                var returnValue = this.top;
+            
+            var returnValue = this.top;
 
-                this.top = this.top.Next;
-                --this.size;
+            this.top = this.top.Next;
+            --this.size;
 
-                return returnValue.Value;
-            }
+            return returnValue.Value;
         }
 
         // Inserts new element to the stack
@@ -47,8 +38,8 @@
 
         private class StackElement
         {
-            public T Value;
-            public StackElement Next;
+            public readonly T Value;
+            public readonly StackElement Next;
 
             public StackElement(T value, StackElement next)
             {
