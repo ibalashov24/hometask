@@ -31,8 +31,8 @@
                 }
                 else if (lexem.Length == 1 && "+-*/".IndexOf(lexem) != -1)
                 {
-                    var lastNumber = .0;
-                    var beforeLastNumber = .0;
+                    double lastNumber;
+                    double beforeLastNumber;
 
                     try
                     {

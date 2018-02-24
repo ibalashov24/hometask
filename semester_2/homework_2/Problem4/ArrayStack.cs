@@ -5,7 +5,7 @@
     internal class ArrayStack<T> : IStack<T>
     {
         // If stack is empty its size will be increased by this factor
-        public static readonly int ResizeFactor = 2;
+        public const int ResizeFactor = 2;
 
         // Default stack size
         public const int DefaultSize = 10;
@@ -23,7 +23,6 @@
                 throw new ArgumentException("Size must be >= 1");
             }
 
-            this.topPosition = 0;
             this.stackUnderlay = new T[initialSize];
         }
 
