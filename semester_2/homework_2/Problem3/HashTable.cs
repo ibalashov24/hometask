@@ -5,14 +5,15 @@
     internal class HashTable<TKey, TValue> : IHashTable<TKey, TValue>
     {
         // New bucket count after resize == oldBucketCount * ResizeFactor
-        private static readonly int ResizeFactor = 2;
+        private const int ResizeFactor = 2;
 
         // The hash table resizes when fill factor >= MaxFillFactor
-        private static readonly double MaxFillFactor = 1.0;
+        private const double MaxFillFactor = 1.0;
 
         // Size of the table
         private int size;
 
+        
         // Array of buckets of the hash table
         private ListStuff.List<TableElement>[] buckets;
 
@@ -140,9 +141,9 @@
         // Increases the number of buckets in the table if it is full
         private void OptimizeTableSize()
         {
-            if (this.GetFillFactor() > HashTable<TKey, TValue>.MaxFillFactor)
+            if (this.GetFillFactor() > MaxFillFactor)
             {
-                var newBucketCount = this.buckets.Length * HashTable<TKey, TValue>.ResizeFactor;
+                var newBucketCount = this.buckets.Length * ResizeFactor;
 
                 var newBuckets = new ListStuff.List<TableElement>[newBucketCount];
                 for (int i = 0; i < newBucketCount; ++i)

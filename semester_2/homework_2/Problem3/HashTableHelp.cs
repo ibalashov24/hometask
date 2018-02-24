@@ -25,8 +25,8 @@
         // Single help message in help function
         internal class HelpMessage
         {
-            public HelpCommands CommandNumber;
-            public string Message;
+            public HelpCommands CommandNumber { get; }
+            public string Message { get; }
 
             public HelpMessage(HelpCommands command, string message)
             {

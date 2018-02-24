@@ -47,7 +47,6 @@
     <Compile Include="IHashTable.cs" />
     <Compile Include="IList.cs" />
     <Compile Include="List.cs" />
-    <Compile Include="ListEnumerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

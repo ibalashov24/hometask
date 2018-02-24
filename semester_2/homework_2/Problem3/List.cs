@@ -1,29 +1,22 @@
 ﻿namespace ListStuff
 {
+    using System;
+    using System.Collections.Generic;
     using System.Collections;
 
-    internal class List<T> : IList<T>, IEnumerable
+    internal class List<T> : IList<T>, IEnumerable<T>
     {
         // Reference to the first element
         private ListElement listContent;
         private int size;
 
-        public List()
-        {
-            this.size = 0;
-            this.listContent = null;
-        }
-
-        public int Size()
-        {
-            return this.size;
-        }
+        public int Size() => this.size;
 
         public void Insert(T insertValue, int position)
         {
             if (position < 0 || position > this.size)
             {
-                return;
+                throw new ArgumentException($"Argument must be in [0..{this.size}]");
             }
 
             var newElement = new ListElement(insertValue, null);
@@ -51,13 +44,12 @@
         {
             if (deletePosition < 0 || deletePosition >= this.size)
             {
-                return;
+                throw new ArgumentException($"Argument must be in [0..{this.size})");
             }
 
             if (deletePosition == 0)
             {
                 this.listContent = this.listContent.Next;
-                return;
             }
             else
             {
@@ -81,25 +73,77 @@
             }
         }
 
-        public bool IsEmpty()
+        public bool IsEmpty() => this.size == 0;
+
+        public IEnumerator<T> GetEnumerator()
         {
-            return this.size == 0;
+            return new ListEnumerator(this.listContent);
         }
 
-        public IEnumerator GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return new ListEnumerator<T>(this.listContent);
+            return GetEnumerator();
         }
 
-        internal class ListElement
+        private class ListElement
         {
-            public ListElement Next;
-            public T Value;
+            public ListElement Next { get; set; }
+            public T Value { get; set; }
 
             public ListElement(T value, ListElement nextElement = null)
             {
                 this.Value = value;
                 this.Next = nextElement;
+            }
+        }
+
+        private class ListEnumerator : IEnumerator<T>
+        {
+            private List<T>.ListElement listBegin;
+            private List<T>.ListElement currentPosition;
+
+            public ListEnumerator(List<T>.ListElement list)
+            {
+                this.listBegin = list;
+            }
+
+            public T Current
+            {
+                get => this.currentPosition.Value;
+                set => this.currentPosition.Value = value;
+            }
+
+            object IEnumerator.Current
+            {
+                get => this.Current;
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                if (this.listBegin == null ||
+                    (this.currentPosition != null && this.currentPosition.Next == null))
+                {
+                    return false;
+                }
+                else if (this.currentPosition == null)
+                {
+                    this.currentPosition = this.listBegin;
+                }
+                else
+                {
+                    this.currentPosition = this.currentPosition.Next;
+                }
+
+                return true;
+            }
+
+            public void Reset()
+            {
+                this.currentPosition = null;
             }
         }
     }
