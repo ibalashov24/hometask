@@ -2,7 +2,7 @@
 {
     internal class Help
     {
-        public static readonly HelpMessage[] Instanses = new HelpMessage[]
+        public static readonly HelpMessage[] Instanses =
         {
             new HelpMessage(HelpCommands.ExitProgram, "exit program"),
             new HelpMessage(HelpCommands.InsertElement, "insert element to the list"),
@@ -22,7 +22,7 @@
             PrintList
         }
 
-        internal class HelpMessage
+        internal struct HelpMessage
         {
             public HelpCommands CommandNumber;
             public string Message;

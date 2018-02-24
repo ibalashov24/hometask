@@ -13,7 +13,11 @@
             while (true)
             {
                 Console.Write("Enter command: ");
-                var currentCommandNumber = int.Parse(Console.ReadLine());
+                if (!int.TryParse(Console.ReadLine(), out var currentCommandNumber))
+                {
+                    Console.WriteLine("Command must be integer!");
+                    continue;
+                }
 
                 if (Help.HelpCommands.IsDefined(typeof(Help.HelpCommands), currentCommandNumber))
                 {
