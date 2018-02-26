@@ -42,7 +42,10 @@
             }
 
             --this.topPosition;
-            return this.stackUnderlay[this.topPosition];
+            var result = this.stackUnderlay[this.topPosition];
+            this.stackUnderlay[this.topPosition] = default(T);
+
+            return result;
         }
 
         public bool IsEmpty() => this.topPosition == 0;
