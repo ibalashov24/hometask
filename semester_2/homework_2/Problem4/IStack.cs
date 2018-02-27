@@ -1,6 +1,6 @@
 ﻿namespace StackStuff
 {
-    internal interface IStack<T>
+    public interface IStack<T>
     {
         // Inserts element to the stack
         void Push(T value);
