@@ -54,7 +54,8 @@
                     }
                     catch (InvalidOperationException)
                     {
-                        throw new ArgumentException("Not enough operands for operation!");
+                        throw new ArgumentException
+                            ("Not enough operands for operation!");
                     }
 
                     switch (currentLexem)
@@ -74,7 +75,8 @@
                         case "/":
                             if (Math.Abs(lastNumber) < epsilon)
                             {
-                                throw new DivideByZeroException("Dividing by zero!");
+                                throw new ArgumentException(
+                                    "Dividing by zero is not permitted!");
                             }
 
                             stack.Push(beforeLastNumber / lastNumber);

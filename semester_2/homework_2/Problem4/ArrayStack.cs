@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class ArrayStack<T> : IStack<T>
+    public class ArrayStack<T> : IStack<T>
     {
         // If stack is empty its size will be increased by this factor
         public const int ResizeFactor = 2;
@@ -31,7 +31,10 @@
             this.stackUnderlay[topPosition] = value;
             ++topPosition;
 
-            this.IncreaseSize();
+            if (topPosition >= this.stackUnderlay.Length)
+            {
+                this.IncreaseSize();
+            }
         }
 
         public T Pop()
