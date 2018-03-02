@@ -1,8 +1,14 @@
 ﻿namespace Problem3
 {
+    /// <summary>
+    /// Provides some user help stuff
+    /// </summary>
     internal class HashTableHelp
     {
-        // All available messages of the program
+
+        /// <summary>
+        /// All available messages of the program
+        /// </summary>
         public static readonly HelpMessage[] Instanses = new HelpMessage[]
         {
             new HelpMessage(HelpCommands.ExitProgram, "exit program"),
@@ -12,7 +18,9 @@
             new HelpMessage(HelpCommands.CheckInTable, "check if value is in table")
         };
 
-        // Available commands of the program
+        /// <summary>
+        /// Available commands of the program
+        /// </summary>
         internal enum HelpCommands
         {
             ExitProgram,
@@ -22,17 +30,26 @@
             CheckInTable
         }
 
-        // Single help message in help function
+        /// <summary>
+        /// Single help message in help function
+        /// </summary>
         internal class HelpMessage
         {
-            public HelpCommands CommandNumber { get; }
-            public string Message { get; }
-
             public HelpMessage(HelpCommands command, string message)
             {
                 this.CommandNumber = command;
                 this.Message = message;
             }
+
+            /// <summary>
+            /// Gets type of the message
+            /// </summary>
+            public HelpCommands CommandNumber { get; }
+
+            /// <summary>
+            /// Gets message text
+            /// </summary>
+            public string Message { get; }
         }
     }
 }

@@ -6,14 +6,20 @@
     {
         public static void Main(string[] args)
         {
-            var hashTable = new HashTableStuff.HashTable<string, int>();
-
+            PrintProgramName();
+            var hashFunction = ChooseHashFunction();
             PrintHelp();
+
+            var hashTable = new HashTableStuff.HashTable<string, int>(hashFunction);
 
             while (true)
             {
                 Console.Write("Enter command: ");
-                var currentCommand = int.Parse(Console.ReadLine());
+                if (!int.TryParse(Console.ReadLine(), out int currentCommand))
+                {
+                    Console.WriteLine("Invalid command!");
+                    PrintHelp();
+                }
 
                 if (!HashTableHelp.HelpCommands.IsDefined(typeof(HashTableHelp.HelpCommands), currentCommand))
                 {
@@ -49,7 +55,7 @@
                             break;
 
                         case HashTableHelp.HelpCommands.Factor:
-                            Console.WriteLine($"Fill factor == {hashTable.GetFillFactor()}");
+                            Console.WriteLine($"Fill factor == {hashTable.FillFactor}");
                             break;
 
                         default:
@@ -60,6 +66,67 @@
             }
         }
 
+
+        /// <summary>
+        /// Asks user for hash function and returns it
+        /// </summary>
+        /// <returns>
+        /// Delegate to chosen hash function
+        /// </returns>
+        private static HashTableStuff.HashFunctionType<string> ChooseHashFunction()
+        {
+            while (true)
+            {
+                PrintAvailableHashFunctions();
+
+                Console.Write("Enter name of chosen hash function (or '0' to use default): ");
+                var chosenHelpFunctionName = Console.ReadLine();
+
+                if (chosenHelpFunctionName == "0")
+                {
+                    return null;
+                }
+
+                var hashFunctionInfo = typeof(HashTableStuff.StringHashFunctions)
+                    .GetMethod(chosenHelpFunctionName);
+                if (hashFunctionInfo == null)
+                {
+                    Console.WriteLine("Incorrect function!");
+                }
+                else
+                {
+                    return (HashTableStuff.HashFunctionType<string>)hashFunctionInfo.CreateDelegate(
+                        typeof(HashTableStuff.HashFunctionType<string>));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prints names of all available hash functions (except <see cref="object.GetHashCode()"/>)
+        /// </summary>
+        private static void PrintAvailableHashFunctions()
+        {
+            Console.WriteLine("Available hash functions: ");
+            foreach (var method in typeof(HashTableStuff.StringHashFunctions).GetMethods(
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Static))
+            {
+                Console.WriteLine(method.Name);
+            }
+        }
+
+
+        /// <summary>
+        /// Prints program name
+        /// </summary>
+        private static void PrintProgramName()
+        {
+            Console.WriteLine("Welcome to the hash table test program!");
+        }
+
+        /// <summary>
+        /// Prints list of all available commands of the program
+        /// </summary>
         private static void PrintHelp()
         {
             foreach (var instance in HashTableHelp.Instanses)

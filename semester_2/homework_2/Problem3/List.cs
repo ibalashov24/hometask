@@ -1,17 +1,30 @@
 ﻿namespace ListStuff
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections;
+    using System.Collections.Generic;
 
+    /// <summary>
+    /// Implements a simple list <see cref="IList{T}"/>
+    /// </summary>
+    /// <typeparam name="T">Type of elements in the list</typeparam>
     internal class List<T> : IList<T>, IEnumerable<T>
     {
         // Reference to the first element
         private ListElement listContent;
         private int size;
 
+        /// <summary>
+        /// Returns size of the list
+        /// </summary>
+        /// <returns>Size of the list</returns>
         public int Size() => this.size;
 
+        /// <summary>
+        /// Inserts new element to the list
+        /// </summary>
+        /// <param name="insertValue">Value to insert</param>
+        /// <param name="position">Position at which value will be placed</param>
         public void Insert(T insertValue, int position)
         {
             if (position < 0 || position > this.size)
@@ -40,6 +53,10 @@
             ++this.size;
         }
 
+        /// <summary>
+        /// Erases element from <c>position</c>
+        /// </summary>
+        /// <param name="deletePosition">Position of erased element</param>
         public void Erase(int deletePosition)
         {
             if (deletePosition < 0 || deletePosition >= this.size)
@@ -65,6 +82,9 @@
             --this.size;
         }
 
+        /// <summary>
+        /// Erases all content in the list
+        /// </summary>
         public void Clean()
         {
             while (!this.IsEmpty())
@@ -73,30 +93,56 @@
             }
         }
 
+        /// <summary>
+        /// Checks if list is empty
+        /// </summary>
+        /// <returns>True if list is not empty</returns>
         public bool IsEmpty() => this.size == 0;
 
+        /// <summary>
+        /// Returns enumerator for generic list
+        /// </summary>
+        /// <returns>Enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
             return new ListEnumerator(this.listContent);
         }
 
+        /// <summary>
+        /// Returns enumerator for the container
+        /// </summary>
+        /// <returns>Enumerator</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
 
+        /// <summary>
+        /// Single element of the list
+        /// </summary>
         private class ListElement
         {
-            public ListElement Next { get; set; }
-            public T Value { get; set; }
-
             public ListElement(T value, ListElement nextElement = null)
             {
                 this.Value = value;
                 this.Next = nextElement;
             }
+
+            /// <summary>
+            /// Gets or sets next element in the list 
+            /// </summary>
+            public ListElement Next { get; set; }
+
+            /// <summary>
+            /// Gets or sets value of current element
+            /// </summary>
+            public T Value { get; set; }
+
         }
 
+        /// <summary>
+        /// Implements list iterator <see cref="IEnumerator{T}"/>
+        /// </summary>
         private class ListEnumerator : IEnumerator<T>
         {
             private List<T>.ListElement listBegin;
