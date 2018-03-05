@@ -136,7 +136,7 @@
         {
             if (!this.IsInTable(key))
             {
-                return;
+                throw new ArgumentException($"Element {key} is not in table");
             }
 
             var keyHash = this.GetBucketNumber(this.buckets, key);
