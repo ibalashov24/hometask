@@ -8,7 +8,7 @@
     /// Implements a simple list <see cref="IList{T}"/>
     /// </summary>
     /// <typeparam name="T">Type of elements in the list</typeparam>
-    internal class List<T> : IList<T>, IEnumerable<T>
+    public class List<T> : IList<T>, IEnumerable<T>
     {
         // Reference to the first element
         private ListElement listContent;
@@ -41,7 +41,7 @@
             else
             {
                 var previousElement = this.listContent;
-                for (int i = 0; i < position - 2; ++i)
+                for (int i = 0; i < position - 1; ++i)
                 {
                     previousElement = previousElement.Next;
                 }
