@@ -19,7 +19,6 @@
         [TestInitialize]
         public void CalculatorInitialization()
         {
-            // Stacks are tested separately, so there is no difference which stack
             this.stackCalculator = new StackCalculatorStuff.StackCalculator(
                 new StackStuff.Stack<double>(), "");
         }
@@ -50,7 +49,7 @@
                 "Incorrect result!!!");
         }
 
-        // Checks that calculator detects invalid arguments
+        // Checks that calculator can detect invalid arguments
         [TestMethod]
         [DeploymentItem("IncorrectTests.csv")]
         [DataSource(
@@ -58,6 +57,7 @@
             "|DataDirectory|\\IncorrectTests.csv",
             "IncorrectTests#csv",
              DataAccessMethod.Sequential)]
+        [ExpectedException(typeof(ArgumentException))]
         public void DataOnWhichShouldBeArgumentException()
         {
             // Program can not find column "Test" by name because of garbage
@@ -65,20 +65,9 @@
             // I do not know how to fix this
             var expression = this.testContextInstance.DataRow[0].GetType() != typeof(System.DBNull) ?
                 (string)this.testContextInstance.DataRow[0] : "";
-
             this.stackCalculator.Expression = expression;
 
-            try
-            {
-                this.stackCalculator.CalculateResult();
-            }
-            catch (Exception e)
-            {
-                Assert.IsInstanceOfType(e, typeof(ArgumentException));
-                return;
-            }
-
-            Assert.Fail("An exception was not thrown on the wrong test");
+            this.stackCalculator.CalculateResult();
         }
     }
 }

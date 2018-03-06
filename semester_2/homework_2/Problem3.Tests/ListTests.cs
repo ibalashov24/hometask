@@ -82,19 +82,11 @@ namespace Problem3.Tests
 
         public void CheckDeleting(ListStuff.List<int> list, int position = 0)
         {
-            try
-            {
-                list.Erase(position);
-            }
-            catch (Exception)
-            {
-                return;
-            }
-
-            Assert.Fail();
+            list.Erase(position);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void DeletingFromEmptyListMustCauseException()
         {
             var list = new ListStuff.List<int>();
@@ -102,6 +94,7 @@ namespace Problem3.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void DeletingFromInvalidPositionMustCauseException()
         {
             var list = new ListStuff.List<int>();
@@ -168,6 +161,7 @@ namespace Problem3.Tests
             Assert.AreEqual(list.Size(), counter);
         }
 
+        [TestMethod]
         public void ListIteratorShouldWorkCorrectlyOnTheSecondRun()
         {
             var list = new ListStuff.List<int>();

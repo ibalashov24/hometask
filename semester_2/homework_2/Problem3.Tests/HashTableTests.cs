@@ -124,37 +124,20 @@
         }
 
         [TestMethod]
+		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void GettingNonexistentElementShouldCauseException()
         {
             var table = new HashTableStuff.HashTable<string, object>();
-			
-			try
-            {
-                var t = table["nonexistent"];
-            }
-			catch (Exception)
-            {
-                return;
-            }
-
-            Assert.Fail();
+	        var t = table["nonexistent"];
         }
 
 		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
 		public void ErasingNonexistentElementShouldCauseException()
         {
             var table = new HashTableStuff.HashTable<string, object>();
-
-            try
-            {
-                table.Erase("blahblah");
-            }
-            catch (Exception)
-            {
-                return;
-            }
-
-            Assert.Fail();
+			
+            table.Erase("blahblah");
         }
 
 		[TestMethod]

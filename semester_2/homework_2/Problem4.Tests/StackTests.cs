@@ -61,20 +61,11 @@
         [DataTestMethod]
         [DataRow(true)]
         [DataRow(false)]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void PopFromEmptyStackMustThrowAnException(bool useArrayStack)
         {
             var stack = SelectStack<int>(useArrayStack);
-
-            try
-            {
-                stack.Pop();
-            }
-            catch (Exception)
-            {
-                return;
-            }
-
-            Assert.Fail();
+            stack.Pop();
         }
 
         [DataTestMethod]
