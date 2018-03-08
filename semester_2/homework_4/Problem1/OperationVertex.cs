@@ -24,11 +24,19 @@
             this.rightSon = right;
         }
 
+        /// <summary>
+        /// Converts operand to its string representation
+        /// </summary>
+        /// <returns>String representation</returns>
         public override string ToString()
         {
             return $" {this.leftSon.ToString()} {this.rightSon.ToString()})";
         }
 
+        /// <summary>
+        /// Converts operand to its string representation in infix form
+        /// </summary>
+        /// <returns>Infix representation</returns>
         protected string GetInfixRepresentation(char operationSign)
         {
             return $"({this.leftSon.GetInfixRepresentation()} " +

@@ -51,6 +51,10 @@
             return "(/" + base.ToString();
         }
 
+        /// <summary>
+        /// Converts operand to its string representation in infix form
+        /// </summary>
+        /// <returns>Infix representation</returns>
         public override string GetInfixRepresentation()
         {
             return base.GetInfixRepresentation('/');

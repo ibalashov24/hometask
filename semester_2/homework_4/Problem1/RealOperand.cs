@@ -28,6 +28,10 @@
             return this.Value.ToString();
         }
 
+        /// <summary>
+        /// Converts operand to its string representation in infix form
+        /// </summary>
+        /// <returns>Infix representation</returns>
         public override string GetInfixRepresentation()
         {
             return this.ToString();
