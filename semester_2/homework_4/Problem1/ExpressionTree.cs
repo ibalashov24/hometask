@@ -94,7 +94,7 @@
                 {
                     if (this.treeRoot == null)
                     {
-                        int nextPosition;
+                        int nextPosition = 0;
                         (this.treeRoot, nextPosition) = this.Parse();
 
                         if (nextPosition < this.expressionString.Length)
@@ -157,18 +157,39 @@
                             currentExpressionStringPosition);
                     }
 
+                    var isCorrectOperand = int.TryParse(
+                        this.expressionString.Substring(currentExpressionStringPosition, numberLength),
+                        out int result);
+
+                    if (!isCorrectOperand)
+                    {
+                        throw new Exception.InvalidExpressionException(
+                            "Invalid input string! Invalid operand!",
+                            currentExpressionStringPosition);
+                    }
+
                     currentVertex = new Vertex.RealOperand(
                         int.Parse(this.expressionString.Substring(currentExpressionStringPosition, numberLength)));
 
-                    nextPosition = currentExpressionStringPosition + numberLength;
+                    nextPosition = currentExpressionStringPosition + numberLength - 1;
                 }
 
+                ++nextPosition;
                 while (nextPosition < this.expressionString.Length && 
-                    (this.expressionString[nextPosition] == ' ' ||
-                    this.expressionString[nextPosition] == ')'))
+                    this.expressionString[nextPosition] == ' ')
                 {
                     ++nextPosition;
                 }
+
+             /*   // The program would work fine without this.
+                // Just a syntax check
+                if (nextPosition < this.expressionString.Length &&
+                    this.expressionString[nextPosition] == ')')
+                {
+                    throw new Exception.InvalidExpressionException(
+                            "Invalid input string! Excess bracket!",
+                            nextPosition);
+                }*/
 
                 return (currentVertex, nextPosition);
             }
