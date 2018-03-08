@@ -129,16 +129,16 @@
                     switch (this.expressionString[currentExpressionStringPosition + 1])
                     {
                         case '+':
-                            currentVertex = new Vertex.OperatorPlus(leftSon, rightSon);
+                            currentVertex = new Vertex.OperationPlus(leftSon, rightSon);
                             break;
                         case '-':
-                            currentVertex = new Vertex.OperatorMinus(leftSon, rightSon);
+                            currentVertex = new Vertex.OperationMinus(leftSon, rightSon);
                             break;
                         case '*':
-                            currentVertex = new Vertex.OperatorMultiply(leftSon, rightSon);
+                            currentVertex = new Vertex.OperationMultiply(leftSon, rightSon);
                             break;
                         case '/':
-                            currentVertex = new Vertex.OperatorDivide(leftSon, rightSon);
+                            currentVertex = new Vertex.OperationDivide(leftSon, rightSon);
                             break;
                         default:
                             throw new Exception.InvalidExpressionException(
@@ -153,7 +153,7 @@
                     if (numberLength < 0)
                     {
                         throw new Exception.InvalidExpressionException(
-                            "Invalid input string! Operator's end not found",
+                            "Invalid input string! Operation's end not found",
                             currentExpressionStringPosition);
                     }
 
@@ -180,17 +180,7 @@
                 {
                     ++nextPosition;
                 }
-
-             /*   // The program would work fine without this.
-                // Just a syntax check
-                if (nextPosition < this.expressionString.Length &&
-                    this.expressionString[nextPosition] == ')')
-                {
-                    throw new Exception.InvalidExpressionException(
-                            "Invalid input string! Excess bracket!",
-                            nextPosition);
-                }*/
-
+                
                 return (currentVertex, nextPosition);
             }
         }

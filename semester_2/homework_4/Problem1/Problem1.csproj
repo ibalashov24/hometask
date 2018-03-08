@@ -47,11 +47,11 @@
     <Compile Include="ExpressionTreeVertex.cs" />
     <Compile Include="IExpressionTree.cs" />
     <Compile Include="InvalidExpressionException.cs" />
-    <Compile Include="OperatorDivide.cs" />
-    <Compile Include="OperatorMinus.cs" />
-    <Compile Include="OperatorMultiply.cs" />
-    <Compile Include="OperatorPlus.cs" />
-    <Compile Include="OperatorVertex.cs" />
+    <Compile Include="OperationDivide.cs" />
+    <Compile Include="OperationMinus.cs" />
+    <Compile Include="OperationMultiply.cs" />
+    <Compile Include="OperationPlus.cs" />
+    <Compile Include="OperationVertex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealOperand.cs" />

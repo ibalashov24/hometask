@@ -5,9 +5,9 @@
     /// <summary>
     /// Implements operator /
     /// </summary>
-    internal class OperatorDivide : OperatorVertex
+    internal class OperationDivide : OperationVertex
     {
-        public OperatorDivide(
+        public OperationDivide(
             ExpressionTreeVertex leftSon,
             ExpressionTreeVertex rightSon) : base(leftSon, rightSon) { }
 
