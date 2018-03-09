@@ -15,12 +15,17 @@
         /// <summary>
         /// Service variable containing value of the tree
         /// </summary>
-        private double? calculatedValue = null;
+        private double? calculatedValue;
 
+        /// <summary>
+        /// Initializes new instance of ExpressionTree
+        /// </summary>
+        /// <param name="expression">Expression to parse</param>
         public ExpressionTree(string expression)
         {
             var parser = new ExpressionStringParser(expression);
             this.root = parser.Root;
+            this.EvaluateTree();
         }
 
         /// <summary>
@@ -30,11 +35,6 @@
         {
             get
             {
-                if (this.calculatedValue == null)
-                {
-                    this.EvaluateTree();
-                }
-
                 return (double)this.calculatedValue;
             }
         }
@@ -68,7 +68,7 @@
         /// <summary>
         /// Parses expression string into the tree
         /// </summary>
-        public class ExpressionStringParser
+        private class ExpressionStringParser
         {
             /// <summary>
             /// Information about the tree in string format
@@ -76,34 +76,39 @@
             private readonly string expressionString;
 
             /// <summary>
-            /// Reference to the root of the tree
+            /// Initializes new instance of ExpressionStringParser
             /// </summary>
-            private Vertex.ExpressionTreeVertex treeRoot;
-
+            /// <param name="stringToParse"></param>
             public ExpressionStringParser(string stringToParse)
             {
                 this.expressionString = stringToParse;
+                this.InitializeRoot();
             }
 
             /// <summary>
-            /// Returns (and finds) root of the tree
+            /// Returns root of the tree
             /// </summary>
             public Vertex.ExpressionTreeVertex Root
             {
-                get
-                {
-                    if (this.treeRoot == null)
-                    {
-                        int nextPosition = 0;
-                        (this.treeRoot, nextPosition) = this.Parse();
+                get;
+                private set;
+            }
 
-                        if (nextPosition < this.expressionString.Length)
-                        {
-                            throw new Exception.InvalidExpressionException(
-                                "There is some trash at the end of expression string");
-                        }
+            /// <summary>
+            /// Detects the root of the tree
+            /// </summary>
+            private void InitializeRoot()
+            {
+                if (this.Root == null)
+                {
+                    int nextPosition = 0;
+                    (this.Root, nextPosition) = this.Parse();
+
+                    if (nextPosition < this.expressionString.Length)
+                    {
+                        throw new Exception.InvalidExpressionException(
+                            "There is some trash at the end of expression string");
                     }
-                    return treeRoot;
                 }
             }
 
@@ -123,7 +128,10 @@
                     Vertex.ExpressionTreeVertex leftSon;
                     Vertex.ExpressionTreeVertex rightSon;
 
-                    (leftSon, nextPosition) = this.Parse(currentExpressionStringPosition + 3);
+                    // Distance between opening bracket and the first operand
+                    const int firstOperandShift = 3;
+                    (leftSon, nextPosition) = this.Parse(currentExpressionStringPosition + 
+                        firstOperandShift);
                     (rightSon, nextPosition) = this.Parse(nextPosition);
 
                     switch (this.expressionString[currentExpressionStringPosition + 1])

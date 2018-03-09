@@ -17,15 +17,7 @@
         /// <returns>Value</returns>
         public override double Handle()
         {
-            try
-            {
-                this.Value = this.rightSon.Handle() * this.leftSon.Handle();
-            }
-            catch (NullReferenceException e)
-            {
-                throw new ArgumentException("Tree is inconsistent!!!", e);
-            }
-
+            this.Value = this.rightSon.Handle() * this.leftSon.Handle();
             return this.Value;
         }
 
@@ -38,6 +30,10 @@
             return "(*" + base.ToString();
         }
 
+        /// <summary>
+        /// Converts operand to its string representation in infix form
+        /// </summary>
+        /// <returns>Infix representation</returns>
         public override string GetInfixRepresentation()
         {
             return base.GetInfixRepresentation('*');

@@ -18,27 +18,12 @@
         public override double Handle()
         {
             const double epsilon = 1e-5;
-
-            double rightSonValue;
-            double leftSonValue;
-
-            try
-            {
-                rightSonValue = this.rightSon.Handle();
-                leftSonValue = this.leftSon.Handle();
-            }
-            catch (NullReferenceException e)
-            {
-                throw new ArgumentException("Tree is inconsistent!!!", e);
-            }
-
-            if (Math.Abs(rightSonValue) < epsilon)
+            if (Math.Abs(this.rightSon.Handle()) < epsilon)
             {
                 throw new DivideByZeroException("Dividing by zero!!");
             }
 
             this.Value = this.leftSon.Handle() / this.rightSon.Handle();
-
             return this.Value;
         }
 

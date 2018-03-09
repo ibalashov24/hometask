@@ -49,10 +49,8 @@ namespace Problem1.Tests
         [ExpectedException(typeof(Tree.Exception.InvalidExpressionException))]
         public void ExceptionTests()
         {
+            // Constructor runs calculations
             var tree = new Tree.ExpressionTree((string)TestContext.DataRow[0]);
-
-            // In order to run calculation
-            var value = tree.Value;
         }
     }
 }

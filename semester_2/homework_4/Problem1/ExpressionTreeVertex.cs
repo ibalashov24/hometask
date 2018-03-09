@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Vertex of the expression tree of any type
+    /// </summary>
     public abstract class ExpressionTreeVertex : Object
     {
         /// <summary>

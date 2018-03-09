@@ -6,7 +6,7 @@
     {
         /// <summary>
         /// Position of expression string where mistake was found
-        /// Or -1 if mistake is genereal
+        /// Or -1 if mistake is general
         /// </summary>
         public int ErrorPosition
         {

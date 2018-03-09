@@ -17,15 +17,7 @@
         /// <returns>Value</returns>
         public override double Handle()
         {
-            try
-            {
-                this.Value = this.rightSon.Handle() + this.leftSon.Handle();
-            }
-            catch (NullReferenceException e)
-            {
-                throw new ArgumentException("Tree is inconsistent!!!", e);
-            }
-
+            this.Value = this.rightSon.Handle() + this.leftSon.Handle();
             return this.Value;
         }
 
@@ -37,6 +29,7 @@
         {
             return "(+" + base.ToString();
         }
+
 
         public override string GetInfixRepresentation()
         {
