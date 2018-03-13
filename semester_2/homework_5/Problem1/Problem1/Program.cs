@@ -40,7 +40,7 @@
             Console.WriteLine();
 
             Console.WriteLine("Fold(): ");
-            Console.WriteLine(Utility.ListUtilities.Fold<int>(list, beginValue,
+            Console.WriteLine(Utility.ListUtilities.Fold<int, int>(list, beginValue,
                 (acc, elem) => acc * elem));
         }
     }

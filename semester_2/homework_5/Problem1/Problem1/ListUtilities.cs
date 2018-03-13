@@ -6,7 +6,7 @@
     /// <summary>
     /// Provides some utilities for List generic
     /// </summary>
-    static class ListUtilities
+    public static class ListUtilities
     {
         /// <summary>
         /// Applies function for each element of the list
@@ -50,14 +50,15 @@
         /// <summary>
         /// Accumulates elements of the list using given accumulator
         /// </summary>
-        /// <typeparam name="T">List element type</typeparam>
+        /// <typeparam name="TList">List element type</typeparam>
+        /// <typeparam name="TAcc">Accumulation result type</typeparam>
         /// <param name="list">Input list</param>
         /// <param name="beginValue">The first value</param>
         /// <param name="accumulator">Function which accumulates acc and current element</param>
         /// <returns>The result of accumulation</returns>
-        public static T Fold<T>(List<T> list, T beginValue, Func<T, T, T> accumulator)
+        public static TAcc Fold<TList, TAcc>(List<TList> list, TAcc beginValue, Func<TAcc, TList, TAcc> accumulator)
         {
-            T result = beginValue;
+            TAcc result = beginValue;
             foreach (var element in list)
             {
                 result = accumulator(result, element);
