@@ -3,13 +3,15 @@
     using System;
     using Events;
 
+    /// <summary>
+    /// Game event loop
+    /// </summary>
     public class EventLoop
     {
         public MoveEvent LeftMove { get; } = new LeftMoveEvent();
         public MoveEvent RightMove { get; } = new RightMoveEvent();
         public MoveEvent UpMove { get; } = new UpMoveEvent();
         public MoveEvent DownMove { get; } = new DownMoveEvent();
-       // public Event RoomChanged { get; } = new RoomChangedEvent();
         
         public EventLoop()
         { }

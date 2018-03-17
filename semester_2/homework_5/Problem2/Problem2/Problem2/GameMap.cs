@@ -9,7 +9,7 @@
     public class GameMap : IMap
     {
         /// <summary>
-        /// 
+        /// Underlay of the map
         /// </summary>
         private CellType[,] board;
 

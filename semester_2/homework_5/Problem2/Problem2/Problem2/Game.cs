@@ -3,18 +3,45 @@
     using System;
     using Map;
 
+    /// <summary>
+    /// Class with all game functionality
+    /// You mustn't have more than 1 instance of Game in one application
+    /// </summary>
     public class Game
     {
+        /// <summary>
+        /// Underlay of the game map
+        /// </summary>
+        /// <seealso cref="GameMap"/>
         private GameMap gameMap;
 
+        /// <summary>
+        /// Current player row in the map (not screen)
+        /// </summary>
         private int currentPlayerRow;
+        /// <summary>
+        /// Current player column in the map (not screen)
+        /// </summary>
         private int currentPlayerCol;
 
+        /// <summary>
+        /// Current row in the map of the left top corner of the screen
+        /// </summary>
         private int currentScreenRow;
+        /// <summary>
+        /// Current column in the map of the left top corner of the screen
+        /// </summary>
         private int currentScreenCol;
 
+        /// <summary>
+        /// Widget that shows position of the player
+        /// </summary>
         private CurrentCoordinateWidget coordinateWidget;
 
+        /// <summary>
+        /// Creates new instance of Game
+        /// </summary>
+        /// <param name="map">Map of the game</param>
         public Game(GameMap map)
         {
             this.gameMap = map;
@@ -30,6 +57,10 @@
             this.ReturnCursorToServicePosition();
         }
 
+        /// <summary>
+        /// Registers game to given event loop
+        /// </summary>
+        /// <param name="loop">Loop that notifies game about events</param>
         public void Register(EventLoop loop)
         {
             loop.LeftMove.EventList += this.OnMove;
@@ -38,6 +69,11 @@
             loop.DownMove.EventList += this.OnMove;
         }
 
+        /// <summary>
+        /// Method that is called then MoveEvent occured
+        /// </summary>
+        /// <param name="sender">Notifier</param>
+        /// <param name="args">Info about the event</param>
         public void OnMove(object sender, GameEventArgs args)
         {
             var newPlayerCol = this.currentPlayerCol + args.ColDelta;
@@ -69,6 +105,11 @@
             }
         }
 
+        /// <summary>
+        /// Redraws a single cell on the screen
+        /// </summary>
+        /// <param name="boardRow">Row of the cell</param>
+        /// <param name="boardCol">Column of the cell</param>
         private void RedrawCell(int boardRow, int boardCol)
         {
 
@@ -106,6 +147,12 @@
             this.ReturnCursorToServicePosition();
         }
 
+        /// <summary>
+        /// Redraws the whole map on the screen
+        /// </summary>
+        /// <remarks>
+        /// May be very slow
+        /// </remarks>
         private void RedrawMap()
         {
             // Minus service line in the bottom
@@ -156,6 +203,10 @@
             return false;
         }
 
+        /// <summary>
+        /// Moves the cursor to a special position 
+        /// where it does not irritate the player
+        /// </summary>
         private void ReturnCursorToServicePosition()
         {
             Console.SetCursorPosition(
@@ -163,13 +214,28 @@
                 Console.WindowHeight - 1);
         }
 
+        /// <summary>
+        /// Block that show current player location
+        /// </summary>
         private class CurrentCoordinateWidget
         {
+            /// <summary>
+            /// Bottom right corner of the block (column)
+            /// </summary>
             private int screenCornerCol;
+            /// <summary>
+            /// Bottom right corner of the block (row)
+            /// </summary>
             private int screenCornerRow;
 
+            /// <summary>
+            /// The column number from there the last output was started
+            /// </summary>
             private int lastPrintCol;
 
+            /// <summary>
+            /// Gets or sets right bottom corner column
+            /// </summary>
             public int ScreenCornerCol
             {
                 get => this.screenCornerCol;
@@ -184,6 +250,9 @@
                 }
             }
 
+            /// <summary>
+            /// Gets or sets right bottom corner row
+            /// </summary>
             public int ScreenCornerRow
             {
                 get => this.screenCornerRow;

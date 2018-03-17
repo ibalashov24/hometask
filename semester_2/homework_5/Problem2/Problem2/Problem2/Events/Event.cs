@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Base type for events
+    /// </summary>
     public abstract class Event
     {
         public event EventHandler<GameEventArgs> EventList;

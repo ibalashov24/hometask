@@ -1,5 +1,8 @@
 ﻿namespace Game.Events
 {
+    /// <summary>
+    /// Event that is generated when the player moves to the 
+    /// </summary>
     internal class LeftMoveEvent : MoveEvent
     {
         public override void OnMove(object sender)

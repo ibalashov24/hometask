@@ -1,5 +1,8 @@
 ﻿namespace Game.Events
 {
+    /// <summary>
+    /// Event that is generated when the player moves to the bottom
+    /// </summary>
     internal class DownMoveEvent : MoveEvent
     {
         public override void OnMove(object sender)

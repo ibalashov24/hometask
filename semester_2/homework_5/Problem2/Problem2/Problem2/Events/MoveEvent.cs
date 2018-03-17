@@ -1,5 +1,8 @@
 ﻿namespace Game.Events
 {
+    /// <summary>
+    /// Base class for events connected with movement
+    /// </summary>
     public abstract class MoveEvent : Event
     {
         public virtual void OnMove(
