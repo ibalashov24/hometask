@@ -91,15 +91,15 @@
                 case CellType.NotExist:
                 case CellType.Border:
                 default:
-                    Console.Write("#");
+                    Console.Write('#');
                     break;
                 case CellType.Free when
                         (boardCol == this.currentPlayerCol &&
                         boardRow == this.currentPlayerRow):
-                    Console.Write("@");
+                    Console.Write('@');
                     break;
                 case CellType.Free:
-                    Console.Write(".");
+                    Console.Write('.');
                     break;
             }
 
