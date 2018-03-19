@@ -48,7 +48,6 @@
     <Compile Include="Events\LeftMoveEvent.cs" />
     <Compile Include="Events\MoveEvent.cs" />
     <Compile Include="Events\RightMoveEvent.cs" />
-    <Compile Include="Events\RoomChangeEvent.cs" />
     <Compile Include="Events\UpMoveEvent.cs" />
     <Compile Include="Exceptions\InvalidCellTypeInMap.cs" />
     <Compile Include="Game.cs" />
@@ -57,6 +56,7 @@
     <Compile Include="GameMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

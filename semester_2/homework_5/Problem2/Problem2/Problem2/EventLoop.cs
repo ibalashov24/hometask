@@ -8,14 +8,29 @@
     /// </summary>
     public class EventLoop
     {
+        /// <summary>
+        /// Event "player moved cursor to the left"
+        /// </summary>
         public MoveEvent LeftMove { get; } = new LeftMoveEvent();
-        public MoveEvent RightMove { get; } = new RightMoveEvent();
-        public MoveEvent UpMove { get; } = new UpMoveEvent();
-        public MoveEvent DownMove { get; } = new DownMoveEvent();
-        
-        public EventLoop()
-        { }
 
+        /// <summary>
+        /// Event "player moved cursor to the right"
+        /// </summary>
+        public MoveEvent RightMove { get; } = new RightMoveEvent();
+
+        /// <summary>
+        /// Event "player moved curor up"
+        /// </summary>
+        public MoveEvent UpMove { get; } = new UpMoveEvent();
+
+        /// <summary>
+        /// Event "player moved cursor down"
+        /// </summary>
+        public MoveEvent DownMove { get; } = new DownMoveEvent();
+
+        /// <summary>
+        /// Runs event loop
+        /// </summary>
         public void Run()
         {
             while (true)
