@@ -57,7 +57,7 @@
                             board[i, j] = CellType.Border;
                             break;
                         default:
-                            throw new Exception.InvalidCellTypeInMap(
+                            throw new Exception.InvalidCellTypeInMapException(
                                 currentCell.ToString());
                     }
                 }

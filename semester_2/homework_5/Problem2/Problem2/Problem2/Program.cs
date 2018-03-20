@@ -14,7 +14,7 @@
 
             var game = new Game.Game(map);
 
-            var mainLoop = new Game.EventLoop();
+            var mainLoop = new Game.GameEventLoop();
             game.Register(mainLoop);
 
             mainLoop.Run();

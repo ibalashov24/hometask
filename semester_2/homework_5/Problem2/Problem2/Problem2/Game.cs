@@ -58,6 +58,15 @@
         }
 
         /// <summary>
+        /// Service function for debugging
+        /// </summary>
+        /// <returns>Current player position (col, row)</returns>
+        public (int, int) GetPlayerPosition()
+        {
+            return (this.currentPlayerCol, this.currentPlayerRow);
+        }
+
+        /// <summary>
         /// Registers game to given event loop
         /// </summary>
         /// <param name="loop">Loop that notifies game about events</param>

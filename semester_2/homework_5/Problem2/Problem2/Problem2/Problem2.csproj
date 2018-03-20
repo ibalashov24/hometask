@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventLoop.cs" />
+    <Compile Include="GameEventLoop.cs" />
     <Compile Include="Events\DownMoveEvent.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\LeftMoveEvent.cs" />
