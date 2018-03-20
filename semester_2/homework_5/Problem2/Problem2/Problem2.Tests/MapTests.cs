@@ -1,11 +1,13 @@
 ﻿namespace Problem2.Tests
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Threading;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class MapTests
     {
         private static Game.Map.IMap testMap;
