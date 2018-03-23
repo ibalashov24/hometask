@@ -238,6 +238,7 @@
             this.PercentButton.TabIndex = 7;
             this.PercentButton.Text = "%";
             this.PercentButton.UseVisualStyleBackColor = false;
+            this.PercentButton.Click += new System.EventHandler(this.PercentButtonClicked);
             // 
             // SqrtButton
             // 

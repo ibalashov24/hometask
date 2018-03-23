@@ -3,16 +3,42 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Implements logic for visual calculator
+    /// </summary>
     public class Calculator : ICalculator
     {
-        private string expression = "";
+        /// <summary>
+        /// Expression in formatted text form
+        /// </summary>
+        private string expression = string.Empty;
+
+        /// <summary>
+        /// The sum of all terms in the expression 
+        /// (except the last one <see cref="lastMultiplicationResult"/>)
+        /// </summary>
         private double fullSum;
+
+        /// <summary>
+        /// The value of the last factor (last term in the sum of terms)
+        /// </summary>
         private double lastMultiplicationResult;
 
+        /// <summary>
+        /// The value of the last operand
+        /// </summary>
         private double lastOperandValue;
+
+        /// <summary>
+        /// The type of the last operation
+        /// </summary>
         private OperatorType lastOperationSign
             = OperatorType.NotDefined;
 
+        /// <summary>
+        /// Returns an expression in a formatted form 
+        /// (with the last operation sign)
+        /// </summary>
         public string Expression
         {
             get => this.expression +
@@ -20,25 +46,35 @@
             private set => this.expression = value;
         }
 
+        /// <summary>
+        /// Gets the value of the last operand
+        /// </summary>
         public double LastOperand
         {
             get => this.lastOperandValue;
         }
 
+        /// <summary>
+        /// Gets value of the whole expression
+        /// </summary>
         public double ExpressionValue
         {
             get => this.fullSum + this.lastMultiplicationResult;
         }
-
-        public Calculator()
-        {
-        }
-
+        
+        /// <summary>
+        /// Sets the value of the last operands
+        /// </summary>
+        /// <param name="value"></param>
         public void SetLastOperandValue(double value)
         {
             this.lastOperandValue = value;
         }
 
+        /// <summary>
+        /// Sets the type of the next operator
+        /// </summary>
+        /// <param name="nextOperator">Operation type</param>
         public void SetNextOperator(OperatorType nextOperator)
         {
             if (nextOperator == OperatorType.NotDefined)
@@ -50,6 +86,10 @@
             this.lastOperationSign = nextOperator;
         }
 
+        /// <summary>
+        /// Adds last operand to the expression
+        /// Attention: next operand value will be 0
+        /// </summary>
         public void FlushOperand()
         {
             if (this.expression.Length > 0 &&
@@ -63,6 +103,9 @@
             this.lastOperandValue = 0;
         }
 
+        /// <summary>
+        /// Leads calculator to the initial state
+        /// </summary>
         public void ClearMemory()
         {
             this.expression = "";
@@ -73,26 +116,42 @@
             this.lastMultiplicationResult = 0;
         }
 
+        /// <summary>
+        /// Applies the negation operation to the last operand
+        /// </summary>
         public void NegateCurrentOperand()
         {
             this.lastOperandValue = -this.lastOperandValue;
         }
 
+        /// <summary>
+        /// Replaces operand X with operand 1/X
+        /// </summary>
         public void PutOperandIntoDenominator()
         {
             this.lastOperandValue = 1 / this.lastOperandValue;
         }
 
+        /// <summary>
+        /// Replaces the last operand with it's square root
+        /// </summary>
         public void ApplySqrtToOperand()
         {
             this.lastOperandValue = Math.Sqrt((double)this.lastOperandValue);
         }
 
+        /// <summary>
+        /// Replaces the last operand with it's square
+        /// </summary>
         public void ApplySqrToOperand()
         {
             this.lastOperandValue *= this.lastOperandValue;
         }
 
+        /// <summary>
+        /// Leads calculator to it's initial state 
+        /// and initializes it with the value of the (old) expression
+        /// </summary>
         public void ReinitializeCalculatorWithResult()
         {
             var oldResult = this.ExpressionValue;
@@ -100,6 +159,9 @@
             this.SetLastOperandValue(oldResult);
         }
 
+        /// <summary>
+        /// Adds last operand to the expression
+        /// </summary>
         private void FlushLastOperand()
         {
             if (this.lastOperationSign == OperatorType.Plus
@@ -133,6 +195,15 @@
                 " " + this.lastOperandValue.ToString() + " ";
         }
 
+        /// <summary>
+        /// Returns the string representation 
+        /// of operations from OperatorType
+        /// </summary>
+        /// <seealso cref="OperatorType"/>
+        /// <param name="operation">
+        /// Operation, the sign of which must be obtained
+        /// </param>
+        /// <returns>Operation sign</returns>
         private string GetOperationSign(OperatorType operation)
         {
             switch (operation)
@@ -146,7 +217,7 @@
                 case OperatorType.Division:
                     return "/";
                 default:
-                    return "";
+                    return string.Empty;
             }
         }
     }

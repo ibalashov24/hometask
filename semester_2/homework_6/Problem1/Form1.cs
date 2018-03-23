@@ -5,22 +5,40 @@
 
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// Calculator's logic
+        /// </summary>
         private Calculator.ICalculator calculator;
 
-        private readonly string defaultPlaceholderValue = "0";
-        private bool isZeroPlaceholderSet = true;
-        private bool isDecorativePlaceholderSet = false;
+        /// <summary>
+        /// Shows if CurrentOperandBox contains temporary placeholder 
+        /// with the value of the expression
+        /// </summary>
+        private bool isResultPrintedInsteadOfOperand = false;
 
+        /// <summary>
+        /// Default sign of comma 
+        /// (can be different in different locales?)
+        /// </summary>
         private const char commaSign = ',';
+
+        /// <summary>
+        /// True if the last symbol of the last operand must == ','
+        /// </summary>
         private bool needPrintCommaWhenNextNumberEntered = false;   
 
+        /// <summary>
+        /// Initializes new instance of Form1
+        /// </summary>
+        /// <param name="calculator">Calculator's logic</param>
         public Form1(Calculator.ICalculator calculator)
         {
             this.calculator = calculator;
 
             InitializeComponent();
 
-            this.PrintZeroPlaceholder();
+            this.PlaceLastOperandToOperandBox();
+            this.PlaceExpressionToExpressionBox();
         }
 
         /// <summary>
@@ -43,15 +61,17 @@
 
             if (this.IsAnyPlaceholderSet())
             {
-                this.CurrentOperandBox.Text = "";
-                this.isZeroPlaceholderSet = false;
-                this.isDecorativePlaceholderSet = false;
+                this.CurrentOperandBox.Text = string.Empty;
+                this.isResultPrintedInsteadOfOperand = false;
             }
 
             this.calculator.SetLastOperandValue(newOperandValue);
             this.PlaceLastOperandToOperandBox();
         }
 
+        /// <summary>
+        /// Handles situation when comma button is pressed
+        /// </summary>
         public void CommaButtonClicked(object sender, EventArgs args)
         {
             var lastOperandString = this.calculator.LastOperand.ToString();
@@ -64,16 +84,12 @@
             }
         }
 
+        /// <summary>
+        /// Handles situation when one of +-*/ was clicked
+        /// </summary>
         public void OperationButtonClicked(object sender, EventArgs args)
         {
             var senderButton = sender as System.Windows.Forms.Button;
-
-            if (this.isZeroPlaceholderSet)
-            {
-                this.calculator.SetLastOperandValue(
-                    double.Parse(this.defaultPlaceholderValue));
-                this.isZeroPlaceholderSet = false;
-            }
 
             if (!IsAnyPlaceholderSet())
             {
@@ -105,11 +121,15 @@
 
             this.PlaceExpressionToExpressionBox();
 
+            // Adding placeholder
             this.CurrentOperandBox.Text = 
                 this.calculator.ExpressionValue.ToString();
-            this.isDecorativePlaceholderSet = true;
+            this.isResultPrintedInsteadOfOperand = true;
         }
 
+        /// <summary>
+        /// Handles situation when backspace button was pressed
+        /// </summary>
         public void BackspaceButtonClicked(object sender, EventArgs args)
         {
             var senderButton = sender as System.Windows.Forms.Button;
@@ -126,15 +146,14 @@
                 return;
             }
              
-            var lastOperandString = 
-                this.calculator.LastOperand.ToString();
+            var lastOperandString = this.calculator.LastOperand.ToString();
             lastOperandString = lastOperandString.Remove(
                 lastOperandString.Length - 1);
             
             if (lastOperandString.Length == 0)
             {
-                this.PrintZeroPlaceholder();
                 this.calculator.SetLastOperandValue(0);
+                this.PlaceLastOperandToOperandBox();
             }
             else
             {
@@ -150,6 +169,9 @@
             }
         }
 
+        /// <summary>
+        /// Handles situation when "=" button was pressed
+        /// </summary>
         public void EqualityButtonClicked(object sender, EventArgs args)
         {
             this.calculator.FlushOperand();
@@ -158,19 +180,28 @@
             this.PlaceExpressionToExpressionBox();
         }
 
+        /// <summary>
+        /// Handles situation when CE button was pressed
+        /// </summary>
         public void CEButtonClicked(object sender, EventArgs args)
         {
             this.calculator.SetLastOperandValue(0);
-            this.PrintZeroPlaceholder();
+            this.PlaceLastOperandToOperandBox();
         }
 
+        /// <summary>
+        /// Handles situation when C button was pressed
+        /// </summary>
         public void CButtonClicked(object sender, EventArgs args)
         {
             this.calculator.ClearMemory();
-            this.PrintZeroPlaceholder();
+            this.PlaceLastOperandToOperandBox();
             this.PlaceExpressionToExpressionBox();
         }
 
+        /// <summary>
+        /// Handles situation when "+-" button was pressed
+        /// </summary>
         public void NegateButtonClicked(object sender, EventArgs args)
         {
             this.SetPlaceholderWithResultAsOperand();
@@ -178,6 +209,9 @@
             this.PlaceLastOperandToOperandBox();
         }
 
+        /// <summary>
+        /// Handles situation when "1/x" button was pressed
+        /// </summary>
         public void FractionButtonClicked(object sender, EventArgs args)
         {
             this.SetPlaceholderWithResultAsOperand();
@@ -185,6 +219,9 @@
             this.PlaceLastOperandToOperandBox();
         }
 
+        /// <summary>
+        /// Handles situation when square root button was pressed
+        /// </summary>
         public void SqrtButtonClicked(object sender, EventArgs args)
         {
             this.SetPlaceholderWithResultAsOperand();
@@ -192,6 +229,9 @@
             this.PlaceLastOperandToOperandBox();
         }
 
+        /// <summary>
+        /// Handles situation when x^2 button was pressed
+        /// </summary>
         public void SqrButtonClicked(object sender, EventArgs args)
         {
             this.SetPlaceholderWithResultAsOperand();
@@ -199,31 +239,49 @@
             this.PlaceLastOperandToOperandBox();
         }
 
-        private void PrintZeroPlaceholder()
+        /// <summary>
+        /// Handles situation when % button was pressed
+        /// </summary>
+        public void PercentButtonClicked(object sender, EventArgs args)
         {
-            this.CurrentOperandBox.Text = this.defaultPlaceholderValue;
-            this.isZeroPlaceholderSet = true;
+            MessageBox.Show(
+                "This function is not implemented yet. Sorry.", 
+                "Not implemented", 
+                MessageBoxButtons.OK);
         }
 
+        /// <summary>
+        /// Checks if any placeholder is installed
+        /// </summary>
+        /// <returns>True if installed</returns>
         private bool IsAnyPlaceholderSet()
         {
-            return this.isZeroPlaceholderSet || this.isDecorativePlaceholderSet;
+            return this.isResultPrintedInsteadOfOperand;
         }
 
+        /// <summary>
+        /// Updates data in CurrentOperandBox
+        /// </summary>
         private void PlaceLastOperandToOperandBox()
         {
             this.CurrentOperandBox.Text =
                 this.calculator.LastOperand.ToString();
         }
 
+        /// <summary>
+        /// Updates data in ExpressionBox
+        /// </summary>
         private void PlaceExpressionToExpressionBox()
         {
             this.ExpressionBox.Text = "\r\n" + this.calculator.Expression;
         }
 
+        /// <summary>
+        /// Expression value --> Box with opeand
+        /// </summary>
         private void SetPlaceholderWithResultAsOperand()
         {
-            if (this.IsAnyPlaceholderSet())
+            if (this.isResultPrintedInsteadOfOperand)
             {
                 this.calculator.SetLastOperandValue(
                     this.calculator.ExpressionValue);

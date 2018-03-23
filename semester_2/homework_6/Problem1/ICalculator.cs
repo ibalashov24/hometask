@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// All available operations in the calculator
+    /// </summary>
     public enum OperatorType
     {
         NotDefined,
@@ -41,6 +44,9 @@
         /// <param name="nextOperator">Next operator</param>
         void SetNextOperator(OperatorType nextOperator);
 
+        /// <summary>
+        /// Adds last operand to the expression
+        /// </summary>
         void FlushOperand();
 
         /// <summary>
@@ -56,9 +62,6 @@
         /// <summary>
         /// Makes operand --> 1 / operand
         /// </summary>
-        /// <exception cref="DivideByZeroException">
-        /// DivideByZeroException could be thrown
-        /// </exception>
         void PutOperandIntoDenominator();
 
         /// <summary>
