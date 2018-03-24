@@ -15,7 +15,7 @@
     }
 
     /// <summary>
-    /// Implements simple class for visual calculator
+    /// Implements simple logic for visual calculator
     /// </summary>
     public interface ICalculator
     {
@@ -36,6 +36,10 @@
         /// </summary>
         string Expression { get; }
 
+        /// <summary>
+        /// Sets the value of the last operand
+        /// </summary>
+        /// <param name="value"></param>
         void SetLastOperandValue(double value);
         
         /// <summary>

@@ -121,7 +121,7 @@
             this.ZeroButton.Margin = new System.Windows.Forms.Padding(2);
             this.ZeroButton.Name = "ZeroButton";
             this.ZeroButton.Size = new System.Drawing.Size(71, 54);
-            this.ZeroButton.TabIndex = 39;
+            this.ZeroButton.TabIndex = 22;
             this.ZeroButton.Text = "0";
             this.ZeroButton.UseVisualStyleBackColor = false;
             this.ZeroButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -137,7 +137,7 @@
             this.NegateButton.Margin = new System.Windows.Forms.Padding(2);
             this.NegateButton.Name = "NegateButton";
             this.NegateButton.Size = new System.Drawing.Size(71, 54);
-            this.NegateButton.TabIndex = 38;
+            this.NegateButton.TabIndex = 21;
             this.NegateButton.Text = "±";
             this.NegateButton.UseVisualStyleBackColor = false;
             this.NegateButton.Click += new System.EventHandler(this.NegateButtonClicked);
@@ -153,7 +153,7 @@
             this.EqualityButton.Margin = new System.Windows.Forms.Padding(2);
             this.EqualityButton.Name = "EqualityButton";
             this.EqualityButton.Size = new System.Drawing.Size(73, 54);
-            this.EqualityButton.TabIndex = 37;
+            this.EqualityButton.TabIndex = 24;
             this.EqualityButton.Text = "=";
             this.EqualityButton.UseVisualStyleBackColor = false;
             this.EqualityButton.Click += new System.EventHandler(this.EqualityButtonClicked);
@@ -169,7 +169,7 @@
             this.DecimalDotButton.Margin = new System.Windows.Forms.Padding(2);
             this.DecimalDotButton.Name = "DecimalDotButton";
             this.DecimalDotButton.Size = new System.Drawing.Size(71, 54);
-            this.DecimalDotButton.TabIndex = 36;
+            this.DecimalDotButton.TabIndex = 23;
             this.DecimalDotButton.Text = ",";
             this.DecimalDotButton.UseVisualStyleBackColor = false;
             this.DecimalDotButton.Click += new System.EventHandler(this.CommaButtonClicked);
@@ -185,7 +185,7 @@
             this.TwoButton.Margin = new System.Windows.Forms.Padding(2);
             this.TwoButton.Name = "TwoButton";
             this.TwoButton.Size = new System.Drawing.Size(71, 51);
-            this.TwoButton.TabIndex = 33;
+            this.TwoButton.TabIndex = 18;
             this.TwoButton.Text = "2";
             this.TwoButton.UseVisualStyleBackColor = false;
             this.TwoButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -201,7 +201,7 @@
             this.OneButton.Margin = new System.Windows.Forms.Padding(2);
             this.OneButton.Name = "OneButton";
             this.OneButton.Size = new System.Drawing.Size(71, 51);
-            this.OneButton.TabIndex = 32;
+            this.OneButton.TabIndex = 17;
             this.OneButton.Text = "1";
             this.OneButton.UseVisualStyleBackColor = false;
             this.OneButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -235,7 +235,7 @@
             this.PercentButton.Margin = new System.Windows.Forms.Padding(2);
             this.PercentButton.Name = "PercentButton";
             this.PercentButton.Size = new System.Drawing.Size(71, 51);
-            this.PercentButton.TabIndex = 7;
+            this.PercentButton.TabIndex = 1;
             this.PercentButton.Text = "%";
             this.PercentButton.UseVisualStyleBackColor = false;
             this.PercentButton.Click += new System.EventHandler(this.PercentButtonClicked);
@@ -251,7 +251,7 @@
             this.SqrtButton.Margin = new System.Windows.Forms.Padding(2);
             this.SqrtButton.Name = "SqrtButton";
             this.SqrtButton.Size = new System.Drawing.Size(71, 51);
-            this.SqrtButton.TabIndex = 8;
+            this.SqrtButton.TabIndex = 2;
             this.SqrtButton.Text = "√";
             this.SqrtButton.UseVisualStyleBackColor = false;
             this.SqrtButton.Click += new System.EventHandler(this.SqrtButtonClicked);
@@ -267,7 +267,7 @@
             this.SqrButton.Margin = new System.Windows.Forms.Padding(2);
             this.SqrButton.Name = "SqrButton";
             this.SqrButton.Size = new System.Drawing.Size(71, 51);
-            this.SqrButton.TabIndex = 9;
+            this.SqrButton.TabIndex = 3;
             this.SqrButton.Text = "𝑥²";
             this.SqrButton.UseVisualStyleBackColor = false;
             this.SqrButton.Click += new System.EventHandler(this.SqrButtonClicked);
@@ -283,7 +283,7 @@
             this.FractionButton.Margin = new System.Windows.Forms.Padding(2);
             this.FractionButton.Name = "FractionButton";
             this.FractionButton.Size = new System.Drawing.Size(73, 51);
-            this.FractionButton.TabIndex = 10;
+            this.FractionButton.TabIndex = 4;
             this.FractionButton.Text = "⅟𝑥";
             this.FractionButton.UseVisualStyleBackColor = false;
             this.FractionButton.Click += new System.EventHandler(this.FractionButtonClicked);
@@ -299,7 +299,7 @@
             this.CEButton.Margin = new System.Windows.Forms.Padding(2);
             this.CEButton.Name = "CEButton";
             this.CEButton.Size = new System.Drawing.Size(71, 51);
-            this.CEButton.TabIndex = 12;
+            this.CEButton.TabIndex = 5;
             this.CEButton.Text = "CE";
             this.CEButton.UseVisualStyleBackColor = false;
             this.CEButton.Click += new System.EventHandler(this.CEButtonClicked);
@@ -315,7 +315,7 @@
             this.CButton.Margin = new System.Windows.Forms.Padding(2);
             this.CButton.Name = "CButton";
             this.CButton.Size = new System.Drawing.Size(71, 51);
-            this.CButton.TabIndex = 13;
+            this.CButton.TabIndex = 6;
             this.CButton.Text = "C";
             this.CButton.UseVisualStyleBackColor = false;
             this.CButton.Click += new System.EventHandler(this.CButtonClicked);
@@ -331,7 +331,7 @@
             this.BackspaceButton.Margin = new System.Windows.Forms.Padding(2);
             this.BackspaceButton.Name = "BackspaceButton";
             this.BackspaceButton.Size = new System.Drawing.Size(71, 51);
-            this.BackspaceButton.TabIndex = 14;
+            this.BackspaceButton.TabIndex = 7;
             this.BackspaceButton.Text = "⌫";
             this.BackspaceButton.UseVisualStyleBackColor = false;
             this.BackspaceButton.Click += new System.EventHandler(this.BackspaceButtonClicked);
@@ -347,7 +347,7 @@
             this.DivisionButton.Margin = new System.Windows.Forms.Padding(2);
             this.DivisionButton.Name = "DivisionButton";
             this.DivisionButton.Size = new System.Drawing.Size(73, 51);
-            this.DivisionButton.TabIndex = 15;
+            this.DivisionButton.TabIndex = 8;
             this.DivisionButton.Text = "÷";
             this.DivisionButton.UseVisualStyleBackColor = false;
             this.DivisionButton.Click += new System.EventHandler(this.OperationButtonClicked);
@@ -363,7 +363,7 @@
             this.SevenButton.Margin = new System.Windows.Forms.Padding(2);
             this.SevenButton.Name = "SevenButton";
             this.SevenButton.Size = new System.Drawing.Size(71, 51);
-            this.SevenButton.TabIndex = 17;
+            this.SevenButton.TabIndex = 9;
             this.SevenButton.Text = "7";
             this.SevenButton.UseVisualStyleBackColor = false;
             this.SevenButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -379,7 +379,7 @@
             this.EightButton.Margin = new System.Windows.Forms.Padding(2);
             this.EightButton.Name = "EightButton";
             this.EightButton.Size = new System.Drawing.Size(71, 51);
-            this.EightButton.TabIndex = 18;
+            this.EightButton.TabIndex = 10;
             this.EightButton.Text = "8";
             this.EightButton.UseVisualStyleBackColor = false;
             this.EightButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -395,7 +395,7 @@
             this.NineButton.Margin = new System.Windows.Forms.Padding(2);
             this.NineButton.Name = "NineButton";
             this.NineButton.Size = new System.Drawing.Size(71, 51);
-            this.NineButton.TabIndex = 19;
+            this.NineButton.TabIndex = 11;
             this.NineButton.Text = "9";
             this.NineButton.UseVisualStyleBackColor = false;
             this.NineButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -413,7 +413,7 @@
             this.MultiplicationButton.Margin = new System.Windows.Forms.Padding(2);
             this.MultiplicationButton.Name = "MultiplicationButton";
             this.MultiplicationButton.Size = new System.Drawing.Size(73, 51);
-            this.MultiplicationButton.TabIndex = 20;
+            this.MultiplicationButton.TabIndex = 12;
             this.MultiplicationButton.Text = "×";
             this.MultiplicationButton.UseVisualStyleBackColor = false;
             this.MultiplicationButton.Click += new System.EventHandler(this.OperationButtonClicked);
@@ -429,7 +429,7 @@
             this.FourButton.Margin = new System.Windows.Forms.Padding(2);
             this.FourButton.Name = "FourButton";
             this.FourButton.Size = new System.Drawing.Size(71, 51);
-            this.FourButton.TabIndex = 22;
+            this.FourButton.TabIndex = 13;
             this.FourButton.Text = "4";
             this.FourButton.UseVisualStyleBackColor = false;
             this.FourButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -445,7 +445,7 @@
             this.FiveButton.Margin = new System.Windows.Forms.Padding(2);
             this.FiveButton.Name = "FiveButton";
             this.FiveButton.Size = new System.Drawing.Size(71, 51);
-            this.FiveButton.TabIndex = 23;
+            this.FiveButton.TabIndex = 14;
             this.FiveButton.Text = "5";
             this.FiveButton.UseVisualStyleBackColor = false;
             this.FiveButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -461,7 +461,7 @@
             this.SixButton.Margin = new System.Windows.Forms.Padding(2);
             this.SixButton.Name = "SixButton";
             this.SixButton.Size = new System.Drawing.Size(71, 51);
-            this.SixButton.TabIndex = 24;
+            this.SixButton.TabIndex = 15;
             this.SixButton.Text = "6";
             this.SixButton.UseVisualStyleBackColor = false;
             this.SixButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -477,7 +477,7 @@
             this.MinusButton.Margin = new System.Windows.Forms.Padding(2);
             this.MinusButton.Name = "MinusButton";
             this.MinusButton.Size = new System.Drawing.Size(73, 51);
-            this.MinusButton.TabIndex = 25;
+            this.MinusButton.TabIndex = 16;
             this.MinusButton.Text = "-";
             this.MinusButton.UseVisualStyleBackColor = false;
             this.MinusButton.Click += new System.EventHandler(this.OperationButtonClicked);
@@ -493,7 +493,7 @@
             this.ThreeButton.Margin = new System.Windows.Forms.Padding(2);
             this.ThreeButton.Name = "ThreeButton";
             this.ThreeButton.Size = new System.Drawing.Size(71, 51);
-            this.ThreeButton.TabIndex = 29;
+            this.ThreeButton.TabIndex = 19;
             this.ThreeButton.Text = "3";
             this.ThreeButton.UseVisualStyleBackColor = false;
             this.ThreeButton.Click += new System.EventHandler(this.NumberButtonClicked);
@@ -509,7 +509,7 @@
             this.PlusButton.Margin = new System.Windows.Forms.Padding(2);
             this.PlusButton.Name = "PlusButton";
             this.PlusButton.Size = new System.Drawing.Size(73, 51);
-            this.PlusButton.TabIndex = 30;
+            this.PlusButton.TabIndex = 20;
             this.PlusButton.Text = "+";
             this.PlusButton.UseVisualStyleBackColor = false;
             this.PlusButton.Click += new System.EventHandler(this.OperationButtonClicked);

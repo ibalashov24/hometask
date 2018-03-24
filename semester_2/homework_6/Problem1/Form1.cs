@@ -36,9 +36,97 @@
             this.calculator = calculator;
 
             InitializeComponent();
+            this.KeyPreview = true;
+            this.KeyDown += this.SomeKeyPressed;
 
             this.PlaceLastOperandToOperandBox();
             this.PlaceExpressionToExpressionBox();
+        }
+
+        /// <summary>
+        /// Handles Enter key press
+        /// </summary>
+        /// <seealso cref="Control.ProcessCmdKey(ref Message, Keys)s"/>
+        protected override bool ProcessCmdKey(
+            ref Message message, 
+            Keys key)
+        {
+            const int WM_KEYDOWN = 0x100;
+
+            if (message.Msg == WM_KEYDOWN 
+                && key == Keys.Enter)
+            {
+                this.EqualityButton.PerformClick();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref message, key);
+        }
+
+        /// <summary>
+        /// Handles pressed key
+        /// </summary>
+        public void SomeKeyPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == 0 &&
+                (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9 ||
+                e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
+            {
+                var numericValue = Math.Min(
+                    Math.Abs(e.KeyCode - Keys.D0), 
+                    Math.Abs(e.KeyCode - Keys.NumPad0));
+
+                this.NumberButtonClicked(
+                        new Button()
+                        {
+                            Text = numericValue.ToString()
+                        }, e);
+
+                return;
+            }
+
+            switch (e.KeyCode)
+            {
+                case Keys.Back:
+                    this.BackspaceButton.PerformClick();
+                    break;
+                case Keys.Multiply:
+                    this.MultiplicationButton.PerformClick();
+                    break;
+                case Keys.Divide:
+                    this.DivisionButton.PerformClick();
+                    break;
+                case Keys.Subtract:
+                    this.MinusButton.PerformClick();
+                    break;
+                case Keys.Add:
+                    this.PlusButton.PerformClick();
+                    break;
+                case Keys.Escape:
+                    this.CButton.PerformClick();
+                    break;
+                case Keys.Delete:
+                    this.CEButton.PerformClick();
+                    break;
+                case Keys.R:
+                    this.FractionButton.PerformClick();
+                    break;
+                case Keys.Q:
+                    this.SqrButton.PerformClick();
+                    break;
+                case Keys.Enter:
+                    this.EqualityButton.PerformClick();
+                    break;
+                case Keys.Decimal:
+                    this.DecimalDotButton.PerformClick();
+                    break;
+                case Keys.F9:
+                    this.NegateButton.PerformClick();
+                    break;
+                case Keys.D2 when (e.Shift):
+                    this.SqrtButton.PerformClick();
+                    break;
+            } 
         }
 
         /// <summary>
