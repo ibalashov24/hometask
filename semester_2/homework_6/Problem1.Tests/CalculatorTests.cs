@@ -12,7 +12,7 @@ namespace Problem1.Tests
         [TestInitialize]
         public void InitCalculator()
         {
-            calculator = new Calculator.Calculator();
+            this.calculator = new Calculator.Calculator();
         }
 
         [TestMethod]
@@ -37,62 +37,62 @@ namespace Problem1.Tests
         [TestMethod]
         public void AdditionShouldWork()
         {
-            calculator.SetLastOperandValue(10.5);
-            calculator.FlushOperand();
+            this.calculator.SetLastOperandValue(10.5);
+            this.calculator.FlushOperand();
 
-            calculator.SetLastOperandValue(-11.5);
-            calculator.SetNextOperator(Calculator.OperatorType.Plus);
-            calculator.FlushOperand();
+            this.calculator.SetLastOperandValue(-11.5);
+            this.calculator.SetNextOperator(Calculator.OperatorType.Plus);
+            this.calculator.FlushOperand();
 
             Assert.IsTrue(AreDoubleEqual(
                 -1,
-                calculator.ExpressionValue));
+                this.calculator.ExpressionValue));
         }
 
         [TestMethod]
         public void SubstractionShouldWork()
         {
-            calculator.SetLastOperandValue(10.5);
-            calculator.FlushOperand();
+            this.calculator.SetLastOperandValue(10.5);
+            this.calculator.FlushOperand();
 
-            calculator.SetLastOperandValue(2);
-            calculator.SetNextOperator(Calculator.OperatorType.Minus);
-            calculator.FlushOperand();
+            this.calculator.SetLastOperandValue(2);
+            this.calculator.SetNextOperator(Calculator.OperatorType.Minus);
+            this.calculator.FlushOperand();
 
             Assert.IsTrue(AreDoubleEqual(
                 8.5,
-                calculator.ExpressionValue));
+                this.calculator.ExpressionValue));
         }
 
         [TestMethod]
         public void MultiplicationShouldWork()
         {
-            calculator.SetLastOperandValue(10.5);
-            calculator.FlushOperand();
+            this.calculator.SetLastOperandValue(10.5);
+            this.calculator.FlushOperand();
 
-            calculator.SetLastOperandValue(2.5);
-            calculator.SetNextOperator(
+            this.calculator.SetLastOperandValue(2.5);
+            this.calculator.SetNextOperator(
                 Calculator.OperatorType.Multiplication);
-            calculator.FlushOperand();
+            this.calculator.FlushOperand();
 
             Assert.IsTrue(AreDoubleEqual(
                 26.25,
-                calculator.ExpressionValue));
+                this.calculator.ExpressionValue));
         }
 
         [TestMethod]
         public void DivisionShouldWork()
         {
-            calculator.SetLastOperandValue(10.5);
-            calculator.FlushOperand();
+            this.calculator.SetLastOperandValue(10.5);
+            this.calculator.FlushOperand();
 
-            calculator.SetLastOperandValue(2);
-            calculator.SetNextOperator(Calculator.OperatorType.Division);
-            calculator.FlushOperand();
+            this.calculator.SetLastOperandValue(2);
+            this.calculator.SetNextOperator(Calculator.OperatorType.Division);
+            this.calculator.FlushOperand();
 
             Assert.IsTrue(AreDoubleEqual(
                 5.25,
-                calculator.ExpressionValue));
+                this.calculator.ExpressionValue));
         }
 
         [TestMethod]
@@ -101,17 +101,17 @@ namespace Problem1.Tests
             var realResult = 0.0;
             for (int i = 0; i < 50; ++i)
             {
-                calculator.SetLastOperandValue(i);
-                calculator.FlushOperand();
+                this.calculator.SetLastOperandValue(i);
+                this.calculator.FlushOperand();
 
                 if (i % 2 == 0)
                 {
-                    calculator.SetNextOperator(Calculator.OperatorType.Minus);
+                    this.calculator.SetNextOperator(Calculator.OperatorType.Minus);
                     realResult += i;
                 }
                 else
                 {
-                    calculator.SetNextOperator(Calculator.OperatorType.Plus);
+                    this.calculator.SetNextOperator(Calculator.OperatorType.Plus);
                     realResult -= i;
                 }
             }
@@ -125,40 +125,40 @@ namespace Problem1.Tests
         public void ComplexExpressionWithMultiplicationShouldBeCalculated()
         {
             var realResult = 5.0;
-            calculator.SetLastOperandValue(5);
-            calculator.FlushOperand();
+            this.calculator.SetLastOperandValue(5);
+            this.calculator.FlushOperand();
 
             for (int i = 0; i < 3; ++i)
             {
                 for (int k = 0; k < 5; k++)
                 {
-                    calculator.SetNextOperator(Calculator.OperatorType.Plus);
-                    calculator.SetLastOperandValue(k);
-                    calculator.FlushOperand();
+                    this.calculator.SetNextOperator(Calculator.OperatorType.Plus);
+                    this.calculator.SetLastOperandValue(k);
+                    this.calculator.FlushOperand();
 
                     realResult += k;
                 }
 
-                calculator.SetNextOperator(Calculator.OperatorType.Plus);
-                calculator.SetLastOperandValue(5);
-                calculator.FlushOperand();
+                this.calculator.SetNextOperator(Calculator.OperatorType.Plus);
+                this.calculator.SetLastOperandValue(5);
+                this.calculator.FlushOperand();
                 var realMultiplicationResult = 5.0;
 
                 for (int j = 1; j < 50; ++j)
                 {
                     if (j % 2 == 0)
                     {
-                        calculator.SetNextOperator(Calculator.OperatorType.Multiplication);
+                        this.calculator.SetNextOperator(Calculator.OperatorType.Multiplication);
                         realMultiplicationResult *= j % 13 + 1;
                     }
                     else
                     {
-                        calculator.SetNextOperator(Calculator.OperatorType.Division);
+                        this.calculator.SetNextOperator(Calculator.OperatorType.Division);
                         realMultiplicationResult /= j % 13 + 1;
                     }
 
-                    calculator.SetLastOperandValue(j % 13 + 1);
-                    calculator.FlushOperand();
+                    this.calculator.SetLastOperandValue(j % 13 + 1);
+                    this.calculator.FlushOperand();
                 }
 
                 realResult += realMultiplicationResult;
