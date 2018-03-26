@@ -41,16 +41,26 @@
         /// </summary>
         /// <param name="value"></param>
         void SetLastOperandValue(double value);
-        
+
         /// <summary>
         /// Set next operation type
         /// </summary>
+        /// <remarks>
+        ///  Keep in mind that the first operand in 
+        ///  the expression is always (hidden) zero
+        /// </remarks>
         /// <param name="nextOperator">Next operator</param>
         void SetNextOperator(OperatorType nextOperator);
 
         /// <summary>
         /// Adds last operand to the expression
         /// </summary>
+        /// <remarks>
+        /// It will flush default (zero) operand 
+        /// if it is not set
+        /// Keep in mind that the first operand in 
+        /// the expression is always (hidden) zero
+        /// </remarks>
         void FlushOperand();
 
         /// <summary>

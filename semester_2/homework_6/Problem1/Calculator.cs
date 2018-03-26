@@ -41,8 +41,12 @@
         /// </summary>
         public string Expression
         {
-            get => this.expression +
-                this.GetOperationSign(this.lastOperationSign);
+            get
+            {
+                var returnValue = this.expression + 
+                    this.GetOperationSign(this.lastOperationSign);
+                return returnValue.Trim();
+            }
             private set => this.expression = value;
         }
 
@@ -108,7 +112,7 @@
         /// </summary>
         public void ClearMemory()
         {
-            this.expression = "";
+            this.expression = string.Empty;
             this.lastOperationSign = OperatorType.NotDefined;
             this.lastOperandValue = 0;
 

@@ -342,7 +342,7 @@
         {
             MessageBox.Show(
                 "This function is not implemented yet. Sorry.", 
-                "Not implemented", 
+                "Message box test", 
                 MessageBoxButtons.OK);
         }
 
