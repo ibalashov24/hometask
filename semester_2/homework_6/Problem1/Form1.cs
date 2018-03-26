@@ -134,10 +134,18 @@
         /// </summary>
         public void NumberButtonClicked(object sender, EventArgs args)
         {
+            // In order to prevent overflow
+            const int maxSymbolsInNumber = 12;
+
             var senderButton = sender as System.Windows.Forms.Button;
             var pressedNumber = senderButton.Text;
 
             var newOperandValueString = this.calculator.LastOperand.ToString();
+            if (newOperandValueString.Length >= maxSymbolsInNumber)
+            {
+                return;
+            }
+
             if (this.needPrintCommaWhenNextNumberEntered)
             {
                 newOperandValueString += commaSign;
@@ -181,7 +189,7 @@
 
             if (!IsAnyPlaceholderSet())
             {
-                this.calculator.FlushOperand();
+                this.ProceedStoredCalculations();
             }
 
             switch (senderButton.Name)
@@ -262,7 +270,7 @@
         /// </summary>
         public void EqualityButtonClicked(object sender, EventArgs args)
         {
-            this.calculator.FlushOperand();
+            this.ProceedStoredCalculations();
             this.calculator.ReinitializeCalculatorWithResult();
             this.PlaceLastOperandToOperandBox();
             this.PlaceExpressionToExpressionBox();
@@ -357,11 +365,21 @@
         }
 
         /// <summary>
-        /// Updates data in ExpressionBox
+        /// Updates data in ExpressionBox with given string
+        /// </summary>
+        /// <param name="value">String to place</param>
+        private void PlaceValueToExpressionBox(string value)
+        {
+            this.ExpressionBox.Text = "\r\n" + value;
+        }
+
+        /// <summary>
+        /// Updates data in ExpressionBox with 
+        /// expression from calculator
         /// </summary>
         private void PlaceExpressionToExpressionBox()
         {
-            this.ExpressionBox.Text = "\r\n" + this.calculator.Expression;
+            this.PlaceValueToExpressionBox(this.calculator.Expression);
         }
 
         /// <summary>
@@ -373,6 +391,21 @@
             {
                 this.calculator.SetLastOperandValue(
                     this.calculator.ExpressionValue);
+            }
+        }
+
+        private void ProceedStoredCalculations()
+        {
+            try
+            {
+                this.calculator.FlushOperand();
+            }
+            catch (OverflowException)
+            {
+                this.calculator.ClearMemory();
+                this.PlaceValueToExpressionBox(
+                    "Very big number");
+                this.isResultPrintedInsteadOfOperand = true;
             }
         }
     }

@@ -170,7 +170,7 @@
                 this.fullSum += this.lastMultiplicationResult;
                 this.lastMultiplicationResult = 0;
             }
-
+            
             switch (this.lastOperationSign)
             {
                 case OperatorType.NotDefined:
