@@ -90,7 +90,7 @@
             public ListElement Next { get; set; }
             public T Value { get; set; }
 
-            public ListElement(T value, ListElement nextElement = null)
+            public ListElement(T value, ListElement nextElement)
             {
                 this.Value = value;
                 this.Next = nextElement;
@@ -99,10 +99,10 @@
 
         private class ListEnumerator : IEnumerator<T>
         {
-            private List<T>.ListElement listBegin;
-            private List<T>.ListElement currentPosition;
+            private ListElement listBegin;
+            private ListElement currentPosition;
 
-            public ListEnumerator(List<T>.ListElement list)
+            public ListEnumerator(ListElement list)
             {
                 this.listBegin = list;
             }
@@ -113,10 +113,7 @@
                 set => this.currentPosition.Value = value;
             }
 
-            object IEnumerator.Current
-            {
-                get => this.Current;
-            }
+            object IEnumerator.Current => this.Current;
 
             public void Dispose()
             {
