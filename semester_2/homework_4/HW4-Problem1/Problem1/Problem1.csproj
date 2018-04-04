@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpressionStringParser.cs" />
     <Compile Include="ExpressionTree.cs" />
     <Compile Include="ExpressionTreeVertex.cs" />
     <Compile Include="IExpressionTree.cs" />

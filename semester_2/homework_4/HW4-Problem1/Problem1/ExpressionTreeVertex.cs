@@ -5,7 +5,7 @@
     /// <summary>
     /// Vertex of the expression tree of any type
     /// </summary>
-    public abstract class ExpressionTreeVertex : Object
+    public abstract class ExpressionTreeVertex
     {
         /// <summary>
         /// Value of current vertex in the parse tree

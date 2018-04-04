@@ -2,6 +2,10 @@
 {
     using System;
 
+    /// <summary>
+    /// Indicates that the expression submitted 
+    /// to the parser contains incorrect elements
+    /// </summary>
     public class InvalidExpressionException : Exception
     {
         /// <summary>
