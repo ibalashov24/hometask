@@ -1,6 +1,7 @@
 ﻿namespace ListStuff
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// List which has only one (or 0) entry of element with each value
@@ -13,7 +14,7 @@
         /// </summary>
         /// <param name="value">Check value</param>
         /// <returns>True if element is in list</returns>
-        private bool IsInList(T value)
+        public bool IsInList(T value)
         {
             foreach (var element in this)
             {

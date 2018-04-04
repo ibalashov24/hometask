@@ -88,10 +88,8 @@
         /// </summary>
         public void Clean()
         {
-            while (!this.IsEmpty())
-            {
-                this.Erase(0);
-            }
+            this.listContent = null;
+            this.size = 0;
         }
 
         /// <summary>
@@ -121,7 +119,7 @@
         /// <summary>
         /// Single element of the list
         /// </summary>
-        public class ListElement
+        protected class ListElement
         {
             public ListElement(T value, ListElement nextElement = null)
             {
@@ -138,13 +136,12 @@
             /// Gets or sets value of current element
             /// </summary>
             public T Value { get; set; }
-
         }
 
         /// <summary>
         /// Implements list iterator <see cref="IEnumerator{T}"/>
         /// </summary>
-        public class ListEnumerator : IEnumerator<T>
+        protected class ListEnumerator : IEnumerator<T>
         {
             private List<T>.ListElement listBegin;
             private List<T>.ListElement currentPosition;
