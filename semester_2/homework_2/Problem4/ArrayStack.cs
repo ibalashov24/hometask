@@ -5,10 +5,10 @@
     public class ArrayStack<T> : IStack<T>
     {
         // If stack is empty its size will be increased by this factor
-        public const int ResizeFactor = 2;
+        private const int ResizeFactor = 2;
 
         // Default stack size
-        public const int DefaultSize = 10;
+        private const int DefaultSize = 10;
 
         // Stack content
         private T[] stackUnderlay;

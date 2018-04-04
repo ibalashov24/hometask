@@ -1,5 +1,6 @@
 ﻿namespace ListStuff
 {
+    // Interface for simple list
     internal interface IList<T>
     {
         // Returns size of the list

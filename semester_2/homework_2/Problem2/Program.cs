@@ -19,7 +19,7 @@
                     continue;
                 }
 
-                if (Help.HelpCommands.IsDefined(typeof(Help.HelpCommands), currentCommandNumber))
+                if (Enum.IsDefined(typeof(Help.HelpCommands), currentCommandNumber))
                 {
                     switch ((Help.HelpCommands)currentCommandNumber)
                     {
