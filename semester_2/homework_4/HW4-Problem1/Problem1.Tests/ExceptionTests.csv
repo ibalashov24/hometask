@@ -1,0 +1,11 @@
+﻿Test,				Comment
+"(1 + 1)",			"Infix form"
+"(+ 5 6 7)",		"More than 2 operands"
+"(+ (* 1 2)) 5)",	"Excess bracket"
+"(+ ((* 1 2) 5)",	"Excess bracket #2"
+"(x 5 6)",			"Invalid operation"
+"(+ (5) 5)",		"Invalid operand"
+"(* 5 a)",			"Invalid operand"
+"1 + 1",			"Fully incorrect"
+"+ 1 1",			"No brackets in the beginning"
+"(* (* 2 (* 2 (* 2 (* 1 2))) (+ 1 2))", "1 bracket expected"
