@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1387FB94-FB72-41C6-A990-0050BD7B9044}</ProjectGuid>
+    <ProjectGuid>{490D0DC9-BEAD-445F-94DD-EE7EF20E803D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>problem_5</RootNamespace>
-    <AssemblyName>problem_5</AssemblyName>
+    <RootNamespace>Problem3</RootNamespace>
+    <AssemblyName>Problem3</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,16 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HashTable.cs" />
+    <Compile Include="HashTableHelp.cs" />
+    <Compile Include="IHashTable.cs" />
+    <Compile Include="IList.cs" />
+    <Compile Include="List.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
