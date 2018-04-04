@@ -44,7 +44,7 @@
         public void FillFactorMustBeZeroInEmptyTableAndPositiveInNonEmpty()
         {
             var table = new HashTableStuff.HashTable<string, object>();
-            Assert.AreEqual(0.0, table.FillFactor);
+            Assert.AreEqual(0, table.FillFactor, 1e-5);
 
             table.Add("testproba555spbu", new object());
         }
