@@ -2,6 +2,11 @@
 {
     using System;
 
+    /// <summary>
+    /// Simple generic hash table
+    /// </summary>
+    /// <typeparam name="TKey">Type of the key</typeparam>
+    /// <typeparam name="TValue">Type of the value</typeparam>
     public class HashTable<TKey, TValue> : IHashTable<TKey, TValue>
     {
         /// <summary>
@@ -58,10 +63,7 @@
         /// <summary>
         /// Gets hash table's fill factor
         /// </summary>
-        public double FillFactor
-        {
-            get => (double)this.size / this.buckets.Length;
-        }
+        public double FillFactor => (double)this.size / this.buckets.Length;
 
         /// <summary>
         /// Allows to access hash table

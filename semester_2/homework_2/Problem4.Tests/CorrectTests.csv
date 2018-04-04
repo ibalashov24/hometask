@@ -1,4 +1,4 @@
-﻿Test, Result, Comment
+Test, Result, Comment
 "1 2 +", "3", "Simple smoke test" 
 "1 2 + 5 - 10 *", "-20", "Simple test with multiple operators" 
 "1 2 /", "0,5", "Simple test with division" 

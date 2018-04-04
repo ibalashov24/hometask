@@ -78,7 +78,7 @@
                 table.Erase(i.ToString());
             }
 
-            Assert.AreEqual(0.0, table.FillFactor);
+            Assert.AreEqual(0, table.FillFactor, 1e-5);
         }
 
         [TestMethod]
@@ -124,7 +124,7 @@
         }
 
         [TestMethod]
-		[ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void GettingNonexistentElementShouldCauseException()
         {
             var table = new HashTableStuff.HashTable<string, object>();

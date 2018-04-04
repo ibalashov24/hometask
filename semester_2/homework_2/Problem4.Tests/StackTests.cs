@@ -12,7 +12,7 @@
         public void CheckSizeOfEmptyStack(bool useArrayStack)
         {
             var stack = SelectStack<object>(useArrayStack);
-            Assert.AreEqual(stack.IsEmpty(), true);
+            Assert.IsTrue(stack.IsEmpty());
         }
 
         [DataTestMethod]

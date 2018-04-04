@@ -33,11 +33,8 @@
             DataAccessMethod.Sequential)]
         public void DataOnWhichShouldBeCorrectResult()
         {
-            // Program can not find column "Test" by name because of garbage
-            // in memory at the place of the column name iside DataRow (see debugger watches)
-            // I do not know how to fix this
-            var expression = this.testContextInstance.DataRow[0].GetType() != typeof(System.DBNull) ?
-                (string)this.testContextInstance.DataRow[0] : "";
+            var expression = this.testContextInstance.DataRow["Test"].GetType() != typeof(System.DBNull) ?
+                (string)this.testContextInstance.DataRow["Test"] : "";
             var correctResult = double.Parse(
                 (string)this.testContextInstance.DataRow["Result"]);
             
@@ -60,11 +57,8 @@
         [ExpectedException(typeof(ArgumentException))]
         public void DataOnWhichShouldBeArgumentException()
         {
-            // Program can not find column "Test" by name because of garbage
-            // in memory at the place of the column name iside DataRow (see debugger watches)
-            // I do not know how to fix this
-            var expression = this.testContextInstance.DataRow[0].GetType() != typeof(System.DBNull) ?
-                (string)this.testContextInstance.DataRow[0] : "";
+            var expression = this.testContextInstance.DataRow["Test"].GetType() != typeof(System.DBNull) ?
+                (string)this.testContextInstance.DataRow["Test"] : "";
             this.stackCalculator.Expression = expression;
 
             this.stackCalculator.CalculateResult();

@@ -7,7 +7,9 @@
     /// <typeparam name="TValue">Element value type in the table</typeparam>
     internal interface IHashTable<TKey, TValue>
     {
-        // Gets hash table's fill factor
+        /// <summary>
+        /// Gets hash table's fill factor
+        /// </summary>
         double FillFactor { get; }
 
         /// <summary>

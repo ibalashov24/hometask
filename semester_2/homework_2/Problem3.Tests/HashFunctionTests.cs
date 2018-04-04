@@ -55,14 +55,7 @@
             
             foreach (var test in inputStrings)
             {
-                try
-                {
-                    int hashValue = hashFunction(test);
-                }
-                catch
-                {
-                    Assert.Fail($"Hash function fails on test: {test}");
-                }
+                int hashValue = hashFunction(test);
             }
         }
     }

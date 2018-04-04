@@ -1,4 +1,4 @@
-﻿Test, Comment
+Test, Comment
 "1 0 /", "Dividing by zero" 
 "0 0 /", "Dividing zero by zero" 
 "blahblah foo /", "Incorrect operands" 
