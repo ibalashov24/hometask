@@ -32,8 +32,25 @@
         /// <returns>Reference to the element</returns>
         public T this[int i]
         {
-            get => this.GetElementByIndex(i).Value;
-            set => this.GetElementByIndex(i).Value = value;
+            get
+            {
+                if (i < 0 || i >= this.Count)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                return this.GetElementByIndex(i).Value;
+            }
+
+            set
+            {
+                if (i < 0 || i >= this.Count)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                this.GetElementByIndex(i).Value = value;
+            }
         }
 
         /// <summary>
