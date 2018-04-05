@@ -3,6 +3,10 @@
     using System;
     using Events;
 
+    /// <summary>
+    /// The base class for all event loops
+    /// that serve the needs of the game
+    /// </summary>
     public abstract class EventLoop
     {
         /// <summary>

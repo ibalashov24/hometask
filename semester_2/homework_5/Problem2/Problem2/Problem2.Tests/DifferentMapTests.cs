@@ -9,13 +9,18 @@
     [ExcludeFromCodeCoverage]
     public class DifferentMapTests
     {
-        public Game.Game IninializeGame(string mapFileName)
+        public Game.Game InitializeGame(string mapFileName)
         {
-            var inputStream = new StreamReader(mapFileName);
+            int width;
+            int height;
+            Game.Map.GameMap currentGameMap;
 
-            var width = int.Parse(inputStream.ReadLine());
-            var height = int.Parse(inputStream.ReadLine());
-            var currentGameMap = new Game.Map.GameMap(inputStream, width, height);
+            using (var inputStream = new StreamReader(mapFileName))
+            {
+                width = int.Parse(inputStream.ReadLine());
+                height = int.Parse(inputStream.ReadLine());
+                currentGameMap = new Game.Map.GameMap(inputStream, width, height);
+            }
 
             var currentGame = new Game.Game(currentGameMap);
 
@@ -29,7 +34,7 @@
         [DataRow("Map4")]
         public void PerformMapTests(string inputFile)
         {
-            var currentGame = IninializeGame("TestMaps/" + inputFile + ".in");
+            var currentGame = InitializeGame("TestMaps/" + inputFile + ".in");
 
             var loop = new ManualEventCaller();
             currentGame.Register(loop);
@@ -77,7 +82,7 @@
             bool moveUpDown,
             int stepCount)
         {
-            var currentGame = IninializeGame($"TestMaps/{inputFile}.in");
+            var currentGame = InitializeGame($"TestMaps/{inputFile}.in");
             var loop = new ManualEventCaller();
             currentGame.Register(loop);
 
@@ -117,7 +122,7 @@
         [ExpectedException(typeof(Game.Map.Exception.InvalidCellTypeInMapException))]
         public void ReadingMapWithInvalidCellTypeShouldCauseException()
         {
-            var currentGame = IninializeGame("TestMaps/MapWithInvalidCells.in");
+            var currentGame = InitializeGame("TestMaps/MapWithInvalidCells.in");
         }
     }
 }

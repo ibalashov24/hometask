@@ -16,18 +16,13 @@
         /// <summary>
         /// Gets the map width
         /// </summary>
-        public int Width
-        {
-            get => board.GetLength(1);
-        }
+        public int Width => board.GetLength(1);
 
         /// <summary>
         /// Gets the map height
         /// </summary>
-        public int Height
-        {
-            get => board.GetLength(0);
-        }
+        public int Height => board.GetLength(0);
+        
 
         /// <summary>
         /// Initializes map

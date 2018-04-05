@@ -13,7 +13,7 @@
         /// Underlay of the game map
         /// </summary>
         /// <seealso cref="GameMap"/>
-        private GameMap gameMap;
+        private IMap gameMap;
 
         /// <summary>
         /// Current player row in the map (not screen)
@@ -42,7 +42,7 @@
         /// Creates new instance of Game
         /// </summary>
         /// <param name="map">Map of the game</param>
-        public Game(GameMap map)
+        public Game(IMap map)
         {
             this.gameMap = map;
             this.currentPlayerCol = currentPlayerRow = 0;
@@ -72,10 +72,10 @@
         /// <param name="loop">Loop that notifies game about events</param>
         public void Register(EventLoop loop)
         {
-            loop.LeftMove.EventList += this.OnMove;
-            loop.RightMove.EventList += this.OnMove;
-            loop.UpMove.EventList += this.OnMove;
-            loop.DownMove.EventList += this.OnMove;
+            loop.LeftMove.Handlers += this.OnMove;
+            loop.RightMove.Handlers += this.OnMove;
+            loop.UpMove.Handlers += this.OnMove;
+            loop.DownMove.Handlers += this.OnMove;
         }
 
         /// <summary>
