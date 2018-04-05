@@ -35,7 +35,7 @@ namespace Problem1.Tests
             var list = new List<int> { 1, 2, 3, 4, 5, 15 };
 
             var systemResult = list.Aggregate(15, accumulator);
-            var ourResult = Utility.ListUtilities.Fold<int, int>(list, 15, accumulator);
+            var ourResult = Utility.ListUtilities.Fold(list, 15, accumulator);
 
             Assert.AreEqual(systemResult, ourResult);
         }
