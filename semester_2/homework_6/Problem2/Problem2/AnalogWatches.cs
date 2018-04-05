@@ -12,29 +12,32 @@ namespace WatchesControl
         // Some settings
 
         // Colors
-        private Color dialFaceColor = Color.Black;
-        private Color hourDivisionColor = Color.Black;
-        private Color minuteDivisionColor = Color.Gray;
-        private Color hourArrowColor = Color.Black;
-        private Color minuteArrowColor = Color.Black;
-        private Color secondArrowColor = Color.Red;
-        private Color pointOfAttachmentColor = Color.Red;
-        private Color backgroundColor = Color.White;
+        private readonly Color dialFaceColor = Color.Black;
+        private readonly Color hourDivisionColor = Color.Black;
+        private readonly Color minuteDivisionColor = Color.Gray;
+        private readonly Color hourArrowColor = Color.Black;
+        private readonly Color minuteArrowColor = Color.Black;
+        private readonly Color secondArrowColor = Color.Red;
+        private readonly Color pointOfAttachmentColor = Color.Red;
+        private readonly Color backgroundColor = Color.White;
 
         // Thicknesses (in pixels)
-        private int dialFaceThickness = 7;
-        private int divisionThickness = 2;
-        private int hourArrowThickness = 4;
-        private int minuteArrowThickness = 3;
-        private int secondArrowThickness = 2;
+        private const int dialFaceThickness = 7;
+        private const int divisionThickness = 2;
+        private const int hourArrowThickness = 4;
+        private const int minuteArrowThickness = 3;
+        private const int secondArrowThickness = 2;
 
         // Lengths and diameters in parts 
         // (length == <dial face diameter> / part)
-        private int pointOfAttachmentDiameterPart = 40;
-        private int hourArrowLengthPart = 6;
-        private int minuteArrowLengthPart = 4;
-        private int secondArrowLengthPart = 3;
-        private int secondArrowCounterweightPart = 12;
+        private const int pointOfAttachmentDiameterPart = 40;
+        private const int hourArrowLengthPart = 6;
+        private const int minuteArrowLengthPart = 4;
+        private const int secondArrowLengthPart = 3;
+        private const int secondArrowCounterweightPart = 12;
+        private const int hourDivisionsLengthPart = 30;
+        private const int minuteDivisionsLengthPart = 45;
+        private const int hourMultipleOfThreeLengthPart = 15;
 
         // End settings
 
@@ -137,7 +140,7 @@ namespace WatchesControl
             var leftTopCornerX = (canvas.ClipRectangle.Width - watchDiameter) / 2;
             var leftTopCornerY = (canvas.ClipRectangle.Height - watchDiameter) / 2;
 
-            var watchPen = new Pen(this.dialFaceColor, this.dialFaceThickness);
+            var watchPen = new Pen(this.dialFaceColor, dialFaceThickness);
             var watchRectangle = new Rectangle(
                 leftTopCornerX,
                 leftTopCornerY,
@@ -171,7 +174,7 @@ namespace WatchesControl
                 canvas,
                 dialFace,
                 60,
-                dialFace.Diameter / 45,
+                dialFace.Diameter / minuteDivisionsLengthPart,
                 this.minuteDivisionColor);
 
             // For "12", "3", "6", "9" hours
@@ -179,14 +182,14 @@ namespace WatchesControl
                 canvas,
                 dialFace,
                 4,
-                dialFace.Diameter / 15,
+                dialFace.Diameter / hourMultipleOfThreeLengthPart,
                 this.hourDivisionColor);
 
             this.DrawDivision(
                 canvas,
                 dialFace,
                 12,
-                dialFace.Diameter / 30,
+                dialFace.Diameter / hourDivisionsLengthPart,
                 this.hourDivisionColor);
         }
 
@@ -199,11 +202,11 @@ namespace WatchesControl
         {
             // TODO: Implement smooth moving of the arrows
 
-            var hourArrowLength = dialFace.Diameter / this.hourArrowLengthPart;
-            var minuteArrowLength = dialFace.Diameter / this.minuteArrowLengthPart;
+            var hourArrowLength = dialFace.Diameter / hourArrowLengthPart;
+            var minuteArrowLength = dialFace.Diameter / minuteArrowLengthPart;
 
-            var secondArrowLength = dialFace.Diameter / this.secondArrowLengthPart;
-            var secondArrowCounterweightLength = dialFace.Diameter / this.secondArrowCounterweightPart;
+            var secondArrowLength = dialFace.Diameter / secondArrowLengthPart;
+            var secondArrowCounterweightLength = dialFace.Diameter / secondArrowCounterweightPart;
 
             double hourArrowAngle = 2 * Math.PI / 12 * (this.currentDateTime.Hour % 12);
             this.DrawSingleArrow(
@@ -212,7 +215,7 @@ namespace WatchesControl
                 new ArrowInfo(
                     hourArrowLength, 
                     this.hourArrowColor, 
-                    this.hourArrowThickness,
+                    hourArrowThickness,
                     hourArrowAngle));
 
             double minuteArrowAngle = 2 * Math.PI / 60 * this.currentDateTime.Minute;
@@ -222,7 +225,7 @@ namespace WatchesControl
                 new ArrowInfo(
                     minuteArrowLength, 
                     this.minuteArrowColor, 
-                    this.minuteArrowThickness,
+                    minuteArrowThickness,
                     minuteArrowAngle));
 
             double secondArrowAngle = 2 * Math.PI / 60 * this.currentDateTime.Second;
@@ -232,7 +235,7 @@ namespace WatchesControl
                 new ArrowInfo(
                     secondArrowLength,
                     this.secondArrowColor, 
-                    this.secondArrowThickness,
+                    secondArrowThickness,
                     secondArrowAngle,
                     secondArrowCounterweightLength));
         }
@@ -247,7 +250,7 @@ namespace WatchesControl
             DialFaceInfo dialFace)
         {
             var pointDiameter = 
-                dialFace.Diameter / this.pointOfAttachmentDiameterPart;
+                dialFace.Diameter / pointOfAttachmentDiameterPart;
             var pointBrush = new SolidBrush(this.pointOfAttachmentColor);
 
             canvas.Graphics.FillEllipse(
@@ -275,7 +278,7 @@ namespace WatchesControl
         {
             var additionToLength = (dialFace.Diameter / 2) - divisionLength;
             var currentAngle = 0.0;
-            var divisionPen = new Pen(divisionColor, this.divisionThickness);
+            var divisionPen = new Pen(divisionColor, divisionThickness);
 
             for (int i = 0; i < divisionCount; ++i)
             {
