@@ -21,6 +21,7 @@
 
         /// <summary>
         /// The value of the last factor (last term in the sum of terms)
+        /// 1 + 3 * 5 + --> 10 * 45 <-- lastMultiplicationResult == 450
         /// </summary>
         private double lastMultiplicationResult;
 
@@ -53,27 +54,20 @@
         /// <summary>
         /// Gets the value of the last operand
         /// </summary>
-        public double LastOperand
-        {
-            get => this.lastOperandValue;
-        }
+        public double LastOperand => this.lastOperandValue;
 
         /// <summary>
         /// Gets value of the whole expression
         /// </summary>
-        public double ExpressionValue
-        {
-            get => this.fullSum + this.lastMultiplicationResult;
-        }
+        public double ExpressionValue 
+            => this.fullSum + this.lastMultiplicationResult;
         
         /// <summary>
         /// Sets the value of the last operands
         /// </summary>
         /// <param name="value"></param>
-        public void SetLastOperandValue(double value)
-        {
-            this.lastOperandValue = value;
-        }
+        public void SetLastOperandValue(double value) 
+            => this.lastOperandValue = value;
 
         /// <summary>
         /// Sets the type of the next operator
@@ -123,34 +117,26 @@
         /// <summary>
         /// Applies the negation operation to the last operand
         /// </summary>
-        public void NegateCurrentOperand()
-        {
-            this.lastOperandValue = -this.lastOperandValue;
-        }
+        public void NegateCurrentOperand() 
+            => this.lastOperandValue = -this.lastOperandValue;
 
         /// <summary>
         /// Replaces operand X with operand 1/X
         /// </summary>
         public void PutOperandIntoDenominator()
-        {
-            this.lastOperandValue = 1 / this.lastOperandValue;
-        }
+            => this.lastOperandValue = 1 / this.lastOperandValue;
 
         /// <summary>
         /// Replaces the last operand with it's square root
         /// </summary>
         public void ApplySqrtToOperand()
-        {
-            this.lastOperandValue = Math.Sqrt((double)this.lastOperandValue);
-        }
+            => this.lastOperandValue = Math.Sqrt((double)this.lastOperandValue);
 
         /// <summary>
         /// Replaces the last operand with it's square
         /// </summary>
         public void ApplySqrToOperand()
-        {
-            this.lastOperandValue *= this.lastOperandValue;
-        }
+            => this.lastOperandValue *= this.lastOperandValue;
 
         /// <summary>
         /// Leads calculator to it's initial state 

@@ -6,7 +6,7 @@ namespace Problem1.Tests
     [TestClass]
     public class CalculatorTests
     {
-        const double epsilon = 1e-6;
+        private const double epsilon = 1e-6;
         private Calculator.Calculator calculator;
 
         [TestInitialize]
@@ -19,9 +19,7 @@ namespace Problem1.Tests
         public void CalculatorValuesShouldBeDefaultInTheBeginning()
         {
             this.IsExpressionEmpty();
-            Assert.IsTrue(this.AreDoubleEqual(
-                0,
-                this.calculator.LastOperand));
+            Assert.AreEqual(0, this.calculator.LastOperand, epsilon);
         }
 
         [TestMethod]
@@ -29,9 +27,8 @@ namespace Problem1.Tests
         {
             this.calculator.SetLastOperandValue(15.5);
             this.calculator.FlushOperand();
-            Assert.IsTrue(AreDoubleEqual(
-                15.5,
-                calculator.ExpressionValue));
+            
+            Assert.AreEqual(15.5, this.calculator.ExpressionValue, epsilon);
         }
 
         [TestMethod]
@@ -44,9 +41,7 @@ namespace Problem1.Tests
             this.calculator.SetNextOperator(Calculator.OperatorType.Plus);
             this.calculator.FlushOperand();
 
-            Assert.IsTrue(AreDoubleEqual(
-                -1,
-                this.calculator.ExpressionValue));
+            Assert.AreEqual(-1, this.calculator.ExpressionValue, epsilon);
         }
 
         [TestMethod]
@@ -59,9 +54,7 @@ namespace Problem1.Tests
             this.calculator.SetNextOperator(Calculator.OperatorType.Minus);
             this.calculator.FlushOperand();
 
-            Assert.IsTrue(AreDoubleEqual(
-                8.5,
-                this.calculator.ExpressionValue));
+            Assert.AreEqual(8.5, this.calculator.ExpressionValue, epsilon);
         }
 
         [TestMethod]
@@ -75,9 +68,7 @@ namespace Problem1.Tests
                 Calculator.OperatorType.Multiplication);
             this.calculator.FlushOperand();
 
-            Assert.IsTrue(AreDoubleEqual(
-                26.25,
-                this.calculator.ExpressionValue));
+            Assert.AreEqual(26.25, this.calculator.ExpressionValue, epsilon);
         }
 
         [TestMethod]
@@ -90,9 +81,7 @@ namespace Problem1.Tests
             this.calculator.SetNextOperator(Calculator.OperatorType.Division);
             this.calculator.FlushOperand();
 
-            Assert.IsTrue(AreDoubleEqual(
-                5.25,
-                this.calculator.ExpressionValue));
+            Assert.AreEqual(5.25, this.calculator.ExpressionValue, epsilon);
         }
 
         [TestMethod]
@@ -116,9 +105,7 @@ namespace Problem1.Tests
                 }
             }
 
-            Assert.IsTrue(this.AreDoubleEqual(
-                realResult,
-                this.calculator.ExpressionValue));
+            Assert.AreEqual(realResult, this.calculator.ExpressionValue, epsilon);
         }
 
         [TestMethod]
@@ -164,9 +151,7 @@ namespace Problem1.Tests
                 realResult += realMultiplicationResult;
             }
 
-            Assert.IsTrue(this.AreDoubleEqual(
-                realResult,
-                this.calculator.ExpressionValue));
+            Assert.AreEqual(realResult, this.calculator.ExpressionValue, epsilon);
         }
 
         [TestMethod]
@@ -175,9 +160,7 @@ namespace Problem1.Tests
             this.calculator.SetLastOperandValue(65);
             this.calculator.ApplySqrtToOperand();
 
-            Assert.IsTrue(this.AreDoubleEqual(
-                Math.Sqrt(65),
-                this.calculator.LastOperand));
+            Assert.AreEqual(Math.Sqrt(65), this.calculator.LastOperand, epsilon);
         }
 
         [TestMethod]
@@ -186,9 +169,7 @@ namespace Problem1.Tests
             this.calculator.SetLastOperandValue(15.56);
             this.calculator.ApplySqrToOperand();
 
-            Assert.IsTrue(this.AreDoubleEqual(
-                Math.Pow(15.56, 2),
-                this.calculator.LastOperand));
+            Assert.AreEqual(Math.Pow(15.56, 2), this.calculator.LastOperand, epsilon);
         }
 
         [TestMethod]
@@ -214,9 +195,7 @@ namespace Problem1.Tests
             this.calculator.ClearMemory();
 
             Assert.IsTrue(this.IsExpressionEmpty());
-            Assert.IsTrue(this.AreDoubleEqual(
-                0,
-                this.calculator.LastOperand));
+            Assert.AreEqual(0, this.calculator.LastOperand, epsilon);
         }
 
         [TestMethod]
@@ -225,9 +204,7 @@ namespace Problem1.Tests
             this.calculator.SetLastOperandValue(15.5);
             this.calculator.PutOperandIntoDenominator();
 
-            Assert.IsTrue(this.AreDoubleEqual(
-                1/15.5,
-                this.calculator.LastOperand));
+            Assert.AreEqual(1 / 15.5, this.calculator.LastOperand, epsilon);
         }
 
         [TestMethod]
@@ -235,15 +212,10 @@ namespace Problem1.Tests
         {
             this.calculator.SetLastOperandValue(42);
             this.calculator.NegateCurrentOperand();
-
-            Assert.IsTrue(this.AreDoubleEqual(
-                -42,
-                this.calculator.LastOperand));
-
+            Assert.AreEqual(-42, this.calculator.LastOperand, epsilon);
+            
             this.calculator.NegateCurrentOperand();
-            Assert.IsTrue(this.AreDoubleEqual(
-                42,
-                this.calculator.LastOperand));
+            Assert.AreEqual(42, this.calculator.LastOperand, epsilon);
         }
 
         [TestMethod]
@@ -259,9 +231,7 @@ namespace Problem1.Tests
             this.calculator.ReinitializeCalculatorWithResult();
 
             Assert.IsTrue(this.IsExpressionEmpty());
-            Assert.IsTrue(this.AreDoubleEqual(
-                8.5,
-                this.calculator.LastOperand));
+            Assert.AreEqual(8.5, this.calculator.LastOperand, epsilon);
         }
 
         [TestMethod]
@@ -271,27 +241,19 @@ namespace Problem1.Tests
             this.calculator.SetLastOperandValue(153);
             this.calculator.FlushOperand();
 
-            Assert.IsTrue(this.AreDoubleEqual(
-                -153,
-                this.calculator.ExpressionValue));
+            Assert.AreEqual(-153, this.calculator.ExpressionValue, epsilon);
             Assert.AreEqual("- 153 -", this.calculator.Expression);
         }
 
         private bool IsExpressionEmpty()
         {
-            var expressionValueZero = this.AreDoubleEqual(
-                0,
-                this.calculator.ExpressionValue);
+            var expressionValueZero = 
+                Math.Abs(this.calculator.ExpressionValue) < epsilon;
             
             var expressionEmpty 
                 = string.Empty == this.calculator.Expression;
 
             return expressionEmpty && expressionValueZero;
-        }
-
-        private bool AreDoubleEqual(double a, double b)
-        {
-            return Math.Abs(a - b) < epsilon;
         }
     }
 }
