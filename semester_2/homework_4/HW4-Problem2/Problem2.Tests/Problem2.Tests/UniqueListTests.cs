@@ -50,6 +50,13 @@ namespace Problem2.Tests
                 this.list.Insert((i * 3456 + 234).ToString(), i);
             }
 
+            int counter = 0;
+            foreach (var element in list)
+            {
+                Assert.AreEqual((counter * 3456 + 234).ToString(), element);
+                ++counter;
+            }
+
             for (int i = 0; i < 1000; ++i)
             {
                 this.list.Erase(0);

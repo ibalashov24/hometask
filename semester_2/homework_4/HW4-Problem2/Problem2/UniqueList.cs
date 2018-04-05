@@ -1,13 +1,14 @@
 ﻿namespace ListStuff
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     /// <summary>
     /// List which has only one (or 0) entry of element with each value
     /// </summary>
     /// <typeparam name="T">Element type</typeparam>
-    public class UniqueList<T> : List<T>
+    public class UniqueList<T> : List<T>, IEnumerable<T>
     {
         /// <summary>
         /// Checks if element with value == <c>value</c>is already in list
@@ -42,5 +43,29 @@
 
             base.Insert(insertValue, position);
         }
+
+        /// <summary>
+        /// Implements enumerator stuff
+        /// </summary>
+        /// <returns>Current enumerator</returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Implements enumerator stuff
+        /// </summary>
+        /// <returns>Current enumerator</returns>
+        public new IEnumerator<T> GetEnumerator()
+        {
+            var currentPosition = this.listContent;
+            while (currentPosition != null)
+            {
+                yield return currentPosition.Value;
+                currentPosition = currentPosition.Next;
+            }
+        }
+
     }
 }
