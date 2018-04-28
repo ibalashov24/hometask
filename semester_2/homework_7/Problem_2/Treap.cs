@@ -225,14 +225,14 @@ namespace CustomSet
         /// Determines whether the current set is a 
         /// proper (strict) subset of a specified collection.
         /// </summary>
-        /// <param name="inputSet">Input collection</param>
+        /// <param name="inputCollection">Input collection</param>
         /// <returns>
         /// True if the treap is proper 
         /// subset of given collection
         /// </returns>
-        public bool IsProperSubsetOf(IEnumerable<T> inputSet)
+        public bool IsProperSubsetOf(IEnumerable<T> inputCollection)
         {
-            var secondTreap = this.BuildTreap(inputSet);
+            var secondTreap = this.BuildTreap(inputCollection);
 
             return this.IsSubsetOf(secondTreap) 
                     && this.Count != secondTreap.Count;
@@ -258,11 +258,9 @@ namespace CustomSet
                 {
                     return false;
                 }
-
-                secondTreap.Add(element);
             }
 
-            return this.Count == secondTreap.Count;
+            return this.Count > secondTreap.Count;
         }
 
 
@@ -384,7 +382,7 @@ namespace CustomSet
         /// <returns>True if sets are equal</returns>
         public bool SetEquals(IEnumerable<T> inputCollection)
         {
-            var secondTreap = new Treap<T>();
+            var secondTreap = this.BuildTreap(inputCollection);
 
             return this.IsSubsetOf(secondTreap) && 
                     this.Count == secondTreap.Count;
@@ -414,10 +412,7 @@ namespace CustomSet
 
             foreach (var element in this)
             {
-                if (secondTreap.Contains(element))
-                {
-                    secondTreap.Remove(element);
-                }
+                secondTreap.Remove(element);
             }
 
             this.UnionWith(secondTreap);
@@ -431,6 +426,11 @@ namespace CustomSet
         /// <param name="inputCollection">Input collection</param>
         public void UnionWith(IEnumerable<T> inputCollection)
         {
+            if (inputCollection == null)
+            {
+                return;
+            }
+
             foreach (var element in inputCollection)
             {
                 this.Add(element);
