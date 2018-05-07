@@ -1,0 +1,179 @@
+Script started on 2018-05-08 00:14:46+0300
+]777;notify;Command completed;uname -a]0;ilya@localhost:~/Github/hometask/semester_2/homework_9]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9[ilya@localhost homework_9]$ cp hhh[K[K[K../homeowr[K[K[Kwork_5/pRO[K[K[KProblem1/Pro;[Kblem1/ListUtilities.cs ListUtilities.cs
+]777;notify;Command completed;cp ../homework_5/Problem1/Problem1/ListUtilities.cs ListUtilities.cs]0;ilya@localhost:~/Github/hometask/semester_2/homework_9]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9[ilya@localhost homework_9]$ ls
+consoleOutput  ListUtilities.cs
+]777;notify;Command completed;ls]0;ilya@localhost:~/Github/hometask/semester_2/homework_9]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9[ilya@localhost homework_9]$ dotnet new col[Knsole -i[Ko Problem1[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kmd[Kkdir Problem2[K1
+]777;notify;Command completed;mkdir Problem1]0;ilya@localhost:~/Github/hometask/semester_2/homework_9]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9[ilya@localhost homework_9]$ cd Problem1
+]777;notify;Command completed;cd Problem1]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ l[Kdotnet new sln 
+
+Welcome to .NET Core!
+---------------------
+Learn more about .NET Core @ https://aka.ms/dotnet-docs. Use dotnet --help to see available commands or go to https://aka.ms/dotnet-cli-docs.
+
+Telemetry
+--------------
+The .NET Core tools collect usage data in order to improve your experience. The data is anonymous and does not include command-line arguments. The data is collected by Microsoft and shared with the community.
+You can opt out of telemetry by setting a DOTNET_CLI_TELEMETRY_OPTOUT environment variable to 1 using your favorite shell.
+You can read more about .NET Core tools telemetry @ https://aka.ms/dotnet-cli-telemetry.
+Getting ready...
+The template "Solution File" was created successfully.
+]777;notify;Command completed;dotnet new sln ]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ ls
+Problem1.sln
+]777;notify;Command completed;ls]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ dotnet new console -o Problm[Kem1
+The template "Console Application" was created successfully.
+
+Processing post-creation actions...
+Running 'dotnet restore' on Problem1/Problem1.csproj...
+  Restoring packages for /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1/Problem1.csproj...
+  Generating MSBuild file /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1/obj/Problem1.csproj.nuget.g.props.
+  Generating MSBuild file /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1/obj/Problem1.csproj.nuget.g.targets.
+  Restore completed in 147,47 ms for /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1/Problem1.csproj.
+
+Restore succeeded.
+
+]777;notify;Command completed;dotnet new console -o Problem1]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ cd Problem1
+]777;notify;Command completed;cd Problem1]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ ls
+[0m[38;5;33mobj[0m  Problem1.csproj  Program.cs
+]777;notify;Command completed;ls]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ mv ../ListUtilities.cs ListUtilities.cs[C[C[C[C[C[C[1@.[1@.[1@/
+]777;notify;Command completed;mv ../../ListUtilities.cs ListUtilities.cs]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ ls
+ListUtilities.cs  [0m[38;5;33mobj[0m  Problem1.csproj  Program.cs
+]777;notify;Command completed;ls]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ code[K[K[K[Kdotnet [K[K[Ket add d[Ksln [K[K[K[K[K[K[K[Ksln Problem1 s[Kadd Problem1.csprohj[K[Kj[C[C[C[C[C[C[C[C[1@.[1@.[1@/[C[C[C[C[C[C[C[C[1@.[1@s[1@l[1@n
+Project `Problem1/Problem1.csproj` added to the solution.
+]777;notify;Command completed;dotnet sln ../Problem1.sln add Problem1.csproj]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ code
+]777;notify;Command completed;code]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ gt[Kit add List*
+]777;notify;Command completed;git add List*]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ git commit -m "Add s[K[K[K[K[KPrepare[K[K[K[K[K[K[KFi[K[KImplemen[K[K[K[K[K[K[K[KAdd F[KFilter() func[K[K[K[K[K function (modified from HT5)[K[K#%[K50[K)"
+[s_2_homework_9_#1 7e6f57d] Add Filter() function (modified from HT#5)
+ 1 file changed, 29 insertions(+)
+ create mode 100644 semester_2/homework_9/Problem1/Problem1/ListUtilities.cs
+]777;notify;Command completed;git commit -m "Add Filter() function (modified from HT#5)"]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1
+[ilya@localhost Problem1]$ dotnet run
+[?1h=[?1h=[?1h=Enter count of primes to print: [?1h=10
+Primes:
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+]777;notify;Command completed;dotnet run]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ cd ..
+]777;notify;Command completed;cd ..]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ dotnet new mstest -o Prom[Kblem1.[K>[K.Tests
+The template "Unit Test Project" was created successfully.
+
+Processing post-creation actions...
+Running 'dotnet restore' on Problem1.Tests/Problem1.Tests.csproj...
+  Restoring packages for /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests/Problem1.Tests.csproj...
+  Generating MSBuild file /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests/obj/Problem1.Tests.csproj.nuget.g.props.
+  Generating MSBuild file /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests/obj/Problem1.Tests.csproj.nuget.g.targets.
+  Restore completed in 829,19 ms for /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests/Problem1.Tests.csproj.
+
+Restore succeeded.
+
+]777;notify;Command completed;dotnet new mstest -o Problem1.Tests]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ cd Problem1.Tests
+]777;notify;Command completed;cd Problem1.Tests]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ dotnet add reference ../Problem1/Problem1.csproj
+Reference `..\Problem1\Problem1.csproj` added to the project.
+]777;notify;Command completed;dotnet add reference ../Problem1/Problem1.csproj]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ dotnet sln Problem1 [K[K[K[K[K[K[K[K[K../Problem1.sn [K[Kln add Problem1.Tests.csproj
+Project `Problem1.Tests/Problem1.Tests.csproj` added to the solution.
+]777;notify;Command completed;dotnet sln ../Problem1.sln add Problem1.Tests.csproj]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ ls
+[0m[38;5;33mobj[0m  Problem1.Tests.csproj  UnitTest1.cs
+]777;notify;Command completed;ls]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ cd ..[K[K[K[K[Kc d[K[Kd ..
+]777;notify;Command completed;cd ..]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ cd [K[K[Kcd Problem1
+]777;notify;Command completed;cd Problem1]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ git tat[K[K[Kstt[Katus
+На ветке s_2_homework_9_#1
+Неотслеживаемые файлы:
+  (используйте «git add <файл>…», чтобы добавить в то, что будет включено в коммит)
+
+	[31m../../../../.gitignore[m
+	[31m../../../../RemoteSystemsTempFiles/[m
+	[31m../../../homework_7/[m
+	[31m../Problem1.Tests/[m
+	[31m../Problem1.sln[m
+	[31m.vscode/[m
+	[31mProblem1.csproj[m
+	[31mProgram.cs[m
+	[31mbin/[m
+	[31mobj/[m
+	[31m../../consoleOutput[m
+
+ничего не добавлено в коммит, но есть неотслеживаемые файлы (используйте «git add», чтобы отслеживать их)
+]777;notify;Command completed;git status]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ git ad [Kd *.[Kcsproj *.cs
+]777;notify;Command completed;git add *csproj *.cs]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ git commit --[Km "Impe[Klement pro[K[K[Kproblem #1"
+[s_2_homework_9_#1 1f49460] Implement problem #1
+ 2 files changed, 92 insertions(+)
+ create mode 100644 semester_2/homework_9/Problem1/Problem1/Problem1.csproj
+ create mode 100644 semester_2/homework_9/Problem1/Problem1/Program.cs
+]777;notify;Command completed;git commit -m "Implement problem #1"]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ cd ..
+]777;notify;Command completed;cd ..]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ ls
+[0m[38;5;33mProblem1[0m  Problem1.sln  [38;5;33mProblem1.Tests[0m
+]777;notify;Command completed;ls]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ cd Problem1
+]777;notify;Command completed;cd Problem1]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ dotnet build
+[?1h=Microsoft (R) Build Engine version 15.6.84.34536 for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+[?1h=[?1h=  Restore completed in 31,52 ms for /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1/Problem1.csproj.
+  Problem1 -> /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1/bin/Debug/netcoreapp2.0/Problem1.dll
+[39;49m[92m
+Build succeeded.
+[39;49m    0 Warning(s)
+[39;49m    0 Error(s)
+[39;49m
+Time Elapsed 00:00:01.14
+]777;notify;Command completed;dotnet build]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1[ilya@localhost Problem1]$ cd ..
+]777;notify;Command completed;cd ..]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1[ilya@localhost Problem1]$ cd Problem1.Tests
+]777;notify;Command completed;cd Problem1.Tests]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ dotnet build
+[?1h=Microsoft (R) Build Engine version 15.6.84.34536 for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+[?1h=[?1h=  Restore completed in 39,68 ms for /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1/Problem1.csproj.
+  Restore completed in 42,14 ms for /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests/Problem1.Tests.csproj.
+  Problem1 -> /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1/bin/Debug/netcoreapp2.0/Problem1.dll
+  Problem1.Tests -> /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests/bin/Debug/netcoreapp2.0/Problem1.Tests.dll
+[39;49m[92m
+Build succeeded.
+[39;49m    0 Warning(s)
+[39;49m    0 Error(s)
+[39;49m
+Time Elapsed 00:00:02.19
+]777;notify;Command completed;dotnet build]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ dotnet test
+[?1h=[?1h=[?1h=Build started, please wait...
+Build completed.
+
+Test run for /home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests/bin/Debug/netcoreapp2.0/Problem1.Tests.dll(.NETCoreApp,Version=v2.0)
+Microsoft (R) Test Execution Command Line Tool Version 15.6.0-preview-20180109-01
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+
+[39;49mTotal tests: 1. Passed: 1. Failed: 0. Skipped: 0.
+[39;49m[39;49m[92mTest Run Successful.
+[39;49m[39;49mTest execution time: 0,7713 Seconds
+[39;49m[?1h=]777;notify;Command completed;dotnet test]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ git status
+На ветке s_2_homework_9_#1
+Неотслеживаемые файлы:
+  (используйте «git add <файл>…», чтобы добавить в то, что будет включено в коммит)
+
+	[31m../../../../.gitignore[m
+	[31m../../../../RemoteSystemsTempFiles/[m
+	[31m../../../homework_7/[m
+	[31m./[m
+	[31m../Problem1.sln[m
+	[31m../Problem1/.vscode/[m
+	[31m../Problem1/bin/[m
+	[31m../Problem1/obj/[m
+	[31m../../consoleOutput[m
+
+ничего не добавлено в коммит, но есть неотслеживаемые файлы (используйте «git add», чтобы отслеживать их)
+]777;notify;Command completed;git status]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ ls
+[0m[38;5;33mbin[0m  [38;5;33mobj[0m  PrimeSequenceTests.cs  Problem1.Tests.csproj
+]777;notify;Command completed;ls]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ git add *cs [K*
+]777;notify;Command completed;git add *cs*]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1.Tests]$ git commit -m "Adc [Kd [K[K[Kd tests[Ks"
+[s_2_homework_9_#1 4b5d4aa] Add tests
+ 2 files changed, 51 insertions(+)
+ create mode 100644 semester_2/homework_9/Problem1/Problem1.Tests/PrimeSequenceTests.cs
+ create mode 100644 semester_2/homework_9/Problem1/Problem1.Tests/Problem1.Tests.csproj
+]777;notify;Command completed;git commit -m "Add tests"]0;ilya@localhost:~/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests]7;file://localhost.localdomain/home/ilya/Github/hometask/semester_2/homework_9/Problem1/Problem1.Tests[ilya@localhost Problem1]$ exit
+
+Script done on 2018-05-08 01:16:42+0300
