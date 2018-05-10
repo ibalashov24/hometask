@@ -5,9 +5,8 @@ branches:
     - s_2_homework_7_#2
 
 environment:
-  - solution_path: semester_2/homework_7/
-  - solution_file: homework_7.sln
-#    - test_project_file: Problem_2.Tests/Problem_2.Tests.csproj
+  solution_path: semester_2/homework_7/
+  solution_file: homework_7.sln
 
 build_script:
   - dotnet build %solution_path%/%solution_file%
