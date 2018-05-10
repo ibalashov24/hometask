@@ -7,10 +7,10 @@ branches:
 environment:
   solution_path: semester_2/homework_7/
   project_file: Problem_2/Problem_2.csproj
-  test_project_file: Problem_2.Tests/Problem_2.Tests.csproj
+  test_project_folder: Problem_2.Tests
 
 build_script:
   - dotnet build %solution_path%/%project_file%
 
-test_script:
-  - dotnet test %solution_path%/%test_project_file%
+before_test:
+  - cd %solution_path%/%test_project_folder%
