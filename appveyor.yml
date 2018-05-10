@@ -7,6 +7,7 @@ branches:
 before_build:
   - dotnet --info
   - dotnet restore semester_2/homework_7/homework_7.sln
+  - dotnet add semester_2/homework_7/Problem_2.Tests/Problem_2.Tests.csproj package Appveyor.TestLogger
 
 build:
   project: semester_2/homework_7/homework_7.sln
