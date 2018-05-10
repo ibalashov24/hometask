@@ -7,16 +7,13 @@ branches:
   only:
     - s_2_homework_7_#2
 
-environment:
-  solution_path: semester_2/homework_7/
-  project_file: Problem_2/Problem_2.csproj
-  test_project_file: Problem_2.Tests/Problem_2.Tests.csproj
+#environment:
+#  solution_path: semester_2/homework_7/
+#  solution_file: homework_7.sln
+#  test_project_file: Problem_2.Tests/Problem_2.Tests.csproj
 
-build_script:
-  - dotnet build %solution_path%/%project_file%
+build:
+  project: semester_2/homework_7/homework_7.sln
 
-before_test:
-  - dotnet add %solution_path%/%test_project_file% package Appveyor.TestLogger
-
-test_script:
-  - dotnet test %solution_path%/%test_project_file%
+#test_script:
+#  - dotnet test %solution_path%/%test_project_file%
