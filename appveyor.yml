@@ -1,0 +1,12 @@
+image: Visual  Studio 2017
+
+branches:
+  only:
+    - s_2_homework_7_#2
+
+environment:
+  matrix:
+    - solution_name: semester_2/homework_7/Problem2/homework_7.sln 
+
+build_script:
+  - dotnet run %solution_name%
