@@ -16,7 +16,7 @@ build_script:
   - dotnet build %solution_path%/%project_file%
 
 before_test:
-  - dotnet add package Appveyor.TestLogger
+  - dotnet add %solution_path%/%test_project_file% package Appveyor.TestLogger
 
 test_script:
   - dotnet test %solution_path%/%test_project_file%
