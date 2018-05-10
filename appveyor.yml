@@ -1,5 +1,8 @@
 image: Visual Studio 2017
 
+before_build:
+  - dotnet --info
+
 branches:
   only:
     - s_2_homework_7_#2
@@ -7,10 +10,13 @@ branches:
 environment:
   solution_path: semester_2/homework_7/
   project_file: Problem_2/Problem_2.csproj
-  test_project_folder: Problem_2.Tests
+  test_project_file: Problem_2.Tests/Problem_2.Tests.csproj
 
 build_script:
   - dotnet build %solution_path%/%project_file%
 
 before_test:
-  - cd %solution_path%/%test_project_folder%
+  - dotnet add package Appveyor.TestLogger
+
+test_script:
+  - dotnet test %solution_path%/%test_project_file%
