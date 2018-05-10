@@ -6,7 +6,7 @@ branches:
 
 environment:
   matrix:
-    - solution_name: semester_2/homework_7/homework_7.sln 
+    - project_name: semester_2/homework_7/Problem_2/Problem_2.csproj 
 
 build_script:
-  - dotnet run %solution_name%
+  - dotnet run --project %project_name%
