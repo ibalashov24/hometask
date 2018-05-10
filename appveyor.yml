@@ -1,12 +1,14 @@
-image: Visual Studio 2017
+	image: Visual Studio 2017
 
-branches:
-  only:
-    - s_2_homework_7_#2
+	branches:
+	  only:
+		- s_2_homework_7_#2
 
-environment:
-  matrix:
-    - project_name: semester_2/homework_7/Problem_2/Problem_2.csproj 
+	environment:
+	  matrix:
+		- solution_path: semester_2/homework_7/
+		- solution_file: homework_7.sln
+	#    - test_project_file: Problem_2.Tests/Problem_2.Tests.csproj
 
-build_script:
-  - dotnet run --project %project_name%
+	build_script:
+	  - dotnet build %solution_path%/%solution_file%
