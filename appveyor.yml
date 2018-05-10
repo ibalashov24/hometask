@@ -1,19 +1,12 @@
 image: Visual Studio 2017
 
-before_build:
-  - dotnet --info
-
 branches:
   only:
     - s_2_homework_7_#2
 
-#environment:
-#  solution_path: semester_2/homework_7/
-#  solution_file: homework_7.sln
-#  test_project_file: Problem_2.Tests/Problem_2.Tests.csproj
+before_build:
+  - dotnet --info
+  - dotnet restore semester_2/homework_7/homework_7.sln
 
 build:
   project: semester_2/homework_7/homework_7.sln
-
-#test_script:
-#  - dotnet test %solution_path%/%test_project_file%
