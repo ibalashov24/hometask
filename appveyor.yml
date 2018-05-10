@@ -5,9 +5,8 @@ branches:
     - s_2_homework_7_#2
 
 environment:
-  matrix:
-    - solution_path: semester_2/homework_7/
-    - solution_file: homework_7.sln
+  - solution_path: semester_2/homework_7/
+  - solution_file: homework_7.sln
 #    - test_project_file: Problem_2.Tests/Problem_2.Tests.csproj
 
 build_script:
