@@ -4,5 +4,8 @@ branches:
   only:
     - s_3_homework_1
 
+before_build:
+  - nuget install Lazy.Tests/packages.config
+
 build:
   project: semester_3/hometask_1/hometask_1.sln
