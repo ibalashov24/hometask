@@ -5,7 +5,7 @@ branches:
     - s_3_homework_1
 
 before_build:
-  - nuget restore
+  - nuget restore semester_3/hometask_1/hometask_1.sln
 
 build:
   project: semester_3/hometask_1/hometask_1.sln
