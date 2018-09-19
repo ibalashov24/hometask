@@ -46,5 +46,29 @@ namespace Tests
 
             Assert.AreEqual(1, callCount, "Supplier was called more than once!");
         }
+
+
+        [TestMethod]
+        public void LazyParallelShouldWorkCorrectAfterThrowingExcetionInSupplier()
+        {
+            var lazy = LazyStuff.LazyFactory<int>.CreateParallelLazy(()
+                => { throw new Exception(); });
+
+            var threads = new Thread[200];
+            for (int i = 0; i < threads.Length; ++i)
+            {
+                threads[i] = new Thread(() => { lazy.Get(); });
+            }
+
+            foreach (var thread in threads)
+            {
+                thread.Start();
+            }
+
+            foreach (var thread in threads)
+            {
+                thread.Join();
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@
         /// <summary>
         /// Computation function
         /// </summary>
-        private readonly Func<T> supplierFunction;
+        private Func<T> supplierFunction;
 
         /// <summary>
         /// If false then <see cref="supplierFunction"/>
@@ -45,7 +45,9 @@
             if (!this.isResultCalculated)
             {
                 this.computationResult = this.supplierFunction();
+
                 this.isResultCalculated = true;
+                this.supplierFunction = null;
             }
 
             return this.computationResult;

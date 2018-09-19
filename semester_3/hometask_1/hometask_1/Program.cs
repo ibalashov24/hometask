@@ -4,7 +4,7 @@
     using System.Threading;
 
     public static class Program
-    {
+    { 
         public static void Main()
         {
             var usualLazy = LazyStuff.LazyFactory<int>.CreateLazy(TestFunction);

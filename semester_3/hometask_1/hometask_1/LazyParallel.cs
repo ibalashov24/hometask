@@ -12,18 +12,18 @@
         /// <summary>
         /// Computation function
         /// </summary>
-        private readonly Func<T> supplierFunction;
+        private volatile Func<T> supplierFunction;
 
         /// <summary>
-        /// Mutex for syncronising calls of supplier
+        /// Object to use in lock(){}
         /// </summary>
-        private readonly Mutex supplierFunctionMutex = new Mutex();
+        private Object lockObject = new Object();
 
         /// <summary>
         /// If false then <see cref="supplierFunction"/> 
         /// will be called in <see cref="Get"/>
         /// </summary>
-        private bool isResultCalculated = false;
+        private volatile bool isResultCalculated = false;
 
         /// <summary>
         /// Calculated result of the supplier
@@ -43,15 +43,16 @@
         {
             if (!this.isResultCalculated)
             {
-                this.supplierFunctionMutex.WaitOne();
-
-                if (!this.isResultCalculated)
+                lock (this.lockObject)
                 {
-                    this.computationResult = this.supplierFunction();
-                    this.isResultCalculated = true;
-                }
+                    if (!this.isResultCalculated)
+                    {
+                        this.computationResult = this.supplierFunction();
 
-                this.supplierFunctionMutex.ReleaseMutex();
+                        this.isResultCalculated = true;
+                        this.supplierFunction = null;
+                    }
+                }
             }
 
             return this.computationResult;
