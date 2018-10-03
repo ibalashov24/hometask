@@ -15,19 +15,14 @@
         private readonly Func<TResult> supplier;
 
         /// <summary>
-        /// Callback which adds given task to the parent thread pool
+        /// Pool that created current task
         /// </summary>
-        private readonly Action<Action<BasePoolThread>> newTaskInstaller;
+        private MyThreadPool parentPool;
 
         /// <summary>
-        /// Blocks caller thread until task result is calculated
+        /// Blocking thread that called Result until task is not executed
         /// </summary>
-        private readonly ManualResetEvent resultReturnGuard = new ManualResetEvent(false);
-
-        /// <summary>
-        /// Main thread which calculates supplier function
-        /// </summary>
-        private BasePoolThread taskThread;
+        private ManualResetEvent resultGuard = new ManualResetEvent(false);
 
         /// <summary>
         /// Calculation result
@@ -42,32 +37,13 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MyTask{TResult}"/> class.
         /// </summary>
-        /// <param name="supplier">Supplier function to calculate</param>
-        /// <param name="newTaskInstaller">
-        /// Callback which adds given task to the parent thread pool
-        /// </param>
-        /// <param name="enqueueImmediately">
-        /// If true then task will be put into pool execution queue immediately
-        /// </param>
-        public MyTask(
-            Func<TResult> supplier,
-            Action<Action<BasePoolThread>> newTaskInstaller,
-            bool enqueueImmediately = true)
+        /// <param name="parentPool">Pool that created these task</param>
+        /// <param name="supplier">Function to calculate</param>
+        public MyTask(MyThreadPool parentPool, Func<TResult> supplier)
         {
+            this.parentPool = parentPool;
             this.supplier = supplier;
-            this.newTaskInstaller = newTaskInstaller;
-
-            if (enqueueImmediately)
-            {
-                this.EnqueueTask();
-            }
         }
-
-        /// <summary>
-        /// Is activated when the task has completed its work
-        /// and calculated some result
-        /// </summary>
-        public event EventHandler<TaskResultInfo> TaskCompleted;
 
         /// <summary>
         /// Gets a value indicating whether task is completed
@@ -82,7 +58,7 @@
             get
             {
                 // Waiting while result is being calculated
-                this.resultReturnGuard.WaitOne();
+                this.resultGuard.WaitOne();
 
                 if (this.occuredException == null)
                 {
@@ -98,8 +74,8 @@
         /// <summary>
         /// Generates new task based on the result of current task
         /// </summary>
-        /// <typeparam name="TResultNew">New task result type</typeparam>
-        /// <param name="newSupplier">New supplier function</param>
+        /// <typeparam name="TNewResult">New task result type</typeparam>
+        /// <param name="supplier">New supplier function</param>
         /// <returns>
         /// Task which executes new supplier function
         /// with the result of current task as a parameter
@@ -112,97 +88,36 @@
                 return supplier(this.Result);
             }
 
-            MyTask<TNewResult> newTask;
-            if (this.IsCompleted)
-            {
-                // Putting task into the queue immediately
-                newTask = new MyTask<TNewResult>(
-                    supplierWrapper,
-                    this.newTaskInstaller,
-                    true);
-            }
-            else
-            {
-                // New task is waiting for the event from the current
-                // thread and then adding itself to the queue
-                newTask = new MyTask<TNewResult>(
-                    supplierWrapper,
-                    this.newTaskInstaller,
-                    false);
-                this.TaskCompleted += newTask.EnqueueTask;
-            }
-
-            return newTask;
+            return this.parentPool.AddTask(supplierWrapper);
         }
 
         /// <summary>
-        /// Enqueue current task to the parent pool execution queue
+        /// Executes task synchronously
         /// </summary>
-        private void EnqueueTask()
+        /// <param name="preventExecution">
+        /// Mark task as not executable
+        /// (Result will throw exception)</param>
+        public void ExecuteTaskManually(bool preventExecution = false)
         {
-            this.newTaskInstaller(this.AssignThread);
-        }
-
-        /// <summary>
-        /// Enqueue current task to the parent pool execution queue
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="info">Information about task execution results</param>
-        private void EnqueueTask(object sender, TaskResultInfo info)
-        {
-            if (info.ThrowedException == null)
+            if (!preventExecution)
             {
-                this.EnqueueTask();
-            }
-        }
-
-        /// <summary>
-        /// Callback which assigns given free thread to the current task.
-        /// Not thread-safe!
-        /// </summary>
-        /// <param name="thread">Free thread to assign</param>
-        private void AssignThread(BasePoolThread thread)
-        {
-            TaskResultInfo SupplierWrapper()
-            {
-                TaskResultInfo executionResult;
                 try
                 {
-                    var result = this.supplier();
-                    executionResult = new TaskResultInfo(result);
+                    this.taskResult = this.supplier();
                 }
                 catch (Exception e)
                 {
-                    executionResult = new TaskResultInfo(e);
+                    this.occuredException = e;
                 }
-
-                return executionResult;
             }
-
-            this.taskThread = thread;
-            this.taskThread.CalculationFinished += this.FinalizeTask;
-            this.taskThread.AssignTask(SupplierWrapper);
-        }
-
-        /// <summary>
-        /// Finalizes execution of the task
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="info">Information about calculation results</param>
-        private void FinalizeTask(object sender, TaskResultInfo info)
-        {
-            if (info.ThrowedException == null)
+            else
             {
-                this.taskResult = (TResult)info.Result;
-                this.occuredException = info.ThrowedException;
+                this.occuredException =
+                    new AggregateException("Task execution cancelled!");
             }
 
-            this.taskThread.CalculationFinished -= this.FinalizeTask;
             this.IsCompleted = true;
-            this.resultReturnGuard.Set();
-
-            // If there is at least 1 handler
-            this.TaskCompleted?.Invoke(this, info);
+            this.resultGuard.Set();
         }
     }
 }

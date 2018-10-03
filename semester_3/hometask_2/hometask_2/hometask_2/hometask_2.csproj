@@ -42,11 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TaskResultInfo.cs" />
     <Compile Include="IMyTask.cs" />
     <Compile Include="MyTask.cs" />
     <Compile Include="MyThreadPool.cs" />
-    <Compile Include="BasePoolThread.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

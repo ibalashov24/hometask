@@ -48,10 +48,11 @@ namespace MyThreadPool.Tests
                 var localI = i;
                 tasks[i] = pool.AddTask(() =>
                 {
-                    System.Threading.Thread.Sleep(100);
+                    System.Threading.Thread.Sleep(50);
                     return localI;
                 });
             }
+            System.Threading.Thread.Sleep(50);
 
             pool.Shutdown();
 
@@ -62,7 +63,6 @@ namespace MyThreadPool.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AssertFailedException))]
         public void PoolShouldNotAcceptNewTasksAfterShutdown()
         {
             var pool = new CustomThreading.MyThreadPool(10);
@@ -70,28 +70,21 @@ namespace MyThreadPool.Tests
 
             pool.Shutdown();
 
-            var tasks = new CustomThreading.IMyTask<int>[10];
             for (int i = 0; i < 10; ++i)
             {
-                var localI = i;
-                tasks[i] = pool.AddTask(() => localI);
-            }
-
-            for (int i = 0; i < 10; ++i)
-            {
-                Assert.AreEqual(i, tasks[i].Result);
+                Assert.AreEqual(null, pool.AddTask(() => 10));
             }
         }
 
         [TestMethod]
-        public void FreeThreadCountShouldBeEqualToMaxThreadCountInEmptyPool()
+        public void AvailableThreadCountShouldBeEqualToMaxThreadCountInEmptyPool()
         {
             var pool = new CustomThreading.MyThreadPool(10);
             Assert.AreEqual(pool.MaxThreadCount, pool.AvailableThreadCount);
         }
 
         [TestMethod]
-        public void FreeThreadCounterShouldWorkCorrectlyInNonEmptyPool()
+        public void AvailableThreadCounterShouldWorkCorrectlyInNonEmptyPool()
         {
             var pool = new CustomThreading.MyThreadPool(10);
             var task = pool.AddTask(() =>
@@ -100,14 +93,11 @@ namespace MyThreadPool.Tests
                 return 5;
             });
 
-            Assert.AreEqual(pool.MaxThreadCount - 1, pool.AvailableThreadCount);
-
-            var t = task.Result;
             Assert.AreEqual(pool.MaxThreadCount, pool.AvailableThreadCount);
         }
 
         [TestMethod]
-        public void FreeThreadCountShouldBeZeroWhilePoolIsFullyBusy()
+        public void AvailableThreadCountShouldBeMaximalWhenPoolIsFullyBusy()
         {
             var pool = new CustomThreading.MyThreadPool(5);
 
@@ -120,7 +110,7 @@ namespace MyThreadPool.Tests
                 });
             }
 
-            Assert.AreEqual(0, pool.AvailableThreadCount);
+            Assert.AreEqual(pool.MaxThreadCount, pool.AvailableThreadCount);
         }
 
         [TestMethod]
@@ -166,6 +156,23 @@ namespace MyThreadPool.Tests
                 return 10;
             });
             var nestedTask = mainTask.ContinueWith(mainValue => mainValue + 15);
+
+            Assert.AreEqual(25, nestedTask.Result);
+        }
+
+        [TestMethod]
+        public void NestedTaskShouldWorkCorrectlyWhenMainTaskIsOutOfView()
+        {
+            var pool = new CustomThreading.MyThreadPool(5);
+
+            var mainTask = pool.AddTask(() =>
+            {
+                System.Threading.Thread.Sleep(100);
+                return 10;
+            });
+            var nestedTask = mainTask.ContinueWith(mainValue => mainValue + 15);
+
+            mainTask = null;
 
             Assert.AreEqual(25, nestedTask.Result);
         }

@@ -10,14 +10,15 @@
     public class MyThreadPool
     {
         /// <summary>
-        /// Queue which contains threads ready to execute new tasks
+        /// Contains all threads in the pool
         /// </summary>
-        private readonly ConcurrentQueue<BasePoolThread> freeThreads;
+        private readonly Thread[] threads;
 
         /// <summary>
         /// Queue which contains tasks which are waiting to be executed
         /// </summary>
-        private readonly ConcurrentQueue<Action<BasePoolThread>> pendingTasks;
+        private readonly ConcurrentQueue<Action<bool>> pendingTasks =
+            new ConcurrentQueue<Action<bool>>();
 
         /// <summary>
         /// Cancellation token
@@ -26,21 +27,46 @@
             new CancellationTokenSource();
 
         /// <summary>
+        /// Unlocks threads if there are tasks waiting for execution
+        /// </summary>
+        private readonly AutoResetEvent threadGuard = new AutoResetEvent(false);
+
+        /// <summary>
+        /// Count of live threads
+        /// </summary>
+        private volatile int availableThreadCount;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MyThreadPool"/> class.
         /// </summary>
         /// <param name="threadCount">Fixed thread count in pool</param>
         public MyThreadPool(int threadCount)
         {
-            this.freeThreads = new ConcurrentQueue<BasePoolThread>();
-            this.pendingTasks = new ConcurrentQueue<Action<BasePoolThread>>();
             this.MaxThreadCount = threadCount;
+            this.availableThreadCount = this.MaxThreadCount;
 
-            for (int i = 0; i < this.MaxThreadCount; ++i)
+            this.threads = new Thread[threadCount];
+            for (int i = 0; i < this.threads.Length; ++i)
             {
-                var newThread = new BasePoolThread(this.cancellation.Token);
+                this.threads[i] = new Thread(() =>
+                {
+                    while (!this.cancellation.IsCancellationRequested)
+                    {
+                        if (this.pendingTasks.TryDequeue(out Action<bool> executeTask))
+                        {
+                            executeTask(false);
+                        }
+                        else
+                        {
+                            this.threadGuard.WaitOne();
+                        }
+                    }
 
-                newThread.CalculationFinished += this.FreeReleasedThread;
-                this.freeThreads.Enqueue(newThread);
+                    --this.availableThreadCount;
+                });
+
+                this.threads[i].IsBackground = true;
+                this.threads[i].Start();
             }
         }
 
@@ -50,9 +76,9 @@
         public int MaxThreadCount { get; }
 
         /// <summary>
-        /// Gets count of free threads in the pool
+        /// Gets count of live treads
         /// </summary>
-        public int AvailableThreadCount => this.freeThreads.Count;
+        public int AvailableThreadCount => this.availableThreadCount;
 
         /// <summary>
         /// Adds new function to be calculated by the pool threads
@@ -62,7 +88,16 @@
         /// <returns>Task for calculating function</returns>
         public IMyTask<TResult> AddTask<TResult>(Func<TResult> supplier)
         {
-            var newTask = new MyTask<TResult>(supplier, this.EnqueueTask);
+            if (this.cancellation.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            var newTask = new MyTask<TResult>(this, supplier);
+
+            this.pendingTasks.Enqueue(newTask.ExecuteTaskManually);
+            this.threadGuard.Set();
+
             return newTask;
         }
 
@@ -73,50 +108,11 @@
         public void Shutdown()
         {
             this.cancellation.Cancel();
+            this.threadGuard.Set();
 
-            foreach (var freeThread in this.freeThreads)
+            while (this.pendingTasks.TryDequeue(out Action<bool> taskToDisable))
             {
-                freeThread.ForceCancellationTokenCheck();
-            }
-        }
-
-        /// <summary>
-        /// Enqueue released thread back into the thread queue
-        /// </summary>
-        /// <param name="sender">Released thread</param>
-        /// <param name="info">Execution results</param>
-        private void FreeReleasedThread(object sender, TaskResultInfo info)
-        {
-            this.freeThreads.Enqueue((BasePoolThread)sender);
-            this.HandlePendingTasks();
-        }
-
-        /// <summary>
-        /// Callback which inserts given task into the task queue
-        /// </summary>
-        /// <param name="threadInstaller">
-        /// Callback which assign free thread to the task
-        /// </param>
-        private void EnqueueTask(Action<BasePoolThread> threadInstaller)
-        {
-            this.pendingTasks.Enqueue(threadInstaller);
-            this.HandlePendingTasks();
-        }
-
-        /// <summary>
-        /// Assigns free threads to pending tasks
-        /// </summary>
-        private void HandlePendingTasks()
-        {
-            lock (this.freeThreads)
-            {
-                while (!this.freeThreads.IsEmpty &&
-                    this.pendingTasks.TryDequeue(out Action<BasePoolThread> nextTask))
-                {
-                    this.freeThreads.TryDequeue(out BasePoolThread freeThread);
-
-                    nextTask(freeThread);
-                }
+                taskToDisable(true);
             }
         }
     }
