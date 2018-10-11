@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTPServer", "SimpleFTP\SimpleFTPServer.csproj", "{86714C3B-10DB-4EC7-9973-6B8706944CDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTPClient", "SimpleFTPClient\SimpleFTPClient.csproj", "{730750FC-713E-4D35-9DA2-47951C75A481}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Debug|x86.ActiveCfg = Debug|x86
+		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Debug|x86.Build.0 = Debug|x86
+		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Release|x86.ActiveCfg = Release|x86
+		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Release|x86.Build.0 = Release|x86
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|x86.ActiveCfg = Debug|x86
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|x86.Build.0 = Debug|x86
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Release|x86.ActiveCfg = Release|x86
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
