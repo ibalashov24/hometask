@@ -4,27 +4,38 @@
 	using System.IO;
 	using System.Net;
 	using System.Net.Sockets;
+	using System.Security;
 	using System.Threading;
-	using System.Threading.Tasks;
 
+    /// <summary>
+    /// Implement simple FTP-like server with 2 commands
+    /// </summary>
 	public class SimpleFTPServer
 	{
+		/// <summary>
+        /// Gets the server port number
+        /// </summary>
+        /// <value>0..65536</value>
 		public int PortNumber { get; }
 
+        /// <summary>
+        /// Gets maximal count of simultaneous connections
+        /// </summary>
+        /// <value>Maximal count of connections</value>
 		public int MaxConnectionCount { get; }
 
+        /// <summary>
+        /// Gets the current connection count.
+        /// </summary>
+        /// <value>Connection count</value>
 		public int CurrentConnectionCount => this.currentConnectionCount;
-
-		private int currentConnectionCount = 0;
-
-		private CancellationTokenSource cancellation =
-			new CancellationTokenSource();
-
+		private volatile int currentConnectionCount;
+        
 		/// <summary>
         /// Initializes a new instance of the 
 		/// <see cref="T:SimpleFTP.SimpleFTPServer"/> class.
         /// </summary>
-        /// <param name="maxConnectionCount">Maximal parallel 
+        /// <param name="maxConnectionCount">Maximal simultaneous
 		/// connection count</param>
 		public SimpleFTPServer(int port, int maxConnectionCount)
 		{
@@ -32,61 +43,98 @@
 			this.PortNumber = port;
 		}
 
+        /// <summary>
+        /// Launch the main server loop
+        /// </summary>
         public void Start()
 		{
-			this.HandleNewConnections();
-		}
-        
-		private void HandleNewConnections()
-		{
-			var cancellationToken = this.cancellation.Token;
+            var listener = new TcpListener(IPAddress.Any, this.PortNumber);
+            listener.Start();
 
-			var listener = new TcpListener(IPAddress.Any, this.PortNumber);
-			listener.Start();
+            Console.WriteLine("Server started on port {0}", this.PortNumber);
 
-			Console.WriteLine("Server started on port {0}", this.PortNumber);
+            while (true)
+            {
+                var newClient = listener.AcceptTcpClient();
 
-			while (!cancellationToken.IsCancellationRequested)
-			{
-				var newClient = listener.AcceptTcpClient();
-				var clientIP = 
-					((IPEndPoint)newClient.Client.RemoteEndPoint).Address;
-				
-				Console.WriteLine("{0} connected", clientIP);
-
-				if (this.CurrentConnectionCount >= this.MaxConnectionCount)
+				IPAddress clientIP;
+				try
 				{
-					newClient.Close();
-					Console.WriteLine("{0} disconnected: Limit reached", clientIP);
-
+					clientIP = ((IPEndPoint)newClient.Client.RemoteEndPoint).Address;
+				}
+				catch (ObjectDisposedException)
+				{
+					Console.WriteLine("New client has closed socket, skipping");
 					continue;
 				}
 
-				++this.currentConnectionCount;
+                Console.WriteLine("{0} connected", clientIP);
 
-				ThreadPool.QueueUserWorkItem(
-					this.ServeConnectedClient, 
-					newClient);
-			}
+                if (this.CurrentConnectionCount >= this.MaxConnectionCount)
+                {
+                    newClient.Close();
+                    Console.WriteLine("{0} disconnected: Limit reached", clientIP);
 
-			listener.Stop();
+                    continue;
+                }
 
-			Console.WriteLine("Goodbye!");
+                ++this.currentConnectionCount;
+
+                ThreadPool.QueueUserWorkItem(
+                    this.ServeConnectedClient,
+                    newClient);
+            }
 		}
-
+              
+        /// <summary>
+        /// Serves the connected client
+        /// </summary>
+		/// <param name="clientObject">TCP Client (of type TcpClient)</param>
 		private async void ServeConnectedClient(object clientObject)
-		{
+		{         
 			var client = (TcpClient)clientObject;
-			var clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-			var inputStream = new StreamReader(client.GetStream());
-			var outputStream = new StreamWriter(client.GetStream());
+
+			IPAddress clientIP;
+			StreamReader inputStream;
+			StreamWriter outputStream;
+            try
+            {
+                clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                inputStream = new StreamReader(client.GetStream());
+                outputStream = new StreamWriter(client.GetStream());
+            }
+            catch (ObjectDisposedException)
+            {
+				this.HandleDisconnectedClient();
+				--this.currentConnectionCount;
+				return;
+            }
    
 			var commandType = new char[1];
-			await inputStream.ReadAsync(commandType, 0, 1);
+			try
+			{
+				await inputStream.ReadAsync(commandType, 0, 1);
+			}
+			catch (ObjectDisposedException)
+			{
+				this.HandleDisconnectedClient();
+				--this.currentConnectionCount;
+				return;
+			}
 
 			if (commandType[0] == '1' || commandType[0] == '2')
 			{
-				var path = await inputStream.ReadLineAsync();
+				string path;
+				try
+				{
+					path = await inputStream.ReadLineAsync();
+				}
+				catch (ObjectDisposedException)
+				{
+					this.HandleDisconnectedClient();
+					--this.currentConnectionCount;
+					return;
+				}
 
 				if (commandType[0] == '1')
 				{
@@ -108,63 +156,221 @@
 			Console.WriteLine("{0} disconnected", clientIP);
 		}
 
+        /// <summary>
+        /// Sends the content of the directory to the client
+        /// </summary>
+        /// <param name="path">Directory path</param>
+        /// <param name="output">Stream to client</param>
 		private void WriteDirectoryContent(string path, StreamWriter output)
 		{
-			var directory = new DirectoryInfo(path);
-			if (!directory.Exists)
+			DirectoryInfo directory;
+			try
 			{
-				output.WriteLine(-1);
-				output.Flush();
+				directory = new DirectoryInfo(path);
+			}
+			catch (SecurityException)
+			{
+				this.HandleIncorrectPath(output, "Access forbidden.");
+				return;
+			}
+			catch (ArgumentException)
+			{
+				this.HandleIncorrectPath(output, "Path contains prohibited characters.");
+				return;
+			}
+			catch (PathTooLongException)
+			{
+				this.HandleIncorrectPath(output, "Path is too long.");
 				return;
 			}
 
-			var directoryContent = directory.GetFileSystemInfos();
-			output.Write("{0}", directoryContent.Length);
+			if (!directory.Exists)
+			{
+				this.HandleIncorrectPath(output, "Directory does not exist.");
+				return;
+			}
+
+			FileSystemInfo[] directoryContent;
+			try
+			{
+				directoryContent = directory.GetFileSystemInfos();
+			}
+			catch (UnauthorizedAccessException)
+			{
+				this.HandleIncorrectPath(output, "Access forbidden.");
+				return;
+			}
+
+			try
+			{
+				output.Write("{0}", directoryContent.Length);
+			}
+			catch (ObjectDisposedException)
+			{
+				this.HandleDisconnectedClient();
+				return;
+			}
             
 			foreach (var entity in directoryContent)
 			{
-				// Replacing spaces with character, prohibited in filenames
-				if (entity is DirectoryInfo)
+				try
 				{
-					output.Write(
-						" {0} {1}",
-						((DirectoryInfo)entity).Name.Replace(' ', '/'),
-						true.ToString());
-				}
-				else if (entity is FileInfo)
+					// Replacing spaces with character, prohibited in filenames
+					if (entity is DirectoryInfo)
+					{
+						output.Write(
+							" {0} {1}",
+							((DirectoryInfo)entity).Name.Replace(' ', '/'),
+							true.ToString());
+					}
+					else if (entity is FileInfo)
+					{
+						output.Write(
+							" {0} {1}",
+							((FileInfo)entity).Name.Replace(' ', '/'),
+							false.ToString());
+					}
+				} 
+				catch (ObjectDisposedException)
 				{
-					output.Write(
-						" {0} {1}",
-						((FileInfo)entity).Name.Replace(' ', '/'),
-						false.ToString());
+					this.HandleDisconnectedClient();
+					return;
 				}
 			}
 
-            output.WriteLine();
-            output.Flush();
+			try
+			{
+				output.WriteLine();
+				output.Flush();
+			}
+			catch (ObjectDisposedException)
+			{
+				this.HandleDisconnectedClient();
+			}
 		}
 
 		private void WriteFileBytes(string path, StreamWriter output)
 		{
 			const int bufferSize = 1024 * 1024;
 
-			var file = new FileInfo(path);
+			FileInfo file;
+			try
+			{
+				file = new FileInfo(path);
+			}
+			catch (SecurityException)
+			{
+				this.HandleIncorrectPath(output, "Access forbidden.");
+				return;
+			}
+			catch (UnauthorizedAccessException)
+			{
+				this.HandleIncorrectPath(output, "Access to file is denied.");
+				return;
+			}
+			catch (ArgumentException)
+			{
+				this.HandleIncorrectPath(output, "Path contains prohibited characters.");
+				return;
+			}
+			catch (PathTooLongException)
+			{
+				this.HandleIncorrectPath(output, "Path to file is too long.");
+				return;
+			}
+			catch (NotSupportedException)
+			{
+				this.HandleIncorrectPath(output, "File name contains colon.");
+				return;
+			}
+
 			if (!file.Exists)
 			{
-				output.WriteLine(-1);
-                output.Flush();
+				this.HandleIncorrectPath(output, "File does not exist.");
                 return;
 			}
 
-            var fileStream = file.OpenRead();
+			FileStream fileStream;
+			try
+			{
+				fileStream = file.OpenRead();
+			}
+			catch (IOException)
+			{
+				this.HandleIncorrectPath(output, "File is already open.");
+				return;
+			}
+			catch (UnauthorizedAccessException)
+			{
+				this.HandleIncorrectPath(output, "It is a directory.");
+				return;
+			}
 
-			output.Write("{0} ", file.Length);
-			output.Flush();
+			try
+			{
+				output.Write("{0} ", file.Length);
+				output.Flush();
+			}
+			catch (ObjectDisposedException)
+			{
+				this.HandleDisconnectedClient();
+				return;
+			}
 
-			fileStream.CopyTo(output.BaseStream, bufferSize);
+			try
+			{
+				fileStream.CopyTo(output.BaseStream, bufferSize);
+			}
+			catch (ObjectDisposedException)
+			{
+				this.HandleDisconnectedClient();
+				return;
+			}
+			catch (IOException)
+			{
+				this.HandleDisconnectedClient();
+				return;
+			}
 
-			output.WriteLine();
-			output.Flush();
+			try
+			{
+				output.WriteLine();
+				output.Flush();
+			} catch (ObjectDisposedException)
+			{
+				this.HandleDisconnectedClient();
+				return;
+			}
 		}
+
+        /// <summary>
+        /// Handles the situation when the client disconnected
+        /// </summary>
+		private void HandleDisconnectedClient()
+        {
+            Console.WriteLine("Client has closed socket, skipping");
+        } 
+
+        /// <summary>
+        /// Handles the situation when client provided invalid path
+        /// </summary>
+        /// <param name="output">Stream to client</param>
+        /// <param name="message">Message to log</param>
+		private void HandleIncorrectPath(
+			StreamWriter output, 
+			string message = "")
+        {
+            Console.WriteLine("Client sent invalid path. " + message);
+
+            try
+            {
+                output.WriteLine("-1");
+                output.Flush();
+            }
+            catch (ObjectDisposedException)
+            {
+                HandleDisconnectedClient();
+            }
+        }
 	}
 }

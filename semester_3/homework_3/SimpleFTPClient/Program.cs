@@ -4,7 +4,7 @@ namespace Program
 {
     class MainClass
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
 			Console.WriteLine("SimpleFTPClient started");
 
@@ -21,6 +21,11 @@ namespace Program
                 var path = Console.ReadLine();
 
                 var fileList = client.ReceiveFileList(path);
+				if (fileList == null)
+				{
+					return;
+				}
+
                 foreach (var currentFile in fileList)
                 {
                     Console.WriteLine("{0} {1}",

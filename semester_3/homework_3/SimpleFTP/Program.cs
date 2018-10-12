@@ -4,9 +4,9 @@ namespace Program
 {
     class MainClass
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
-			var server = new SimpleFTP.SimpleFTPServer(12345, 1);
+			var server = new SimpleFTP.SimpleFTPServer(12345, 2);
 
 			server.Start();
 
