@@ -121,7 +121,10 @@
 
             foreach (var thread in this.threads)
             {
-                thread.Join();
+                if (thread.IsAlive)
+                {
+                    thread.Join();
+                }
             }
         }
     }
