@@ -59,6 +59,11 @@
                         else
                         {
                             this.threadGuard.WaitOne();
+
+                            if (this.cancellation.IsCancellationRequested)
+                            {
+                                this.threadGuard.Set();
+                            }
                         }
                     }
 
@@ -108,11 +113,7 @@
         public void Shutdown()
         {
             this.cancellation.Cancel();
-
-            for (int i = 0; i < this.threads.Length; ++i)
-            {
-                this.threadGuard.Set();
-            }
+            this.threadGuard.Set();
 
             while (this.pendingTasks.TryDequeue(out Action<bool> taskToDisable))
             {
@@ -123,7 +124,7 @@
             {
                 if (thread.IsAlive)
                 {
-                    thread.Join();
+                    thread.Join();   
                 }
             }
         }
