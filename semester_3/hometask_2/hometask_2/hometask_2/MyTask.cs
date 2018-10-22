@@ -83,10 +83,7 @@
         public IMyTask<TNewResult> ContinueWith<TNewResult>(
             Func<TResult, TNewResult> supplier)
         {
-            TNewResult supplierWrapper()
-            {
-                return supplier(this.Result);
-            }
+            TNewResult supplierWrapper() => supplier(this.Result);
 
             return this.parentPool.AddTask(supplierWrapper);
         }

@@ -108,11 +108,20 @@
         public void Shutdown()
         {
             this.cancellation.Cancel();
-            this.threadGuard.Set();
+
+            for (int i = 0; i < this.threads.Length; ++i)
+            {
+                this.threadGuard.Set();
+            }
 
             while (this.pendingTasks.TryDequeue(out Action<bool> taskToDisable))
             {
                 taskToDisable(true);
+            }
+
+            foreach (var thread in this.threads)
+            {
+                thread.Join();
             }
         }
     }
