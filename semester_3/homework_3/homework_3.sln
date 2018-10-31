@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTPServer", "SimpleFT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTPClient", "SimpleFTPClient\SimpleFTPClient.csproj", "{730750FC-713E-4D35-9DA2-47951C75A481}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTP.Tests", "SimpleFTP.Tests\SimpleFTP.Tests.csproj", "{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,5 +21,9 @@ Global
 		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|x86.Build.0 = Debug|x86
 		{730750FC-713E-4D35-9DA2-47951C75A481}.Release|x86.ActiveCfg = Release|x86
 		{730750FC-713E-4D35-9DA2-47951C75A481}.Release|x86.Build.0 = Release|x86
+		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

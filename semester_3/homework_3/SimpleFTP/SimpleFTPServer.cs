@@ -6,13 +6,17 @@
     using System.Net.Sockets;
     using System.Security;
     using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implement simple FTP-like server with 2 commands
     /// </summary>
-    public class SimpleFTPServer
+    public class SimpleFTPServer : IDisposable
     {
         private volatile int currentConnectionCount;
+
+        private CancellationTokenSource cancellationToken
+                = new CancellationTokenSource();
 
         /// <summary>
         /// Initializes a new instance of the
@@ -52,42 +56,67 @@
         /// </summary>
         public void Start()
         {
-            var listener = new TcpListener(IPAddress.Any, this.PortNumber);
-            listener.Start();
-
-            Console.WriteLine("Server started on port {0}", this.PortNumber);
-
-            while (true)
+            var mainLoop = new Thread(async () =>
             {
-                var newClient = listener.AcceptTcpClient();
+                var listener = new TcpListener(IPAddress.Any, this.PortNumber);
+                listener.Start();
 
-                IPAddress clientIP;
-                try
+                Console.WriteLine("Server started on port {0}", this.PortNumber);
+
+                while (!this.cancellationToken.IsCancellationRequested)
                 {
-                    clientIP = ((IPEndPoint)newClient.Client.RemoteEndPoint).Address;
+                    var newClient = await listener.AcceptTcpClientAsync();
+
+                    if (this.cancellationToken.IsCancellationRequested)
+                    {
+                        listener.Stop();
+                        newClient.Close();
+                        this.currentConnectionCount = 0;
+                        return;
+                    }
+
+                    IPAddress clientIP;
+                    try
+                    {
+                        clientIP = ((IPEndPoint)newClient.Client.RemoteEndPoint).Address;
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        Console.WriteLine("New client has closed socket, skipping");
+                        continue;
+                    }
+
+                    Console.WriteLine("{0} connected", clientIP);
+
+                    if (this.CurrentConnectionCount >= this.MaxConnectionCount)
+                    {
+                        newClient.Close();
+                        Console.WriteLine("{0} disconnected: Limit reached", clientIP);
+
+                        continue;
+                    }
+
+                    ++this.currentConnectionCount;
+
+                    ThreadPool.QueueUserWorkItem(
+                        this.ServeConnectedClient,
+                        newClient);
                 }
-                catch (ObjectDisposedException)
-                {
-                    Console.WriteLine("New client has closed socket, skipping");
-                    continue;
-                }
 
-                Console.WriteLine("{0} connected", clientIP);
+                listener.Stop();
+            });
 
-                if (this.CurrentConnectionCount >= this.MaxConnectionCount)
-                {
-                    newClient.Close();
-                    Console.WriteLine("{0} disconnected: Limit reached", clientIP);
+            mainLoop.Start();
+        }
 
-                    continue;
-                }
+        public void Shutdown()
+        {
+            this.cancellationToken.Cancel();
+        }
 
-                ++this.currentConnectionCount;
-
-                ThreadPool.QueueUserWorkItem(
-                    this.ServeConnectedClient,
-                    newClient);
-            }
+        public void Dispose()
+        {
+            this.Shutdown();
         }
 
         /// <summary>
@@ -338,7 +367,6 @@
 
             try
             {
-                output.WriteLine();
                 output.Flush();
             }
             catch (ObjectDisposedException)

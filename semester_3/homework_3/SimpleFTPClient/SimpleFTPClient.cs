@@ -130,6 +130,7 @@
 
             Console.WriteLine("File saved");
 
+            resultFileStream.Close();
             this.DisconnectFromServer();
             return true;
         }
