@@ -174,15 +174,7 @@
         /// <param name="pathToDirectory">Path to directory on a server</param>
         public List<FileMetaInfo> ReceiveFileList(string pathToDirectory)
         {
-            try
-            {
-                this.ConnectToServer();
-            }
-            catch (ObjectDisposedException)
-            {
-                this.DisconnectFromServer();
-                return null;
-            }
+            this.ConnectToServer();
 
             try
             {
