@@ -8,7 +8,7 @@
         {
             var server = new SimpleFTP.SimpleFTPServer(12345, 2);
 
-            server.Start();
+            server.Start().GetAwaiter().GetResult();
 
             Console.WriteLine("Hello World!");
         }

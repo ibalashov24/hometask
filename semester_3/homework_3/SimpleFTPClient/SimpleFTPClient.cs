@@ -6,13 +6,34 @@
     using System.Net;
     using System.Net.Sockets;
 
+    /// <summary>
+    /// Simple FTP Client which can handle 2 commands
+    /// </summary>
     public class SimpleFTPClient
     {
+        /// <summary>
+        /// The server hostname
+        /// </summary>
         private readonly string serverHostname;
+
+        /// <summary>
+        /// The server port
+        /// </summary>
         private readonly int serverPort;
 
+        /// <summary>
+        /// Current client instance
+        /// </summary>
         private TcpClient client;
+
+        /// <summary>
+        /// The output stream of a client
+        /// </summary>
         private StreamReader inputStream;
+
+        /// <summary>
+        /// The output stream of a client
+        /// </summary>
         private StreamWriter outputStream;
 
         /// <summary>
@@ -26,8 +47,19 @@
             this.serverPort = port;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether client
+        /// <see cref="T:SimpleFTP.SimpleFTPClient"/> is connected to server
+        /// </summary>
+        /// <value><c>true</c> if is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected => this.client.Connected;
 
+        /// <summary>
+        /// Receives the file from a server
+        /// </summary>
+        /// <returns><c>true</c>, if file was received, <c>false</c> otherwise.</returns>
+        /// <param name="pathToFile">Path to file on a server</param>
+        /// <param name="pathToSaveFile">Path to save receive file</param>
         public bool ReceiveFile(string pathToFile, string pathToSaveFile)
         {
             // Block size in bytes
@@ -135,6 +167,11 @@
             return true;
         }
 
+        /// <summary>
+        /// Receives directory content from a server
+        /// </summary>
+        /// <returns>Directory content</returns>
+        /// <param name="pathToDirectory">Path to directory on a server</param>
         public List<FileMetaInfo> ReceiveFileList(string pathToDirectory)
         {
             try
@@ -198,8 +235,7 @@
                 var fileName = directoryContent[(2 * i) + 1].Replace('/', ' ');
                 var isDirectoryString = directoryContent[(2 * i) + 2];
 
-                bool isDirectory;
-                if (!bool.TryParse(isDirectoryString, out isDirectory))
+                if (!bool.TryParse(isDirectoryString, out bool isDirectory))
                 {
                     this.DisconnectFromServer();
                     return null;
@@ -212,21 +248,18 @@
             return result;
         }
 
+        /// <summary>
+        /// Reads single integer from input stream.
+        /// </summary>
+        /// <returns>The integer from input stream.</returns>
         private int ReadIntegerFromInputStream()
         {
             string fileSizeString = string.Empty;
+            while (!fileSizeString.EndsWith(" ", StringComparison.Ordinal))
+            {
+                fileSizeString += (char)this.inputStream.Read();
+            }
 
-            try
-            {
-                while (!fileSizeString.EndsWith(" ", StringComparison.Ordinal))
-                {
-                    fileSizeString += (char)this.inputStream.Read();
-                }
-            }
-            catch (ObjectDisposedException)
-            {
-                throw;
-            }
 
             if (!int.TryParse(fileSizeString, out int resultInteger))
             {
@@ -237,6 +270,9 @@
             return resultInteger;
         }
 
+        /// <summary>
+        /// Estabilishing connection to the server
+        /// </summary>
         private void ConnectToServer()
         {
             try
@@ -252,6 +288,9 @@
             }
         }
 
+        /// <summary>
+        /// Disconnects from server
+        /// </summary>
         private void DisconnectFromServer()
         {
             this.outputStream.Close();

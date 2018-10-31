@@ -82,6 +82,7 @@ namespace SimpleFTP.Tests
             var writer = new StreamWriter(client.GetStream());
             var reader = new StreamReader(client.GetStream());
 
+            // Sends invalid command
             writer.WriteLine("2 |||||somestrangepath");
 
             client.Close();

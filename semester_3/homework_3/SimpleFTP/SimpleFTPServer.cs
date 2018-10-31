@@ -54,59 +54,54 @@
         /// <summary>
         /// Launch the main server loop
         /// </summary>
-        public void Start()
+        public async Task Start()
         {
-            var mainLoop = new Thread(async () =>
+            var listener = new TcpListener(IPAddress.Any, this.PortNumber);
+            listener.Start();
+
+            Console.WriteLine("Server started on port {0}", this.PortNumber);
+
+            while (!this.cancellationToken.IsCancellationRequested)
             {
-                var listener = new TcpListener(IPAddress.Any, this.PortNumber);
-                listener.Start();
+                var newClient = await listener.AcceptTcpClientAsync();
 
-                Console.WriteLine("Server started on port {0}", this.PortNumber);
-
-                while (!this.cancellationToken.IsCancellationRequested)
+                if (this.cancellationToken.IsCancellationRequested)
                 {
-                    var newClient = await listener.AcceptTcpClientAsync();
-
-                    if (this.cancellationToken.IsCancellationRequested)
-                    {
-                        listener.Stop();
-                        newClient.Close();
-                        this.currentConnectionCount = 0;
-                        return;
-                    }
-
-                    IPAddress clientIP;
-                    try
-                    {
-                        clientIP = ((IPEndPoint)newClient.Client.RemoteEndPoint).Address;
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        Console.WriteLine("New client has closed socket, skipping");
-                        continue;
-                    }
-
-                    Console.WriteLine("{0} connected", clientIP);
-
-                    if (this.CurrentConnectionCount >= this.MaxConnectionCount)
-                    {
-                        newClient.Close();
-                        Console.WriteLine("{0} disconnected: Limit reached", clientIP);
-
-                        continue;
-                    }
-
-                    ++this.currentConnectionCount;
-
-                    ThreadPool.QueueUserWorkItem(
-                        this.ServeConnectedClient,
-                        newClient);
+                    listener.Stop();
+                    newClient.Close();
+                    this.currentConnectionCount = 0;
+                    return;
                 }
 
-                listener.Stop();
-            });
+                IPAddress clientIP;
+                try
+                {
+                    clientIP = ((IPEndPoint)newClient.Client.RemoteEndPoint).Address;
+                }
+                catch (ObjectDisposedException)
+                {
+                    Console.WriteLine("New client has closed socket, skipping");
+                    continue;
+                }
 
-            mainLoop.Start();
+                Console.WriteLine("{0} connected", clientIP);
+
+                if (this.CurrentConnectionCount >= this.MaxConnectionCount)
+                {
+                    newClient.Close();
+                    Console.WriteLine("{0} disconnected: Limit reached", clientIP);
+
+                    continue;
+                }
+
+                ++this.currentConnectionCount;
+
+                ThreadPool.QueueUserWorkItem(
+                    this.ServeConnectedClient,
+                    newClient);
+            }
+
+            listener.Stop();
         }
 
         public void Shutdown()
@@ -128,65 +123,44 @@
             var client = (TcpClient)clientObject;
 
             IPAddress clientIP;
-            StreamReader inputStream;
-            StreamWriter outputStream;
             try
             {
                 clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                inputStream = new StreamReader(client.GetStream());
-                outputStream = new StreamWriter(client.GetStream());
-            }
-            catch (ObjectDisposedException)
-            {
-                this.HandleDisconnectedClient();
-                --this.currentConnectionCount;
-                return;
-            }
-
-            var commandType = new char[1];
-            try
-            {
+                var inputStream = new StreamReader(client.GetStream());
+                var outputStream = new StreamWriter(client.GetStream());
+                
+                var commandType = new char[1];
                 await inputStream.ReadAsync(commandType, 0, 1);
+
+                if (commandType[0] == '1' || commandType[0] == '2')
+                {
+                    var path = await inputStream.ReadLineAsync();
+
+                    if (commandType[0] == '1')
+                    {
+                        Console.WriteLine(
+                            "Client {0} requested directory content",
+                            clientIP);
+                        this.WriteDirectoryContent(path, outputStream);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Client {0} requested file", clientIP);
+                        this.WriteFileBytes(path, outputStream);
+                    }
+                }
             }
             catch (ObjectDisposedException)
             {
                 this.HandleDisconnectedClient();
                 --this.currentConnectionCount;
                 return;
-            }
-
-            if (commandType[0] == '1' || commandType[0] == '2')
-            {
-                string path;
-                try
-                {
-                    path = await inputStream.ReadLineAsync();
-                }
-                catch (ObjectDisposedException)
-                {
-                    this.HandleDisconnectedClient();
-                    --this.currentConnectionCount;
-                    return;
-                }
-
-                if (commandType[0] == '1')
-                {
-                    Console.WriteLine(
-                        "Client {0} requested directory content",
-                        clientIP);
-                    this.WriteDirectoryContent(path, outputStream);
-                }
-                else
-                {
-                    Console.WriteLine("Client {0} requested file", clientIP);
-                    this.WriteFileBytes(path, outputStream);
-                }
             }
 
             client.Close();
             --this.currentConnectionCount;
 
-            Console.WriteLine("{0} disconnected", clientIP);
+            Console.WriteLine($"{clientIP} disconnected");
         }
 
         /// <summary>
