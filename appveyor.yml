@@ -5,7 +5,7 @@ branches:
     - s_3_homework_3
 
 before_build:
-    - dotnet add package NUnit --version 3.11.0 semester_3/homework_3/SimpleFTP.Tests/SimpleFTP.Tests.csproj
+    - dotnet add semester_3/homework_3/SimpleFTP.Tests/SimpleFTP.Tests.csproj  package NUnit --version 3.11.0
 
 build:
   project: semester_3/homework_3/homework_3.sln
