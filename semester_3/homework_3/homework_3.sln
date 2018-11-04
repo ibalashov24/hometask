@@ -1,6 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTPServer", "SimpleFTP\SimpleFTPServer.csproj", "{86714C3B-10DB-4EC7-9973-6B8706944CDD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTPClient", "SimpleFTPClient\SimpleFTPClient.csproj", "{730750FC-713E-4D35-9DA2-47951C75A481}"
@@ -9,21 +10,41 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTP.Tests", "SimpleFT
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Debug|x86.ActiveCfg = Debug|x86
 		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Debug|x86.Build.0 = Debug|x86
+		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Release|x86.ActiveCfg = Release|x86
 		{86714C3B-10DB-4EC7-9973-6B8706944CDD}.Release|x86.Build.0 = Release|x86
-		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|x86.ActiveCfg = Debug|x86
-		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|x86.Build.0 = Debug|x86
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Debug|x86.Build.0 = Debug|Any CPU
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{730750FC-713E-4D35-9DA2-47951C75A481}.Release|Any CPU.Build.0 = Release|Any CPU
 		{730750FC-713E-4D35-9DA2-47951C75A481}.Release|x86.ActiveCfg = Release|x86
 		{730750FC-713E-4D35-9DA2-47951C75A481}.Release|x86.Build.0 = Release|x86
+		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Release|x86.ActiveCfg = Release|Any CPU
 		{9C4CD4D2-D903-43D9-8779-E230E8EFBC8B}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {20003234-D020-4D82-BE9F-D555B543711F}
 	EndGlobalSection
 EndGlobal

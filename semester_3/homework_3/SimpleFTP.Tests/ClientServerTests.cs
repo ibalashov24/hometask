@@ -45,21 +45,10 @@ namespace SimpleFTP.Tests
             Console.WriteLine("Invalid command test");
 
             var client = new TcpClient(hostname, port);
-
             var reader = new StreamReader(client.GetStream());
 
             this.SendInvalidCommand(client);
-
-            string data;
-            try
-            {
-                data = reader.ReadToEnd();
-            }
-            catch (SocketException)
-            {
-                client.Close();
-                return;
-            }
+            var data = reader.ReadToEnd();
 
             if (data != string.Empty)
             {
@@ -100,7 +89,7 @@ namespace SimpleFTP.Tests
         [Test]
         public void SimpleFTPClientShouldReceiveCorrectFileList()
         {
-            var path = ".SimpleFTPTEST_TEST_";
+            var path = Path.Combine(Path.GetTempPath(), ".SimpleFTPTEST_TEST_");
 
             var actualFileList = this.CreateTestDirectory(path);
 
@@ -112,8 +101,8 @@ namespace SimpleFTP.Tests
                 {
                     if (item1.IsDirectory == item2.IsDirectory)
                     {
-                    return String.Compare(
-                        item1.Name, item2.Name, StringComparison.Ordinal);
+                        return String.Compare(
+                                item1.Name, item2.Name, StringComparison.Ordinal);
                     }
                     else
                     {
@@ -127,10 +116,9 @@ namespace SimpleFTP.Tests
         [Test]
         public void SimpleFTPClientShouldReceiveCorrectFile()
         {
-            var testFilePath = ".SimpleFTPTESTFile_";
-            this.CreateTestFile(testFilePath);
+            var testFilePath = Path.GetTempFileName();
+            var fileSavePath = Path.GetTempFileName();
 
-            var fileSavePath = ".SimpleFTPTESTReceivedFile_";
             var client = new SimpleFTPClient(hostname, port);
 
             Assert.IsTrue(client.ReceiveFile(testFilePath, fileSavePath));
@@ -143,15 +131,18 @@ namespace SimpleFTP.Tests
             Assert.AreEqual(testFileContent, receivedFileContent);
         }
 
-        private void CreateTestFile(string fileName)
+        private string CreateTestFile()
         {
             var fileContent = "TESTTESTTESTTEST";
+            var filePath = Path.GetTempFileName();
 
-            var writer = new StreamWriter(File.Create(fileName));
+            var writer = new StreamWriter(File.OpenWrite(filePath));
             writer.WriteLine(fileContent);
             writer.Flush();
 
             writer.Close();
+
+            return filePath;
         }
 
         private List<FileMetaInfo> CreateTestDirectory(string dirName)
