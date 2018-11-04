@@ -4,5 +4,8 @@ branches:
   only:
     - s_3_homework_3
 
+before_buid:
+    - dotnet add package NUnit --version 3.11.0 
+
 build:
   project: semester_3/homework_3/homework_3.sln
