@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNUnit.Runner", "MyNUnit.Runner\MyNUnit.Runner.csproj", "{2731C2D5-0926-488C-883F-31AAFBA855A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNUnit.TestTools", "MyNUnit.TestTools\MyNUnit.TestTools.csproj", "{CEAC36CD-17EB-4BC1-AF62-37B9492BA793}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2731C2D5-0926-488C-883F-31AAFBA855A5}.Debug|x86.ActiveCfg = Debug|x86
+		{2731C2D5-0926-488C-883F-31AAFBA855A5}.Debug|x86.Build.0 = Debug|x86
+		{2731C2D5-0926-488C-883F-31AAFBA855A5}.Release|x86.ActiveCfg = Release|x86
+		{2731C2D5-0926-488C-883F-31AAFBA855A5}.Release|x86.Build.0 = Release|x86
+		{CEAC36CD-17EB-4BC1-AF62-37B9492BA793}.Debug|x86.ActiveCfg = Debug|x86
+		{CEAC36CD-17EB-4BC1-AF62-37B9492BA793}.Debug|x86.Build.0 = Debug|x86
+		{CEAC36CD-17EB-4BC1-AF62-37B9492BA793}.Release|x86.ActiveCfg = Release|x86
+		{CEAC36CD-17EB-4BC1-AF62-37B9492BA793}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal

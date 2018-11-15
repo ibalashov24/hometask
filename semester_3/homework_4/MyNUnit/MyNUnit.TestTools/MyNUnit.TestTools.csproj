@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{CEAC36CD-17EB-4BC1-AF62-37B9492BA793}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <RootNamespace>MyNUnit.TestTools</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assert.cs" />
+    <Compile Include="AssertFailedException.cs" />
+    <Compile Include="Attributes\TestAttribute.cs" />
+    <Compile Include="Attributes\BeforeAttribute.cs" />
+    <Compile Include="Attributes\AfterAttribute.cs" />
+    <Compile Include="Attributes\BeforeClassAttribute.cs" />
+    <Compile Include="Attributes\AfterClassAttribute.cs" />
+    <Compile Include="Attributes\TestClassAttribute.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
