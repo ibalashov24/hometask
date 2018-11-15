@@ -16,67 +16,74 @@
             this.testAssembly = assembly;
         }
 
-        public void RunAllTestsAsync()
+        public async Task<List<TestResult>> RunAllTestsAsync()
         {
-            var testTask = new Task(() =>
+            return await Task.Factory.StartNew<List<TestResult>>(this.RunAllTests);
+        }
+
+        public List<TestResult> RunAllTests()
+        {
+            var results = new List<TestResult>();
+
+            foreach (var classToTest in this.FindAllTestClasses())
             {
-                foreach (var classToTest in this.FindAllTestClasses())
+                var testMethods = this.FindTestMethodsInClass(classToTest);
+
+                object testClassInstance;
+                try
                 {
-                    var testMethods = this.FindTestMethodsInClass(classToTest);
-
-                    object testClassInstance;
-                    try
-                    {
-                        testClassInstance =
-                            System.Activator.CreateInstance(classToTest);
-                    }
-                    catch (Exception)
-                    {
-                        this.ReportAllTestsFailed(
-                            testMethods,
-                            $"Cannot create instance of {classToTest.Name}");
-                        continue;
-                    }
-
-                    if (!this.RunSecurely(testMethods.BeforeClassMethods,
-                                         testClassInstance))
-                    {
-                        this.ReportAllTestsFailed(
-                            testMethods,
-                            $"Failed to execute Before class methods of {classToTest.Name}");
-                        continue;
-                    }
-
-                    bool fatalErrorOccured = false;
-                    foreach (var method in testMethods.TestMethods)
-                    {
-                        if (fatalErrorOccured || 
-                            !fatalErrorOccured && !this.RunSecurely(testMethods.BeforeMethods,
-                                                                   testClassInstance))
-                        {
-                            fatalErrorOccured = true;
-                            this.ReportTestFailed(method,
-                                                  "Failed to execute Before or " +
-                                                  $"After methods of {classToTest.Name}");
-                            continue;
-                        }
-
-                        this.RunTest(method, testClassInstance);
-
-                        fatalErrorOccured = this.RunSecurely(testMethods.AfterMethods,
-                                                            testClassInstance);
-                    }
-
-                    if (!this.RunSecurely(testMethods.AfterClassMethods,
-                                          testClassInstance))
-                    {
-                        this.SendMessage(
-                            $"Failed to execute After class methods of {classToTest.Name}");
-                    }
+                    testClassInstance =
+                        System.Activator.CreateInstance(classToTest);
                 }
-            });
+                catch (Exception)
+                {
+                    results.AddRange(this.ReportAllTestsFailed(
+                        testMethods,
+                        $"Cannot create instance of {classToTest.Name}"));
+                    continue;
+                }
 
-            testTask.Start();
+                if (!this.RunSecurely(testMethods.BeforeClassMethods, testClassInstance))
+                {
+                    results.AddRange(this.ReportAllTestsFailed(
+                        testMethods,
+                        $"Failed to execute Before class methods of {classToTest.Name}"));
+                    continue;
+                }
+
+                bool fatalErrorOccured = false;
+                foreach (var method in testMethods.TestMethods)
+                {
+                    if (fatalErrorOccured ||
+                        !fatalErrorOccured && !this.RunSecurely(testMethods.BeforeMethods,
+                                                               testClassInstance))
+                    {
+                        fatalErrorOccured = true;
+                        results.Add(this.ReportTestFailed(method,
+                            "Failed to execute Before or " +
+                            $"After methods of {classToTest.Name}"));
+                        continue;
+                    }
+
+                    var testResult = this.RunTest(method, testClassInstance);
+                    if (testResult != null)
+                    {
+                        results.Add(testResult);
+                    }
+
+                    fatalErrorOccured = !this.RunSecurely(testMethods.AfterMethods,
+                                                        testClassInstance);
+                }
+
+                if (!this.RunSecurely(testMethods.AfterClassMethods,
+                                      testClassInstance))
+                {
+                    this.SendMessage(
+                        $"Failed to execute After class methods of {classToTest.Name}");
+                }
+            }
+
+            return results;
         }
 
         private IEnumerable<Type> FindAllTestClasses()
@@ -149,8 +156,15 @@
             return true;
         }
 
-        private bool RunTest(MethodInfo method, object instance)
+        private TestResult RunTest(MethodInfo method, object instance)
         {
+            var testParams = method.GetCustomAttribute<TestAttribute>();
+            if (testParams.IgnoreReason != null)
+            {
+                this.ReportTestIgnored(method, testParams.IgnoreReason);
+                return null;
+            }
+
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             try
             {
@@ -159,37 +173,55 @@
             catch (Exception e)
             {
                 stopwatch.Stop();
-                this.ReportTestFailed(
-                    method,
-                    $"{e.GetType().ToString()} ({stopwatch.Elapsed}s): {e.Message}");
 
-                return false;
+                var exceptionType = e.InnerException.GetType().ToString();
+                var exceptionMessage = e.InnerException.Message;
+
+                if (exceptionType == testParams.Expected?.ToString())
+                {
+                    return this.ReportTestSucceed(
+                        method,
+                        $"{exceptionType} ({stopwatch.Elapsed}s): {exceptionMessage}");
+                }
+                else
+                {
+                    return this.ReportTestFailed(
+                        method,
+                        $"{exceptionType} ({stopwatch.Elapsed}s): {exceptionMessage}");
+                }
             }
             stopwatch.Stop();
 
-            this.ReportTestSucceed(method, $"Elapsed {stopwatch.Elapsed}s");
-
-            return true;
+            return this.ReportTestSucceed(method, $"Elapsed {stopwatch.Elapsed}s");
         }
 
-        void ReportTestFailed(MethodInfo test, string message)
+        private TestResult ReportTestFailed(MethodInfo test, string message)
         {
             this.SendMessage($"{test.Name} failed. {message}");
+            return new TestResult(test.Name, false, message);
         }
 
-        private void ReportAllTestsFailed(
+        private List<TestResult> ReportAllTestsFailed(
             TestMethodsContainer container,
             string message)
         {
+            var results = new List<TestResult>();
             foreach (var test in container.TestMethods)
             {
-                this.ReportTestFailed(test, message);
+                results.Add(this.ReportTestFailed(test, message));
             }
+            return results;
         }
 
-        private void ReportTestSucceed(MethodInfo test, string message)
+        private TestResult ReportTestSucceed(MethodInfo test, string message)
         {
             this.SendMessage($"{test.Name} passed. {message}");
+            return new TestResult(test.Name, true, string.Empty);
+        }
+
+        private void ReportTestIgnored(MethodInfo test, string message)
+        {
+            this.SendMessage($"Ignoring {test.Name}. {message}");
         }
 
         private void SendMessage(string message)

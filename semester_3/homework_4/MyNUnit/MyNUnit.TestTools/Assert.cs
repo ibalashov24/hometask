@@ -2,7 +2,7 @@
 {
     public static class Assert
     {
-        static void AreEqual<T>(
+        public static void AreEqual<T>(
             T expected, 
             T actual, 
             string message = "")
@@ -15,7 +15,7 @@
             }
         }
 
-        static void AreEqual(
+        public static void AreEqual(
             string expected, 
             string actual, 
             string message = "")
@@ -28,7 +28,7 @@
             }
         }
 
-        static void Fail(
+        public static void Fail(
             string message = "")
         {
             throw new AssertFailedException(
@@ -36,7 +36,7 @@
                 message);
         }
 
-        static void IsTrue(
+        public static void IsTrue(
             bool condition, 
             string message)
         {

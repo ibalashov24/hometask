@@ -7,6 +7,6 @@
     {
         public Type Expected { get; }
 
-        public string Ignore { get; }
+        public string IgnoreReason { get; }
     }
 }

@@ -12,13 +12,12 @@ namespace MyNUnit.Runner
             Console.WriteLine("MyNUnit Test Runner");
             Console.Write("Enter path to assemblies: ");
 
-            //var path = Console.ReadLine();
-            var path = "/home/ilya/Documents/";
+            var path = Console.ReadLine();
 
             foreach (var assembly in LoadAllAssemblies(path))
             {
                 var runner = new TestRunner(assembly);
-                runner.RunAllTestsAsync();
+                runner.RunAllTestsAsync().GetAwaiter().GetResult();
             }
         }
 
