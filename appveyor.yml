@@ -8,4 +8,4 @@ before_build:
     - nuget restore semester_3/homework_4/MyNUnit/MyNUnit.sln
 
 build:
-project: semester_3/homework_4/MyNUnit/MyNUnit.sln
+    project: semester_3/homework_4/MyNUnit/MyNUnit.sln
