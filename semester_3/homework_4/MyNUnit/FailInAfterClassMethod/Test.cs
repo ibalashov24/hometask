@@ -1,22 +1,11 @@
 namespace MyNUnit.TestProjects
 {
     using System;
-    using System.IO;
-
     using MyNUnit.TestTools;
 
     [TestClass]
     public class Test
     {
-        private FileStream log;
-
-        public Test()
-        {
-            this.log = new FileStream(
-                Path.Combine(Path.GetTempPath(), "MyNUnitFailInBeforeClass.tst"),
-                FileMode.Append, FileAccess.Write, FileShare.Read);
-        }
-
         [BeforeClass]
         public int GoodBeforeClassMethod()
         {
@@ -29,9 +18,10 @@ namespace MyNUnit.TestProjects
         }
 
         [BeforeClass]
-        public void BadBeforeClassMethod()
+        public void SecondGoodMethod()
         {
-            throw new AggregateException("Before Class method execution failed");
+            int b = 5 * 5;
+            b += 3;
         }
 
         [Test]
@@ -39,8 +29,6 @@ namespace MyNUnit.TestProjects
         {
             var a = 5 + 5 * 5;
             ++a;
-
-            this.log.WriteByte(0);
         }
 
         [Test]
@@ -49,24 +37,20 @@ namespace MyNUnit.TestProjects
             var b = 6 + 6 * 6;
             --b;
 
-            this.log.WriteByte(0);
-            this.log.Flush();
-
             Assert.Fail("It failed :(");
         }
 
-        [After]
-        public void MethodWhichShouldNotBeCalled()
+        [Test]
+        public void TestWhichAlsoMustWorkGood()
         {
-            this.log.WriteByte(0);
-            this.log.Flush();
+            var a = 10 + 5 * 6;
+            ++a;
         }
 
         [AfterClass]
         public void AnotherMethodWhichShouldNotBeCalled()
         {
-            this.log.WriteByte(0);
-            this.log.Flush();
+            throw new AggregateException("Error in AfterClass method");
         }
     }
 }

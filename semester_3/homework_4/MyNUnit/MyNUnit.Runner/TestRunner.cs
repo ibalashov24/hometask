@@ -192,6 +192,13 @@
             }
             stopwatch.Stop();
 
+            if (testParams.Expected != null)
+            {
+                return this.ReportTestFailed(
+                        method,
+                        $"({stopwatch.Elapsed}s): {testParams.Expected.ToString()} did not fire");
+            }
+
             return this.ReportTestSucceed(method, $"Elapsed {stopwatch.Elapsed}s");
         }
 
