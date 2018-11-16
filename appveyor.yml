@@ -5,7 +5,7 @@ branches:
     - s_3_homework_4
 
 before_build:
-    - nuget restore semester_4/homework_4/MyNUnit/MyNUnit.sln
+    - nuget restore semester_3/homework_4/MyNUnit/MyNUnit.sln
 
 build:
-project: semester_4/homework_4/MyNUnit/MyNUnit.sln
+project: semester_3/homework_4/MyNUnit/MyNUnit.sln
