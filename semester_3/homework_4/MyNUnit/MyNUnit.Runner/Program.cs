@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-
-namespace MyNUnit.Runner
+﻿namespace MyNUnit.Runner
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
+
     public static class Program
     {
         public static void Main(string[] args)
@@ -37,7 +37,7 @@ namespace MyNUnit.Runner
                 {
                     currentAssembly = Assembly.LoadFrom(file);
                 }
-                catch (FileLoadException)
+                catch (Exception)
                 {
                     continue;
                 }

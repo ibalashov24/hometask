@@ -3,6 +3,10 @@
     using System.Collections.Generic;
     using System.Reflection;
 
+    /// <summary>
+    /// Contains class test methods of different types
+    /// (with appropriate attribute)
+    /// </summary>
     public class TestMethodsContainer
     {
         public List<MethodInfo> BeforeClassMethods { get; set; }

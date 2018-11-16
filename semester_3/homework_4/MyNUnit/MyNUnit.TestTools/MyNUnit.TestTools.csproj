@@ -20,7 +20,6 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="Assert.cs" />
     <Compile Include="AssertFailedException.cs" />
