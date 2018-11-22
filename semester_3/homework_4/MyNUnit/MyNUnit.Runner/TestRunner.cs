@@ -53,7 +53,7 @@
                 return;
             }
 
-            Parallel.ForEach<MethodInfo>(testMethods.TestMethods, async (method) =>
+            Parallel.ForEach<MethodInfo>(testMethods.TestMethods, (method) =>
                 {
                     var testResult = this.RunTest(
                         classToTest,
