@@ -76,9 +76,8 @@ namespace MyNUnit.Tests
             var assembly = this.GetAssemblyByName("FailInBeforeClassMethod");
             var actual = this.GetTestResults(assembly);
 
-            var resultFile = new FileStream(
-                Path.Combine(Path.GetTempPath(), "MyNUnitFailInBeforeClass.tst"),
-                FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            var resultFile = File.OpenRead(
+                Path.Combine(Path.GetTempPath(), "MyNUnitFailInBeforeClass.tst"));
             var fileLength = resultFile.Length;
 
             resultFile.Close();
