@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Concurrent;
     using System.Reflection;
     using System.Threading.Tasks;
 
@@ -27,84 +28,174 @@
         }
 
         /// <summary>
-        /// Runs all tests in given assembly asynchronously
-        /// </summary>
-        /// <returns>Test results</returns>
-        public async Task<List<TestResult>> RunAllTestsAsync()
-        {
-            return await Task.Factory.StartNew<List<TestResult>>(this.RunAllTests);
-        }
-
-        /// <summary>
         /// Runs all tests in given assembly
         /// </summary>
         /// <returns>Test results</returns>
-        public List<TestResult> RunAllTests()
+        public List<TestResult> RunAllTestsAsync()
         {
-            var results = new List<TestResult>();
+            var results = new ConcurrentQueue<TestResult>();
 
-            foreach (var classToTest in this.FindAllTestClasses())
+            Parallel.ForEach<Type>(this.FindAllTestClasses(), (classToTest) =>
+                {
+                    this.TestClassAsync(classToTest, results);
+                });
+
+            return new List<TestResult>(results);
+        }
+
+        private void TestClassAsync(Type classToTest, ConcurrentQueue<TestResult> results)
+        {
+            var testMethods = this.FindTestMethodsInClass(classToTest);
+
+            if (!this.RunStaticClassMethods(testMethods.BeforeClassMethods, out string message))
             {
-                var testMethods = this.FindTestMethodsInClass(classToTest);
+                this.ReportAllTestsFailed(results, testMethods, message);
+                return;
+            }
 
-                object testClassInstance;
-                try
+            Parallel.ForEach<MethodInfo>(testMethods.TestMethods, async (method) =>
                 {
-                    testClassInstance =
-                        System.Activator.CreateInstance(classToTest);
-                }
-                catch (Exception)
-                {
-                    results.AddRange(this.ReportAllTestsFailed(
-                        testMethods,
-                        $"Cannot create instance of {classToTest.Name}"));
-                    continue;
-                }
+                    var testResult = this.RunTest(
+                        classToTest,
+                        method,
+                        testMethods.BeforeMethods,
+                        testMethods.AfterMethods);
 
-                if (!this.RunSecurely(testMethods.BeforeClassMethods, testClassInstance))
-                {
-                    results.AddRange(this.ReportAllTestsFailed(
-                        testMethods,
-                        $"Failed to execute Before class methods of {classToTest.Name}"));
-                    continue;
-                }
-
-                bool fatalErrorOccured = false;
-                foreach (var method in testMethods.TestMethods)
-                {
-                    if (fatalErrorOccured ||
-                        (!fatalErrorOccured && !this.RunSecurely(
-                            testMethods.BeforeMethods,
-                            testClassInstance)))
-                    {
-                        fatalErrorOccured = true;
-                        results.Add(this.ReportTestFailed(
-                            method,
-                            $"Failed to execute Before or After methods of {classToTest.Name}"));
-                        continue;
-                    }
-
-                    var testResult = this.RunTest(method, testClassInstance);
+                    // If null then test was ingnored
                     if (testResult != null)
                     {
-                        results.Add(testResult);
+                        results.Enqueue(testResult);
                     }
+                });
 
-                    fatalErrorOccured = !this.RunSecurely(
-                        testMethods.AfterMethods,
-                        testClassInstance);
+            if (!this.RunStaticClassMethods(testMethods.AfterClassMethods, out message))
+            {
+                this.SendMessage(message);
+            }
+
+            return;
+        }
+
+        private bool RunStaticClassMethods(List<MethodInfo> methods, out string resultMessage)
+        {
+            foreach (var staticClassMethod in methods)
+            {
+                if (!staticClassMethod.IsStatic)
+                {
+                    resultMessage = $"{staticClassMethod.Name} is should be static";
+                    return false;
                 }
 
-                if (!this.RunSecurely(
-                    testMethods.AfterClassMethods,
-                    testClassInstance))
+                if (!this.RunMethodSecurely(staticClassMethod, null, out resultMessage))
                 {
-                    this.SendMessage(
-                        $"Failed to execute After class methods of {classToTest.Name}");
+                    return false;
                 }
             }
 
-            return results;
+            resultMessage = "Success";
+            return true;
+        }
+
+        private bool RunNonStaticClassMethods(
+            List<MethodInfo> methods,
+            object instance,
+            out string resultMessage)
+        {
+            foreach (var method in methods)
+            {
+                if (!this.RunMethodSecurely(method, instance, out resultMessage))
+                {
+                    return false;
+                }
+            }
+
+            resultMessage = "Success";
+            return true;
+        }
+
+        /// <summary>
+        /// Executes given test and returns results of testing
+        /// </summary>
+        /// <param name="method">Test method</param>
+        /// <param name="instance">Instance of the class where method is contined</param>
+        /// <returns>Testing results</returns>
+        private TestResult RunTest(
+            Type testClass,
+            MethodInfo method, 
+            List<MethodInfo> beforeMethods, 
+            List<MethodInfo> afterMethods)
+        {
+            object instance;
+            try
+            {
+                instance = System.Activator.CreateInstance(testClass);
+            }
+            catch (Exception e)
+            {
+                return this.ReportTestFailed(
+                    method, $"Unable to create class instance: {e.GetType().ToString()}");
+            }
+
+            if (!this.RunNonStaticClassMethods(beforeMethods, instance, out string message))
+            {
+                return this.ReportTestFailed(method, message);
+            }
+
+            var testResult = this.RunTestBody(method, instance);
+
+            if (!this.RunNonStaticClassMethods(afterMethods, instance, out message) 
+                && testResult.IsPassed)
+            {
+                return this.ReportTestFailed(method, message);
+            }
+
+            return testResult;
+        }
+
+        private TestResult RunTestBody(MethodInfo method, object instance)
+        {
+            var testParams = method.GetCustomAttribute<TestAttribute>();
+            if (testParams.IgnoreReason != null)
+            {
+                this.ReportTestIgnored(method, testParams.IgnoreReason);
+                return null;
+            }
+
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            try
+            {
+                method.Invoke(instance, Array.Empty<object>());
+            }
+            catch (Exception e)
+            {
+                stopwatch.Stop();
+
+                var exceptionType = e.InnerException.GetType().ToString();
+                var exceptionMessage = e.InnerException.Message;
+
+                if (exceptionType == testParams.Expected?.ToString())
+                {
+                    return this.ReportTestSucceed(
+                        method,
+                        $"{exceptionType} ({stopwatch.Elapsed}s): {exceptionMessage}");
+                }
+                else
+                {
+                    return this.ReportTestFailed(
+                        method,
+                        $"{exceptionType} ({stopwatch.Elapsed}s): {exceptionMessage}");
+                }
+            }
+            stopwatch.Stop();
+
+            if (testParams.Expected != null)
+            {
+                return this.ReportTestFailed(
+                        method,
+                        $"({stopwatch.Elapsed}s): {testParams.Expected.ToString()} did not fire");
+            }
+
+            return this.ReportTestSucceed(method, $"Elapsed {stopwatch.Elapsed}s");
         }
 
         /// <summary>
@@ -159,84 +250,21 @@
 
             return result;
         }
-
-        private bool RunSecurely(List<MethodInfo> methodList, object instance)
+        
+        private bool RunMethodSecurely(MethodInfo method, object instance, out string message)
         {
-            foreach (var method in methodList)
-            {
-                if (!this.RunSecurely(method, instance))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool RunSecurely(MethodInfo method, object instance)
-        {
-            try
-            {
-                method.Invoke(instance, Array.Empty<object>());
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Executes given test and returns results of testing
-        /// </summary>
-        /// <param name="method">Test method</param>
-        /// <param name="instance">Instance of the class where method is contined</param>
-        /// <returns>Testing results</returns>
-        private TestResult RunTest(MethodInfo method, object instance)
-        {
-            var testParams = method.GetCustomAttribute<TestAttribute>();
-            if (testParams.IgnoreReason != null)
-            {
-                this.ReportTestIgnored(method, testParams.IgnoreReason);
-                return null;
-            }
-
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             try
             {
                 method.Invoke(instance, Array.Empty<object>());
             }
             catch (Exception e)
             {
-                stopwatch.Stop();
-
-                var exceptionType = e.InnerException.GetType().ToString();
-                var exceptionMessage = e.InnerException.Message;
-
-                if (exceptionType == testParams.Expected?.ToString())
-                {
-                    return this.ReportTestSucceed(
-                        method,
-                        $"{exceptionType} ({stopwatch.Elapsed}s): {exceptionMessage}");
-                }
-                else
-                {
-                    return this.ReportTestFailed(
-                        method,
-                        $"{exceptionType} ({stopwatch.Elapsed}s): {exceptionMessage}");
-                }
-            }
-            stopwatch.Stop();
-
-            if (testParams.Expected != null)
-            {
-                return this.ReportTestFailed(
-                        method,
-                        $"({stopwatch.Elapsed}s): {testParams.Expected.ToString()} did not fire");
+                message = $"Failed to execute {method.Name}. {e.GetType()}: {e.Message}";
+                return false;
             }
 
-            return this.ReportTestSucceed(method, $"Elapsed {stopwatch.Elapsed}s");
+            message = "Success";
+            return true;
         }
 
         /// <summary>
@@ -257,17 +285,15 @@
         /// <param name="container">Container with all test methods</param>
         /// <param name="message">Custom message</param>
         /// <returns>Testing reports</returns>
-        private List<TestResult> ReportAllTestsFailed(
+        private void ReportAllTestsFailed(
+            ConcurrentQueue<TestResult> outContainer,
             TestMethodsContainer container,
             string message)
         {
-            var results = new List<TestResult>();
             foreach (var test in container.TestMethods)
             {
-                results.Add(this.ReportTestFailed(test, message));
+                outContainer.Enqueue(this.ReportTestFailed(test, message));
             }
-
-            return results;
         }
 
         /// <summary>

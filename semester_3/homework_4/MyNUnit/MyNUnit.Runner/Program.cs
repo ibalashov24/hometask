@@ -9,15 +9,17 @@
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("MyNUnit Test Runner");
-            Console.Write("Enter path to assemblies: ");
+            var path = args[1];
 
-            var path = Console.ReadLine();
+            MainLoop(path);
+        }
 
+        public static void MainLoop(string path)
+        {
             foreach (var assembly in LoadAllAssemblies(path))
             {
                 var runner = new TestRunner(assembly);
-                runner.RunAllTestsAsync().GetAwaiter().GetResult();
+                runner.RunAllTestsAsync();
             }
         }
 

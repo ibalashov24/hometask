@@ -8,17 +8,17 @@ namespace MyNUnit.TestProjects
     [TestClass]
     public class Test
     {
-        private FileStream log;
+        private static FileStream log;
 
         public Test()
         {
-            this.log = new FileStream(
+            log = new FileStream(
                 Path.Combine(Path.GetTempPath(), "MyNUnitFailInBeforeClass.tst"),
                 FileMode.Append, FileAccess.Write, FileShare.Read);
         }
 
         [BeforeClass]
-        public int GoodBeforeClassMethod()
+        public static int GoodBeforeClassMethod()
         {
             var result = 0;
             for (int i = 0; i <= 5; ++i)
@@ -29,7 +29,7 @@ namespace MyNUnit.TestProjects
         }
 
         [BeforeClass]
-        public void BadBeforeClassMethod()
+        public static void BadBeforeClassMethod()
         {
             throw new AggregateException("Before Class method execution failed");
         }
@@ -40,7 +40,7 @@ namespace MyNUnit.TestProjects
             var a = 5 + 5 * 5;
             ++a;
 
-            this.log.WriteByte(0);
+            log.WriteByte(0);
         }
 
         [Test]
@@ -49,8 +49,8 @@ namespace MyNUnit.TestProjects
             var b = 6 + 6 * 6;
             --b;
 
-            this.log.WriteByte(0);
-            this.log.Flush();
+            log.WriteByte(0);
+            log.Flush();
 
             Assert.Fail("It failed :(");
         }
@@ -58,15 +58,15 @@ namespace MyNUnit.TestProjects
         [After]
         public void MethodWhichShouldNotBeCalled()
         {
-            this.log.WriteByte(0);
-            this.log.Flush();
+            log.WriteByte(0);
+            log.Flush();
         }
 
         [AfterClass]
-        public void AnotherMethodWhichShouldNotBeCalled()
+        public static void AnotherMethodWhichShouldNotBeCalled()
         {
-            this.log.WriteByte(0);
-            this.log.Flush();
+            log.WriteByte(0);
+            log.Flush();
         }
     }
 }

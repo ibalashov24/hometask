@@ -195,7 +195,7 @@ namespace MyNUnit.Tests
         private List<TestResult> GetTestResults(Assembly assembly)
         {
             var runner = new TestRunner(assembly);
-            return runner.RunAllTests();
+            return runner.RunAllTestsAsync();
         }
     }
 }

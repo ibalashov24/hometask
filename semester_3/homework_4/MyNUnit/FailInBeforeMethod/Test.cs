@@ -6,17 +6,17 @@ namespace MyNUnit.TestProjects
     [TestClass]
     public class Test
     {
-        private int afterExcecutionCount = 0;
+        private static int AfterExcecutionCount = 0;
 
         [Before]
         public void AfterMethod()
         {
-            if (this.afterExcecutionCount == 1)
+            if (AfterExcecutionCount == 1)
             {
                 throw new AggregateException("BeforeMethod failed");
             }
 
-            ++this.afterExcecutionCount;
+            ++AfterExcecutionCount;
         }
 
 

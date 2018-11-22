@@ -7,7 +7,7 @@ namespace MyNUnit.TestProjects
     public class Test
     {
         [BeforeClass]
-        public int GoodBeforeClassMethod()
+        public static int GoodBeforeClassMethod()
         {
             var result = 0;
             for (int i = 0; i <= 5; ++i)
@@ -18,7 +18,7 @@ namespace MyNUnit.TestProjects
         }
 
         [BeforeClass]
-        public void SecondGoodMethod()
+        public static void SecondGoodMethod()
         {
             int b = 5 * 5;
             b += 3;
@@ -48,7 +48,7 @@ namespace MyNUnit.TestProjects
         }
 
         [AfterClass]
-        public void AnotherMethodWhichShouldNotBeCalled()
+        public static void AnotherMethodWhichShouldNotBeCalled()
         {
             throw new AggregateException("Error in AfterClass method");
         }

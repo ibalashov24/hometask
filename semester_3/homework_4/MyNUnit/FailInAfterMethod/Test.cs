@@ -6,7 +6,7 @@ namespace MyNUnit.TestProjects
     [TestClass]
     public class Test
     {
-        private int afterExcecutionCount = 0;
+        private static int AfterExcecutionCount = 0;
 
         [Test]
         public void FirstCorrectTest()
@@ -39,12 +39,12 @@ namespace MyNUnit.TestProjects
         [After]
         public void AfterMethod()
         {
-            if (this.afterExcecutionCount == 1)
+            if (AfterExcecutionCount == 2)
             {
                 throw new AggregateException("AfterMethod failed");
             }
 
-            ++this.afterExcecutionCount;
+            ++AfterExcecutionCount;
         }
     }
 }
