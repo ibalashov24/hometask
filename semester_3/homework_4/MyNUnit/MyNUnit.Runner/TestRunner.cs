@@ -193,8 +193,6 @@
             }
             catch (Exception e)
             {
-                stopwatch.Stop();
-
                 var exceptionType = e.InnerException.GetType().ToString();
                 var exceptionMessage = e.InnerException.Message;
 
@@ -211,7 +209,10 @@
                         $"{exceptionType} ({stopwatch.Elapsed}s): {exceptionMessage}");
                 }
             }
-            stopwatch.Stop();
+            finally
+            {
+                stopwatch.Stop();
+            }
 
             if (testParams.Expected != null)
             {
