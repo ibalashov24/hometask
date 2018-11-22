@@ -72,7 +72,7 @@ namespace MyNUnit.TestProjects
         // -4 after After section
 
         [AfterClass]
-        public static void FirtsAfterClass()
+        public static void FirstAfterClass()
         {
             sharedVariable /= 1000;
 

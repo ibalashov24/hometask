@@ -73,17 +73,16 @@ namespace MyNUnit.Tests
         [Test]
         public void TestShouldBehaveCorrectlyAfterErrorInBeforeClassMethod()
         {
+            if (File.Exists(Path.Combine(Path.GetTempPath(), "MyNUnitFailInBeforeClass.tst")))
+            {
+                File.Delete(Path.Combine(Path.GetTempPath(), "MyNUnitFailInBeforeClass.tst"));
+            }
+            
             var assembly = this.GetAssemblyByName("FailInBeforeClassMethod");
             var actual = this.GetTestResults(assembly);
 
-            var resultFile = File.OpenRead(
-                Path.Combine(Path.GetTempPath(), "MyNUnitFailInBeforeClass.tst"));
-            var fileLength = resultFile.Length;
-
-            resultFile.Close();
-
-            // Each `unnecessary` method writes zero to this file
-            Assert.AreEqual(0, fileLength);
+            // BeforeClass methods was called before class constructor
+            Assert.IsFalse(File.Exists(Path.Combine(Path.GetTempPath(), "MyNUnitFailInBeforeClass.tst")));
         }
 
         [Test]
