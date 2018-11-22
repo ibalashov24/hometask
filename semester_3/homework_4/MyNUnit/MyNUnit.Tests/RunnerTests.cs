@@ -58,6 +58,11 @@ namespace MyNUnit.Tests
         [Test]
         public void BeforeAndAfterWorksCorrectly()
         {
+            if (File.Exists(Path.Combine(Path.GetTempPath(), "MyNUnitTestBeforeAfter.tst")))
+            {
+                File.Delete(Path.Combine(Path.GetTempPath(), "MyNUnitTestBeforeAfter.tst"));
+            }
+
             var assembly = this.GetAssemblyByName("BeforeAndAfterWorksCorrectly");
             var actual = this.GetTestResults(assembly);
 
@@ -67,7 +72,7 @@ namespace MyNUnit.Tests
 
             // Magic number was calculated on the calculator 
             // (and is the same as in the test class file)
-            Assert.AreEqual(945 % 256, result);
+            Assert.AreEqual(35435 % 256, result);
         }
 
         [Test]

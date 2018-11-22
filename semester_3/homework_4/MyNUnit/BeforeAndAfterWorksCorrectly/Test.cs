@@ -7,7 +7,7 @@ namespace MyNUnit.TestProjects
     [TestClass]
     public class Test
     {
-        private static int sharedVariable = 0;
+        private volatile static int sharedVariable = 0;
 
         [BeforeClass]
         public static void FirstBeforeClass()
@@ -42,20 +42,11 @@ namespace MyNUnit.TestProjects
         [Test]
         public void Test1()
         {
-            sharedVariable *= 29;
+            sharedVariable *= 945;
         }
 
-        // 2175 after first test
-        // 2171 after first After section execution
-
-        [Test]
-        public void Test2()
-        {
-            sharedVariable *= 29;
-        }
-
-        // 63046 after second test
-        // 63042 after second After section execution
+        // 70875 after first test
+        // 70871 after first After section execution
 
         [After]
         public void FirstAfter()
@@ -74,28 +65,28 @@ namespace MyNUnit.TestProjects
         [AfterClass]
         public static void FirstAfterClass()
         {
-            sharedVariable /= 1000;
+            sharedVariable /= 10;
 
-            if (sharedVariable == 945)
+            if (sharedVariable == 35435)
             {
-                SaveResultFile(945);
+                SaveResultFile(35435);
             }
         }
 
-        // 63 after first AfterClass method
+        // 7087 after first AfterClass method
 
         [AfterClass]
         public static void SecondAfterClass()
         {
-            sharedVariable *= 15;
+            sharedVariable *= 5;
 
-            if (sharedVariable == 945)
+            if (sharedVariable == 35435)
             {
-                SaveResultFile(945);
+                SaveResultFile(35435);
             }
         }
 
-        // 945 after second AfterClass method
+        // 35435 after second AfterClass method
 
         private static void SaveResultFile(int result)
         {
