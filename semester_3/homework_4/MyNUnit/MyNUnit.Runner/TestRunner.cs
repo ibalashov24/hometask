@@ -43,6 +43,11 @@
             return new List<TestResult>(results);
         }
 
+        /// <summary>
+        /// Runs all tests from given class
+        /// </summary>
+        /// <param name="classToTest">Class to test</param>
+        /// <param name="results">Testing results</param>
         private void TestClassAsync(Type classToTest, ConcurrentQueue<TestResult> results)
         {
             var testMethods = this.FindTestMethodsInClass(classToTest);
@@ -76,6 +81,13 @@
             return;
         }
 
+        /// <summary>
+        /// Runs all static methods from the list
+        /// </summary>
+        /// <param name="methods">Method list</param>
+        /// <param name="instance">Class instance</param>
+        /// <param name="resultMessage">Supporting message (fail or success)</param>
+        /// <returns>True if success</returns>
         private bool RunStaticClassMethods(List<MethodInfo> methods, out string resultMessage)
         {
             foreach (var staticClassMethod in methods)
@@ -96,6 +108,13 @@
             return true;
         }
 
+        /// <summary>
+        /// Runs all non static methods from the list
+        /// </summary>
+        /// <param name="methods">Method list</param>
+        /// <param name="instance">Class instance</param>
+        /// <param name="resultMessage">Supporting message (fail or success)</param>
+        /// <returns>True if success</returns>
         private bool RunNonStaticClassMethods(
             List<MethodInfo> methods,
             object instance,
@@ -152,6 +171,12 @@
             return testResult;
         }
 
+        /// <summary>
+        /// Tests test method itself
+        /// </summary>
+        /// <param name="method">Test method</param>
+        /// <param name="instance">Class instance</param>
+        /// <returns></returns>
         private TestResult RunTestBody(MethodInfo method, object instance)
         {
             var testParams = method.GetCustomAttribute<TestAttribute>();
@@ -250,7 +275,14 @@
 
             return result;
         }
-        
+
+        /// <summary>
+        /// Run method and checks if any exeption happened
+        /// </summary>
+        /// <param name="method">Method to test</param>
+        /// <param name="instance">Class instance where method from</param>
+        /// <param name="message">Supporting message</param>
+        /// <returns></returns>
         private bool RunMethodSecurely(MethodInfo method, object instance, out string message)
         {
             try
@@ -259,7 +291,10 @@
             }
             catch (Exception e)
             {
-                message = $"Failed to execute {method.Name}. {e.GetType()}: {e.Message}";
+                var type = e.InnerException.GetType().ToString();
+                var exceptionMessage = e.InnerException.Message;
+
+                message = $"Failed to execute {method.Name}. {type}: {exceptionMessage}";
                 return false;
             }
 

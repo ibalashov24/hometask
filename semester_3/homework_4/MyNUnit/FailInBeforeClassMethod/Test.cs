@@ -39,8 +39,9 @@ namespace MyNUnit.TestProjects
         {
             var a = 5 + 5 * 5;
             ++a;
-
+                
             log.WriteByte(0);
+            log.Flush();
         }
 
         [Test]
