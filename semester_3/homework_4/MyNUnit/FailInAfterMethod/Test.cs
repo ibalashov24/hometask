@@ -7,6 +7,7 @@ namespace MyNUnit.TestProjects
     public class Test
     {
         private static int AfterExcecutionCount = 0;
+        private static object LockObject = new object();
 
         [Test]
         public void FirstCorrectTest()
@@ -39,12 +40,15 @@ namespace MyNUnit.TestProjects
         [After]
         public void AfterMethod()
         {
-            if (AfterExcecutionCount == 2)
+            lock (LockObject)
             {
-                throw new AggregateException("AfterMethod failed");
-            }
+                if (AfterExcecutionCount == 2)
+                {
+                    throw new AggregateException("AfterMethod failed");
+                }
 
-            ++AfterExcecutionCount;
+                ++AfterExcecutionCount;
+            }            
         }
     }
 }

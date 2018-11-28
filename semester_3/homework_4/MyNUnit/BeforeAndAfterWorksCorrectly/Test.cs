@@ -7,7 +7,7 @@ namespace MyNUnit.TestProjects
     [TestClass]
     public class Test
     {
-        private volatile static int sharedVariable = 0;
+        private static int sharedVariable = 0;
 
         [BeforeClass]
         public static void FirstBeforeClass()

@@ -31,13 +31,13 @@
         /// Runs all tests in given assembly
         /// </summary>
         /// <returns>Test results</returns>
-        public List<TestResult> RunAllTestsAsync()
+        public List<TestResult> RunAllTests()
         {
             var results = new ConcurrentQueue<TestResult>();
 
             Parallel.ForEach<Type>(this.FindAllTestClasses(), (classToTest) =>
                 {
-                    this.TestClassAsync(classToTest, results);
+                    this.TestClass(classToTest, results);
                 });
 
             return new List<TestResult>(results);
@@ -48,7 +48,7 @@
         /// </summary>
         /// <param name="classToTest">Class to test</param>
         /// <param name="results">Testing results</param>
-        private void TestClassAsync(Type classToTest, ConcurrentQueue<TestResult> results)
+        private void TestClass(Type classToTest, ConcurrentQueue<TestResult> results)
         {
             var testMethods = this.FindTestMethodsInClass(classToTest);
 
@@ -77,8 +77,6 @@
             {
                 this.SendMessage(message);
             }
-
-            return;
         }
 
         /// <summary>
@@ -94,7 +92,7 @@
             {
                 if (!staticClassMethod.IsStatic)
                 {
-                    resultMessage = $"{staticClassMethod.Name} is should be static";
+                    resultMessage = $"{staticClassMethod.Name} should be static";
                     return false;
                 }
 
