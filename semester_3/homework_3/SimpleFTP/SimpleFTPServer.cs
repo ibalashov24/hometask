@@ -13,6 +13,8 @@
     /// </summary>
     public class SimpleFTPServer : IDisposable
     {
+        private const string defaultPathDesignation = "~";
+
         private volatile int currentConnectionCount;
 
         private CancellationTokenSource cancellationToken
@@ -168,8 +170,10 @@
         /// </summary>
         /// <param name="path">Directory path</param>
         /// <param name="output">Stream to client</param>
-        private void WriteDirectoryContent(string path, StreamWriter output)
+        private void WriteDirectoryContent(string relativePath, StreamWriter output)
         {
+            var path = this.GetAbsolutePath(relativePath);
+
             DirectoryInfo directory;
             try
             {
@@ -256,9 +260,11 @@
             }
         }
 
-        private void WriteFileBytes(string path, StreamWriter output)
+        private void WriteFileBytes(string relativePath, StreamWriter output)
         {
             const int bufferSize = 1024 * 1024;
+
+            var path = this.GetAbsolutePath(relativePath);
 
             FileInfo file;
             try
@@ -378,6 +384,18 @@
             {
                 this.HandleDisconnectedClient();
             }
+        }
+
+        private string GetAbsolutePath(string relativePath)
+        {
+            var rootFolder = Path.GetTempPath();
+
+            if (relativePath == defaultPathDesignation)
+            {
+                return rootFolder;
+            }
+
+            return rootFolder + '/' + relativePath;
         }
     }
 }
