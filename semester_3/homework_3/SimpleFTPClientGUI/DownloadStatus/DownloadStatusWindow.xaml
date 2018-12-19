@@ -21,8 +21,8 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0" Text="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" 
-                                               Margin="0" Background="{Binding StatusColor, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Grid.Column="0" Text="{Binding ItemName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                               Margin="0" Background="{Binding StatusColor, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

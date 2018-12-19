@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.ComponentModel;
+using System.Collections;
 
 namespace SimpleFTPClientGUI.DownloadStatus
 {
@@ -26,9 +27,15 @@ namespace SimpleFTPClientGUI.DownloadStatus
             this.RefreshWindow();
         }
 
-        public List<ItemStatusInfo> Items
+        public IEnumerable<ItemStatusInfo> Items
         {
-            get => new List<ItemStatusInfo>(this.ItemList.Items.Cast<ItemStatusInfo>());
+            get
+            {
+                foreach (var item in this.ItemList.Items)
+                {
+                    yield return (ItemStatusInfo)item;
+                }
+            }
         }
 
         public void RefreshWindow()

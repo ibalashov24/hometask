@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Collections;
 
 using SimpleFTP;
 using SimpleFTPClientGUI.FileExplorer;
@@ -81,30 +82,27 @@ namespace SimpleFTPClientGUI
         {
             var statusWindow = new DownloadStatusWindow(
                     files.Where(a => !a.IsDirectory).Select(a => a.Name));
-            var itemStatus = statusWindow.Items;
 
             if (showStatusGUI)
             {
                 statusWindow.Show();
             }
 
-            var changeStatus = new Action<ItemStatusInfo, ItemStatus>((info, status) =>
+            foreach (var item in statusWindow.Items)
             {
-                info.SetItemStatus(status);
+                item.SetItemStatus(ItemStatus.Downloaded);
                 statusWindow.RefreshWindow();
-            });
+            }
 
-            changeStatus(itemStatus[0], ItemStatus.InProgress);
-
-            return;
-
-            Parallel.ForEach<ItemStatusInfo>(itemStatus, (ItemStatusInfo file) =>
+            Parallel.ForEach<ItemStatusInfo>(statusWindow.Items, (ItemStatusInfo file) =>
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(changeStatus, file, ItemStatus.InProgress);
+                //Dispatcher.CurrentDispatcher.BeginInvoke(changeStatus, file, ItemStatus.InProgress);
 
-                this.client.ReceiveFile(file.ItemName, folderToSave + '\\' + file.ItemName);
-
-                Dispatcher.CurrentDispatcher.BeginInvoke(changeStatus, file, ItemStatus.Downloaded);
+                this.client.ReceiveFile(
+                    this.CurrentDirectory + '\\' + file.ItemName, 
+                    folderToSave + '\\' + file.ItemName);
+                 
+                //Dispatcher.CurrentDispatcher.BeginInvoke(changeStatus, file, ItemStatus.Downloaded);
             });
             
             if (showStatusGUI)
