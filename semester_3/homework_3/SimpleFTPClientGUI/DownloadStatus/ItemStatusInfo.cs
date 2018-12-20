@@ -50,13 +50,11 @@ namespace SimpleFTPClientGUI.DownloadStatus
                 case ItemStatus.Downloaded:
                     {
                         this.StatusColor = Brushes.Green;
-                        //this.ItemName += " HUIPIZDA";
                         break;
                     }
                 case ItemStatus.InProgress:
                     {
                         this.StatusColor = Brushes.Yellow;
-                        //this.ItemName += " LAKAKAL";
                         break;
                     }
                 case ItemStatus.Failed:
