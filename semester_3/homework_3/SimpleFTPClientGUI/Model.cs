@@ -24,9 +24,14 @@ namespace SimpleFTPClientGUI
         public const string LevelUpFolderName = "...";
 
         /// <summary>
-        /// Client backend
+        /// Server hostname
         /// </summary>
-        private SimpleFTPClient client;
+        private string serverHostname;
+
+        /// <summary>
+        /// Server port
+        /// </summary>
+        private int serverPort;
 
         /// <summary>
         /// Stack containig path details (empty => current folder is empty)
@@ -56,9 +61,17 @@ namespace SimpleFTPClientGUI
         }
 
         /// <summary>
+        /// Returns new client
+        /// </summary>
+        private SimpleFTPClient Client
+        {
+            get => new SimpleFTPClient(this.serverHostname, this.serverPort);
+        }
+
+        /// <summary>
         /// True if Model is connected to the server
         /// </summary>
-        public bool IsConnected => this.client != null;
+        public bool IsConnected => true;
 
         /// <summary>
         /// Initializes new instance of Model
@@ -103,7 +116,8 @@ namespace SimpleFTPClientGUI
         /// <param name="port">Server port</param>
         public void ReconnectToServer(string hostname, int port)
         {
-            this.client = new SimpleFTP.SimpleFTPClient(hostname, port);
+            this.serverHostname = hostname;
+            this.serverPort = port;
         }
 
         /// <summary>
@@ -139,8 +153,9 @@ namespace SimpleFTPClientGUI
                     {
                         filePath = this.CurrentDirectory + '\\';
                     }
-                        
-                    var isReceived = this.client.ReceiveFile(
+
+                    bool isReceived = false;
+                    isReceived = this.Client.ReceiveFile(
                         filePath + file.ItemName,
                         folderToSave + '\\' + file.ItemName);
                     
@@ -157,7 +172,7 @@ namespace SimpleFTPClientGUI
         /// <returns>Item list</returns>
         public List<ItemInfo> GetItemsInCurrentDirectory()
         {
-            var items = this.client.ReceiveFileList(this.CurrentDirectory);
+            var items = this.Client.ReceiveFileList(this.CurrentDirectory);
 
             var result = new List<ItemInfo>();
             // If not in root directory
