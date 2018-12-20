@@ -1,29 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Threading;
-using System.Collections;
-
 using SimpleFTP;
 using SimpleFTPClientGUI.FileExplorer;
 using SimpleFTPClientGUI.DownloadStatus;
 
-using System.Threading;
-
 namespace SimpleFTPClientGUI
 {
+    /// <summary>
+    /// Application MVVM Model
+    /// </summary>
     public class Model
     {
+        /// <summary>
+        /// Root folder designation on server
+        /// </summary>
         public const string DefaultFolderOnServer = "~";
 
+        /// <summary>
+        /// Default LevelUp folder name
+        /// </summary>
         public const string LevelUpFolderName = "...";
 
+        /// <summary>
+        /// Client backend
+        /// </summary>
         private SimpleFTPClient client;
 
+        /// <summary>
+        /// Stack containig path details (empty => current folder is empty)
+        /// </summary>
         private Stack<string> Path = new Stack<string>();
 
+        /// <summary>
+        /// Gets current path is one string
+        /// </summary>
         public string CurrentDirectory
         {
             get
@@ -43,12 +55,22 @@ namespace SimpleFTPClientGUI
             }
         }
 
+        /// <summary>
+        /// True if Model is connected to the server
+        /// </summary>
         public bool IsConnected => this.client != null;
 
+        /// <summary>
+        /// Initializes new instance of Model
+        /// </summary>
         public Model()
         {
         }
 
+        /// <summary>
+        /// Goes to the level down to subfolder
+        /// </summary>
+        /// <param name="subfolderName">Subfolder to go to</param>
         public void GoToSubfolder(string subfolderName)
         {
             if (subfolderName == LevelUpFolderName)
@@ -60,6 +82,10 @@ namespace SimpleFTPClientGUI
             this.Path.Push(subfolderName);
         }
 
+        /// <summary>
+        /// Goes to the level up to parent folder
+        /// </summary>
+        /// <returns>New current folder</returns>
         public string GoLevelUp()
         {
             if (this.Path.Count == 0)
@@ -70,11 +96,24 @@ namespace SimpleFTPClientGUI
             return this.Path.Pop();
         }
 
+        /// <summary>
+        /// Reconects to the server with given credentials
+        /// </summary>
+        /// <param name="hostname">Server hostname</param>
+        /// <param name="port">Server port</param>
         public void ReconnectToServer(string hostname, int port)
         {
             this.client = new SimpleFTP.SimpleFTPClient(hostname, port);
         }
 
+        /// <summary>
+        /// Downloads requested files from the server and shows progress
+        /// </summary>
+        /// <param name="files">Files to download</param>
+        /// <param name="folderToSave">Folder to save files to</param>
+        /// <param name="showStatusGUI">
+        /// If true then progress will be shown in separate window
+        /// </param>
         public void DownloadSelectedFiles(
             IEnumerable<ItemInfo> files, 
             string folderToSave,
@@ -88,29 +127,34 @@ namespace SimpleFTPClientGUI
                 statusWindow.Show();
             }
 
-            foreach (var item in statusWindow.Items)
+            foreach(var file in statusWindow.Items)
             {
-                item.SetItemStatus(ItemStatus.Downloaded);
-                statusWindow.RefreshWindow();
+                var task = new Task(() =>
+                {
+                    statusWindow.Dispatcher.Invoke((Action)(() => file.SetItemStatus(
+                        ItemStatus.InProgress)));
+
+                    string filePath = string.Empty;
+                    if (this.CurrentDirectory != DefaultFolderOnServer)
+                    {
+                        filePath = this.CurrentDirectory + '\\';
+                    }
+                        
+                    var isReceived = this.client.ReceiveFile(
+                        filePath + file.ItemName,
+                        folderToSave + '\\' + file.ItemName);
+                    
+                    statusWindow.Dispatcher.Invoke((Action)(() => file.SetItemStatus(
+                        isReceived ? ItemStatus.Downloaded : ItemStatus.Failed)));
+                });
+                task.Start();
             }
-
-            Parallel.ForEach<ItemStatusInfo>(statusWindow.Items, (ItemStatusInfo file) =>
-            {
-                //Dispatcher.CurrentDispatcher.BeginInvoke(changeStatus, file, ItemStatus.InProgress);
-
-                this.client.ReceiveFile(
-                    this.CurrentDirectory + '\\' + file.ItemName, 
-                    folderToSave + '\\' + file.ItemName);
-                 
-                //Dispatcher.CurrentDispatcher.BeginInvoke(changeStatus, file, ItemStatus.Downloaded);
-            });
-            
-            if (showStatusGUI)
-            {
-                statusWindow.Close();
-            } 
         }
 
+        /// <summary>
+        /// Retrieves item list in current directory
+        /// </summary>
+        /// <returns>Item list</returns>
         public List<ItemInfo> GetItemsInCurrentDirectory()
         {
             var items = this.client.ReceiveFileList(this.CurrentDirectory);

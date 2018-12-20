@@ -132,6 +132,7 @@
                 var outputStream = new StreamWriter(client.GetStream());
                 
                 var commandType = new char[1];
+
                 await inputStream.ReadAsync(commandType, 0, 1);
 
                 if (commandType[0] == '1' || commandType[0] == '2')
@@ -152,7 +153,7 @@
                     }
                 }
             }
-            catch (ObjectDisposedException)
+            catch (System.IO.IOException)
             {
                 this.HandleDisconnectedClient();
                 --this.currentConnectionCount;

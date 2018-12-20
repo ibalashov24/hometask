@@ -1,42 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-
-using System.Windows.Media;
+﻿using System.Windows.Media;
+using System.ComponentModel;
 
 namespace SimpleFTPClientGUI.DownloadStatus
 {
+    /// <summary>
+    /// Available downloading states
+    /// </summary>
     public enum ItemStatus { Neutral, Downloaded, InProgress, Failed }
 
-    public class ItemStatusInfo
+    /// <summary>
+    /// Represents information about loaded item
+    /// </summary>
+    public class ItemStatusInfo : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Name of item
+        /// </summary>
         public string ItemName { get; private set;  }
 
+        /// <summary>
+        /// Color of item which represents downloading status
+        /// </summary>
         public Brush StatusColor { get; private set; }
 
-        public ItemStatusInfo(string itemName, ItemStatus itemStatus = ItemStatus.Failed)
+        /// <summary>
+        /// Is some of properties changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Ininitializes new instance of ItemStatusInfo
+        /// </summary>
+        /// <param name="itemName">New item name</param>
+        /// <param name="itemStatus">New item status</param>
+        public ItemStatusInfo(string itemName, ItemStatus itemStatus = ItemStatus.Neutral)
         {
             this.ItemName = itemName;
             this.SetItemStatus(itemStatus);
         }
 
+        /// <summary>
+        /// Sets new status of item
+        /// </summary>
+        /// <param name="newStatus"></param>
         public void SetItemStatus(ItemStatus newStatus)
         {
             switch (newStatus)
             {
                 case ItemStatus.Downloaded:
                     {
-                        //this.StatusColor = Brushes.Green;
-                        this.ItemName += " HUIPIZDA";
+                        this.StatusColor = Brushes.Green;
+                        //this.ItemName += " HUIPIZDA";
                         break;
                     }
                 case ItemStatus.InProgress:
                     {
                         this.StatusColor = Brushes.Yellow;
-                        this.ItemName += " LAKAKAL";
+                        //this.ItemName += " LAKAKAL";
                         break;
                     }
                 case ItemStatus.Failed:
@@ -55,6 +75,8 @@ namespace SimpleFTPClientGUI.DownloadStatus
                         break;
                     }
             }
+
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
     }
 }

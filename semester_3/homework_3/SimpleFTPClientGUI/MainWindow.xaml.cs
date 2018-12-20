@@ -1,18 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-using SimpleFTPClientGUI.FileExplorer;
 
 namespace SimpleFTPClientGUI
 {
@@ -21,12 +8,19 @@ namespace SimpleFTPClientGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        /// <summary>
+        /// Initializes new instance of MainWindow
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles situation when user requesed folder opening in FileExplorer
+        /// </summary>
+        /// <param name="sender">FileExplorer</param>
+        /// <param name="e">Information about selection</param>
         private void UserRequestedFolderOpening(object sender, EventArgs e)
         {
             var viewModel = this.DataContext as ViewModel;

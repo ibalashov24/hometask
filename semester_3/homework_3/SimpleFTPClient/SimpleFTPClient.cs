@@ -249,7 +249,11 @@
             string fileSizeString = string.Empty;
             while (!fileSizeString.EndsWith(" ", StringComparison.Ordinal))
             {
-                fileSizeString += (char)this.inputStream.Read();
+                if (!this.inputStream.EndOfStream)
+                {
+                    var t = this.inputStream.Read();
+                    fileSizeString += (char)t;
+                }
             }
 
 

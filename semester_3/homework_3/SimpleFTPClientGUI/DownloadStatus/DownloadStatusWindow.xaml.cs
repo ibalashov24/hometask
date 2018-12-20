@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.ComponentModel;
-using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace SimpleFTPClientGUI.DownloadStatus
 {
@@ -11,8 +10,15 @@ namespace SimpleFTPClientGUI.DownloadStatus
     /// </summary>
     public partial class DownloadStatusWindow : Window, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Is WPF property changed (INotifyPropertyChanged stuff)
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Initializes new instance of DownloadStatusWindow
+        /// </summary>
+        /// <param name="itemNames">Items to show on window</param>
         public DownloadStatusWindow(IEnumerable<string> itemNames)
         {
             InitializeComponent();
@@ -21,26 +27,15 @@ namespace SimpleFTPClientGUI.DownloadStatus
 
             foreach (var item in itemNames)
             {
-                this.ItemList.Items.Add(new ItemStatusInfo(item));
-            }
-
-            this.RefreshWindow();
-        }
-
-        public IEnumerable<ItemStatusInfo> Items
-        {
-            get
-            {
-                foreach (var item in this.ItemList.Items)
-                {
-                    yield return (ItemStatusInfo)item;
-                }
+                var newItem = new ItemStatusInfo(item);
+                this.Items.Add(newItem);
             }
         }
 
-        public void RefreshWindow()
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
-        }
+        /// <summary>
+        /// Items which are downloaded
+        /// </summary>
+        public ObservableCollection<ItemStatusInfo> Items { get; private set; } =
+            new ObservableCollection<ItemStatusInfo>();
     }
 }

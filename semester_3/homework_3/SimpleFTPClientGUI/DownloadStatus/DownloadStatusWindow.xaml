@@ -10,7 +10,7 @@
     <Grid>
         <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                   Margin="0" ScrollViewer.CanContentScroll="True"
-                  x:Name="ItemList">
+                  x:Name="ItemList" ItemsSource="{Binding Items, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn x:Name="NameColumn" Width="300" Header="File">
