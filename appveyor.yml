@@ -5,7 +5,7 @@ branches:
     - s_3_homework_5
 
 before_build:
-    - nuget restore semester_3/homework_3/homework_3.sln
+    - nuget restore semester_3/homework_3/SimpleFTP.sln
 
 build:
-  project: semester_3/homework_3/homework_3.sln
+  project: semester_3/homework_3/SimpleFTP.sln
