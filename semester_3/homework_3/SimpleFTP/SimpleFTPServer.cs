@@ -396,7 +396,7 @@
                 return rootFolder;
             }
 
-            return rootFolder + '/' + relativePath;
+            return rootFolder + relativePath;
         }
     }
 }
