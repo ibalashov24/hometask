@@ -2,10 +2,10 @@ image: Visual Studio 2017
 
 branches:
   only:
-    - s_3_homework_3
+    - s_3_homework_4
 
 before_build:
-    - nuget restore semester_3/homework_3/homework_3.sln
+    - nuget restore semester_3/homework_4/MyNUnit/MyNUnit.sln
 
 build:
-  project: semester_3/homework_3/homework_3.sln
+    project: semester_3/homework_4/MyNUnit/MyNUnit.sln
