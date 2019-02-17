@@ -6,7 +6,7 @@
     {
         public static void Main()
         {
-            var server = new SimpleFTP.SimpleFTPServer(12345, 2);
+            var server = new SimpleFTP.SimpleFTPServer(12345, 100);
 
             server.Start().GetAwaiter().GetResult();
 

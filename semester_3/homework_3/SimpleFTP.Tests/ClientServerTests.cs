@@ -89,9 +89,9 @@ namespace SimpleFTP.Tests
         [Test]
         public void SimpleFTPClientShouldReceiveCorrectFileList()
         {
-            var path = Path.Combine(Path.GetTempPath(), ".SimpleFTPTEST_TEST_");
-
-            var actualFileList = this.CreateTestDirectory(path);
+            var path = ".SimpleFTPTEST_TEST_";
+            var fullpath = Path.Combine(Path.GetTempPath() + path);
+            var actualFileList = this.CreateTestDirectory(fullpath);
 
             var client = new SimpleFTPClient(hostname, port);
             var files = client.ReceiveFileList(path);
@@ -116,7 +116,7 @@ namespace SimpleFTP.Tests
         [Test]
         public void SimpleFTPClientShouldReceiveCorrectFile()
         {
-            var testFilePath = Path.GetTempFileName();
+            var testFilePath = Path.GetFileName(Path.GetTempFileName());
             var fileSavePath = Path.GetTempFileName();
 
             var client = new SimpleFTPClient(hostname, port);
@@ -124,7 +124,7 @@ namespace SimpleFTP.Tests
             Assert.IsTrue(client.ReceiveFile(testFilePath, fileSavePath));
 
             var testFileContent = 
-                new StreamReader(File.OpenRead(testFilePath)).ReadToEnd();
+                new StreamReader(File.OpenRead(Path.GetTempPath() + testFilePath)).ReadToEnd();
             var receivedFileContent = 
                 new StreamReader(File.OpenRead(fileSavePath)).ReadToEnd();
 
