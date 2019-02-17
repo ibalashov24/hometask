@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AreEqualTest\AreEqualTest.csproj" />
+    <ProjectReference Include="..\BeforeAndAfterWorksCorrectly\BeforeAndAfterWorksCorrectly.csproj" />
+    <ProjectReference Include="..\FailInAfterClassMethod\FailInAfterClassMethod.csproj" />
+    <ProjectReference Include="..\FailInAfterMethod\FailInAfterMethod.csproj" />
+    <ProjectReference Include="..\FailInBeforeClassMethod\FailInBeforeClassMethod.csproj" />
+    <ProjectReference Include="..\FailInBeforeMethod\FailInBeforeMethod.csproj" />
+    <ProjectReference Include="..\MultipleCorrectAndFailedTests\MultipleCorrectAndFailedTests.csproj" />
+    <ProjectReference Include="..\MyNUnit.Runner\MyNUnit.Runner.csproj" />
+    <ProjectReference Include="..\MyNUnit.TestTools\MyNUnit.TestTools.csproj" />
+    <ProjectReference Include="..\ProjectWithoutTests\ProjectWithoutTests.csproj" />
+    <ProjectReference Include="..\SimpleTest\SimpleTest.csproj" />
+    <ProjectReference Include="..\TestsInDifferentClasses\TestsInDifferentClasses.csproj" />
+    <ProjectReference Include="..\TestWithExpectedParam\TestWithExpectedParam.csproj" />
+    <ProjectReference Include="..\TestWithIgnoreParam\TestWithIgnoreParam.csproj" />
+  </ItemGroup>
+
+</Project>
