@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "problem_1", "problem_1\problem_1.fsproj", "{E80DBFF9-0FE3-4145-91DD-E915E918B354}"
+EndProject
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "problem_1.Tests", "problem_1.Tests\problem_1.Tests.fsproj", "{31C81E87-0EFE-4564-AAFC-1351B2028E4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E80DBFF9-0FE3-4145-91DD-E915E918B354}.Debug|x86.ActiveCfg = Debug|x86
+		{E80DBFF9-0FE3-4145-91DD-E915E918B354}.Debug|x86.Build.0 = Debug|x86
+		{E80DBFF9-0FE3-4145-91DD-E915E918B354}.Release|x86.ActiveCfg = Release|x86
+		{E80DBFF9-0FE3-4145-91DD-E915E918B354}.Release|x86.Build.0 = Release|x86
+		{31C81E87-0EFE-4564-AAFC-1351B2028E4A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31C81E87-0EFE-4564-AAFC-1351B2028E4A}.Debug|x86.Build.0 = Debug|Any CPU
+		{31C81E87-0EFE-4564-AAFC-1351B2028E4A}.Release|x86.ActiveCfg = Release|Any CPU
+		{31C81E87-0EFE-4564-AAFC-1351B2028E4A}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
