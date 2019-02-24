@@ -5,6 +5,10 @@ Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "problem_1", "problem_1\prob
 EndProject
 Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "problem_1.Tests", "problem_1.Tests\problem_1.Tests.fsproj", "{31C81E87-0EFE-4564-AAFC-1351B2028E4A}"
 EndProject
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "problem_2", "problem_2\problem_2.fsproj", "{8DC428A0-6535-4553-831A-2F173390C74B}"
+EndProject
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "problem_2.Tests", "problem_2.Tests\problem_2.Tests.fsproj", "{A6827EB2-95E6-4BF9-9CC5-EFD84BECD916}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,5 +23,13 @@ Global
 		{31C81E87-0EFE-4564-AAFC-1351B2028E4A}.Debug|x86.Build.0 = Debug|Any CPU
 		{31C81E87-0EFE-4564-AAFC-1351B2028E4A}.Release|x86.ActiveCfg = Release|Any CPU
 		{31C81E87-0EFE-4564-AAFC-1351B2028E4A}.Release|x86.Build.0 = Release|Any CPU
+		{8DC428A0-6535-4553-831A-2F173390C74B}.Debug|x86.ActiveCfg = Debug|x86
+		{8DC428A0-6535-4553-831A-2F173390C74B}.Debug|x86.Build.0 = Debug|x86
+		{8DC428A0-6535-4553-831A-2F173390C74B}.Release|x86.ActiveCfg = Release|x86
+		{8DC428A0-6535-4553-831A-2F173390C74B}.Release|x86.Build.0 = Release|x86
+		{A6827EB2-95E6-4BF9-9CC5-EFD84BECD916}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A6827EB2-95E6-4BF9-9CC5-EFD84BECD916}.Debug|x86.Build.0 = Debug|Any CPU
+		{A6827EB2-95E6-4BF9-9CC5-EFD84BECD916}.Release|x86.ActiveCfg = Release|Any CPU
+		{A6827EB2-95E6-4BF9-9CC5-EFD84BECD916}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
