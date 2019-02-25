@@ -5,8 +5,8 @@ branches:
     - s_4_hometask_2
 
 before_build:
-  - dotnet --info
-  - dotnet restore semester_4/hometask_2/hometask_2.sln
+  - nuget restore
 
 build:
   project: semester_4/hometask_2/hometask_2.sln
+  verbosity: minimal
