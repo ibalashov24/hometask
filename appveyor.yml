@@ -7,8 +7,8 @@ branches:
 before_build:
   - dotnet --info
   - dotnet restore semester_4/hometask_2/hometask_2.sln
-  - dotnet add semester_4/hometask_2/problem_1.Tests/problem_1.Tests.fsproj package FsUnit
-  - dotnet add semester_4/hometask_2/problem_2.Tests/problem_2.Tests.fsproj package FsUnit
+  - dotnet restore semester_4/hometask_2/problem_1.Tests/problem_1.Tests.fsproj
+  - dotnet restore semester_4/hometask_2/problem_2.Tests/problem_2.Tests.fsproj
 
 build:
   project: semester_4/hometask_2/hometask_2.sln
