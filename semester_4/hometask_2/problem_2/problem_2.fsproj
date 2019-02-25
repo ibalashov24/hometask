@@ -49,16 +49,16 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Program.fs" />
-    <None Include="packages.config" />
     <Content Include="App.config" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core">
+      <HintPath>..\packages\FSharp.Core.4.6.2\lib\net45\FSharp.Core.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
-    <Reference Include="FSharp.Core">
-      <HintPath>..\packages\FSharp.Core.4.3.3\lib\net45\FSharp.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>
