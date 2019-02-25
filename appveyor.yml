@@ -5,12 +5,7 @@ branches:
     - s_4_hometask_2
 
 before_build:
-  - nuget restore semester_4/hometask_2/problem_1/problem_1.fsproj
-  - nuget restore semester_4/hometask_2/problem_2/problem_2.fsproj
-  - nuget restore semester_4/hometask_2/problem_3/problem_3.fsproj
-  - nuget restore semester_4/hometask_2/problem_1.Tests/problem_1.Tests.fsproj
-  - nuget restore semester_4/hometask_2/problem_2.Tests/problem_2.Tests.fsproj
-  - nuget restore semester_4/hometask_2/problem_3.Tests/problem_1.Tests.fsproj
+  - nuget restore semester_4/hometask_2/hometask_2.sln
   
 build:
   project: semester_4/hometask_2/hometask_2.sln
