@@ -5,8 +5,8 @@ branches:
     - s_4_hometask_2
 
 before_build:
-  - nuget restore semester_4/hometask_2/hometask_2.sln
+  - nuget restore semester_4/hometask_2_VS/hometask_2_VS.sln
   
 build:
-  project: semester_4/hometask_2/hometask_2.sln
+  project: semester_4/hometask_2_VS/hometask_2_VS.sln
   verbosity: minimal
