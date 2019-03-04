@@ -5,11 +5,10 @@ branches:
     - s_4_hometask_3
 
 before_build:
-    - nuget restore semester_4/hometask_3/hometask3.sln
+    - dotnet restore semester_4/hometask_3/hometask3.sln
 
 test_script:
-  - nunit3-console semester_4/hometask_3/hometask3.sln \
-    --result=myresults.xml;format=AppVeyor
+  - dotnet test
 
 build:
   project: semester_4/hometask_3/hometask3.sln
