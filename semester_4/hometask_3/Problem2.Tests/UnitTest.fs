@@ -51,12 +51,3 @@ module Tests =
                     Tree(1, Tree(1, Tip, Tip), Tree(1, Tip, Tip)))
 
         tree |> binaryTreeMap mapping |> should equal expected
-
-    [<Test>]
-    let ``binaryTreeMap() should fail with incorrect mapping and non-empty tree`` () =
-        let mapping = (fun value -> 
-                raise<| Exception("Foo") |> ignore 
-                value)
-        let tree = Tree(5, Tip, Tip)
-
-        tree |> binaryTreeMap mapping |> should throw typeof<Exception>
