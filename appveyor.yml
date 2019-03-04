@@ -8,7 +8,7 @@ before_build:
     - dotnet restore semester_4/hometask_3/hometask3.sln
 
 test_script:
-  - dotnet test
+  - dotnet test semester_4/hometask_3/hometask3.sln
 
 build:
   project: semester_4/hometask_3/hometask3.sln
