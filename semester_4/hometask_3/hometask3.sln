@@ -13,6 +13,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Problem3", "Problem3\Proble
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Problem3.Tests", "Problem3.Tests\Problem3.Tests.fsproj", "{952ACF4E-9FF7-4733-BBDF-2E78ED3257C4}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Problem4", "Problem4\Problem4.fsproj", "{DCAFAA7C-B0B4-4290-8C4D-F2DF6E379E14}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Problem4.Tests", "Problem4.Tests\Problem4.Tests.fsproj", "{08FE48BC-030E-4E92-B278-110C94208B10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,5 +47,13 @@ Global
 		{952ACF4E-9FF7-4733-BBDF-2E78ED3257C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{952ACF4E-9FF7-4733-BBDF-2E78ED3257C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{952ACF4E-9FF7-4733-BBDF-2E78ED3257C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCAFAA7C-B0B4-4290-8C4D-F2DF6E379E14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCAFAA7C-B0B4-4290-8C4D-F2DF6E379E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCAFAA7C-B0B4-4290-8C4D-F2DF6E379E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCAFAA7C-B0B4-4290-8C4D-F2DF6E379E14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08FE48BC-030E-4E92-B278-110C94208B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08FE48BC-030E-4E92-B278-110C94208B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08FE48BC-030E-4E92-B278-110C94208B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08FE48BC-030E-4E92-B278-110C94208B10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
