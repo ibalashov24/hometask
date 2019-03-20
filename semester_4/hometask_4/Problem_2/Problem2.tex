@@ -1,0 +1,22 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+
+\title{Problem 4.2}
+\author{Ilya Balashov}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{align}
+S\ K\ K\ & = (\lambda x\ y\ z.x\ z\ (y\ z))\ (\lambda x\ y.x)\ (\lambda x\ y.x) \\
+& = (\lambda x.\lambda y.\lambda z.x\ z\ (y\ z))\ (\lambda x.\lambda y.x)\ (\lambda x. \lambda y.x) \\
+& \longrightarrow_{\beta, \alpha}  (\lambda y.\lambda z.(\lambda x.\lambda t.x)\ z\ (y\ z))\ (\lambda x.\lambda y.x) \\
+& \longrightarrow_\beta \lambda z.(\lambda x.\lambda t.x)\ z\ ((\lambda x.\lambda y.x)\ z) \\
+& \longrightarrow_\beta \lambda z.(\lambda t.z)\ ((\lambda x.\lambda y.x)\ z) \\
+& \longrightarrow_\beta \lambda z.z \\
+& = I
+\end{align}
+
+\end{document}
