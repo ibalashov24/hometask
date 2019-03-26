@@ -9,14 +9,14 @@
 \begin{document}
 \maketitle
 
-\begin{align}
+\begin{align*}
 S\ K\ K\ & = (\lambda x\ y\ z.x\ z\ (y\ z))\ (\lambda x\ y.x)\ (\lambda x\ y.x) \\
 & = (\lambda x.\lambda y.\lambda z.x\ z\ (y\ z))\ (\lambda x.\lambda y.x)\ (\lambda x. \lambda y.x) \\
-& \longrightarrow_{\beta, \alpha}  (\lambda y.\lambda z.(\lambda x.\lambda t.x)\ z\ (y\ z))\ (\lambda x.\lambda y.x) \\
-& \longrightarrow_\beta \lambda z.(\lambda x.\lambda t.x)\ z\ ((\lambda x.\lambda y.x)\ z) \\
-& \longrightarrow_\beta \lambda z.(\lambda t.z)\ ((\lambda x.\lambda y.x)\ z) \\
+& \longrightarrow_{\beta}  (\lambda y.\lambda z.(\lambda x.\lambda y.x)\ z\ (y\ z))\ (\lambda x.\lambda y.x) \\
+& \longrightarrow_\beta \lambda z.(\lambda x.\lambda y.x)\ z\ ((\lambda x.\lambda y.x)\ z) \\
+& \longrightarrow_\beta \lambda z.(\lambda y.z)\ ((\lambda x.\lambda y.x)\ z) \\ 
 & \longrightarrow_\beta \lambda z.z \\
 & = I
-\end{align}
+\end{align*}
 
 \end{document}
