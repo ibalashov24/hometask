@@ -5,7 +5,10 @@ branches:
     - s_4_hometask_4
 
 before_build:
-    - nuget restore semester_4/hometask_4/Problem_3/Problem_3.sln 
+    - dotnet restore semester_4/hometask_4/Problem_3/Problem_3.sln
+
+test_script:
+  - dotnet test semester_4/hometask_4/Problem_3/Problem_3.sln
 
 build:
   project: semester_4/hometask_4/Problem_3/Problem_3.sln
