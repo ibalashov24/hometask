@@ -25,50 +25,49 @@ module Main =
 
         /// Returns unused name for the free variable
         let getNewVariable alreadyInUse = 
-            let allAvailable = availableVariableName |> Set.difference alreadyInUse
+            let allAvailable = alreadyInUse |> Set.difference availableVariableName
             (allAvailable |> Set.toList).Head
 
         /// Performs term substitution instead of variable
         let rec performReplacement oldVariable newTerm expression = 
             match expression with
-                | Variable x -> 
-                    if (x = oldVariable) then
-                        newTerm
-                    else
-                        Variable (x)
+                | Variable x when x = oldVariable -> newTerm
+                | Variable x -> Variable (x) 
                 | Application (termLeft, termRight) ->
                     let replacementFunction = performReplacement oldVariable newTerm 
                     let leftTransformed = termLeft |> replacementFunction
                     let rightTransformed = termRight |> replacementFunction
 
                     Application(leftTransformed, rightTransformed)
-                | LambdaAbstraction (variable, term) ->
+                | LambdaAbstraction (variable, term) when variable = oldVariable -> expression
+                | LambdaAbstraction (variable, term) ->    
                     let freeVariablesInTerm = getFreeVariables term
-                    let freeVariablesInExpression = getFreeVariables expression
-                    if ((freeVariablesInTerm |> Set.contains variable) && 
-                        (freeVariablesInExpression |> Set.contains oldVariable)) then
+                    let freeVariablesInSubstitution = getFreeVariables newTerm
+
+                    if ((freeVariablesInSubstitution |> Set.contains variable) && 
+                        (freeVariablesInTerm |> Set.contains oldVariable)) then
                             let freeName = getNewVariable 
-                                            (freeVariablesInTerm |> Set.union freeVariablesInExpression)
-                            let alphaTransformed = newTerm |> performReplacement variable (Variable(freeName))
-                            let transformedTerm = term |> performReplacement oldVariable alphaTransformed
-                            LambdaAbstraction (variable, transformedTerm)
+                                            (freeVariablesInTerm |> Set.union freeVariablesInSubstitution)
+                            let alphaTransformed = term |> performReplacement variable (Variable(freeName))
+                            let transformedTerm = alphaTransformed |> performReplacement oldVariable newTerm
+                            LambdaAbstraction (freeName, transformedTerm)
                     else
-                            LambdaAbstraction (variable, term)
+                            LambdaAbstraction (variable, term |> performReplacement oldVariable newTerm)
 
         /// Beta reduces expression
         let rec betaReductionRec expression = 
             match expression with
                 | Variable x -> Variable(x)
                 | LambdaAbstraction (variable, term) -> 
-                    term |> betaReductionRec
+                    LambdaAbstraction(variable, term |> betaReductionRec)
+                | Application (LambdaAbstraction (variable, term), termRight) ->
+                    let transformed = term |> performReplacement variable termRight
+                    transformed |> betaReductionRec
                 | Application (termLeft, termRight) ->
-                    match termLeft with
-                        | LambdaAbstraction (variable, term) -> 
-                            performReplacement variable termRight term
-                        | _ -> 
                             let leftReduced = termLeft |> betaReductionRec
-                            let rightReduced = termRight |> betaReductionRec
-                            Application(leftReduced, rightReduced)
+                            match leftReduced with
+                                | LambdaAbstraction(_) -> Application(leftReduced, termRight) |> betaReductionRec
+                                | _ -> Application(leftReduced, termRight |> betaReductionRec)
 
         betaReductionRec expression
 
