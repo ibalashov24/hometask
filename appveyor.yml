@@ -2,10 +2,10 @@ image: Visual Studio 2017
 
 branches:
   only:
-    - s_3_homework_5
+    - s_4_hometask_4
 
 before_build:
-    - nuget restore semester_3/homework_3/SimpleFTP.sln
+    - nuget restore semester_4/hometask_4/Problem_3/Problem_3.sln 
 
 build:
-  project: semester_3/homework_3/SimpleFTP.sln
+  project: semester_4/hometask_4/Problem_3/Problem_3.sln
