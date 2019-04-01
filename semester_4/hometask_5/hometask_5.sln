@@ -11,6 +11,8 @@ Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Problem2", "Problem2\Proble
 EndProject
 Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Problem2.Tests", "Problem2.Tests\Problem2.Tests.fsproj", "{DDCE8132-DF05-4731-9930-DA7333C75123}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Problem3", "Problem3\Problem3.fsproj", "{52B7687A-2666-42FD-84AF-64451E5F01E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{DDCE8132-DF05-4731-9930-DA7333C75123}.Release|x64.Build.0 = Release|Any CPU
 		{DDCE8132-DF05-4731-9930-DA7333C75123}.Release|x86.ActiveCfg = Release|Any CPU
 		{DDCE8132-DF05-4731-9930-DA7333C75123}.Release|x86.Build.0 = Release|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Debug|x64.Build.0 = Debug|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Debug|x86.Build.0 = Debug|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Release|x64.ActiveCfg = Release|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Release|x64.Build.0 = Release|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Release|x86.ActiveCfg = Release|Any CPU
+		{52B7687A-2666-42FD-84AF-64451E5F01E9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
