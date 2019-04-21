@@ -17,8 +17,11 @@ module Tests =
                 [3; 4]
             |]
 
-        let simulator = new Simulator(computers, graph, new LoggerOneProbability())
-        simulator.Start() |> ignore
+        let logger = new LoggerOneProbability()
+        let simulator = new Simulator(computers, graph, logger)
+        simulator.Start()
+
+        logger.IsSomeoneHealthy() |> should be False
 
     [<Test>]
     let ``Simulator should work correctly with overall probability = 0`` () =
@@ -32,11 +35,14 @@ module Tests =
                 [3; 5]
                 [3; 4]
             |]
+        let expectedState = [| for i in 1..6 -> false |]
 
-        let simulator = new Simulator(computers, graph, new LoggerZeroProbability())
+        let simulator = new Simulator(computers, graph, new LoggerZeroProbability(6))
         try
-            simulator.Start() |> ignore
+            simulator.Start() |> should be True
         with
             | Failure("Test success!") -> Assert.Pass()
-
+            | Failure("Test failure!") -> 
+                Assert.Fail("Probabiliy == 0, but some computers were infected")
+                
         Assert.Fail("The simulation stopped, although it shouldn't have to!")

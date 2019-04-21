@@ -21,3 +21,4 @@ type ConsoleLogger() =
             prettyPrintList 1 (state |> List.ofArray)
 
             stepNumber <- stepNumber + 1
+            stepNumber

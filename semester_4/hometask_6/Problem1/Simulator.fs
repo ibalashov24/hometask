@@ -16,11 +16,11 @@ type Simulator(
                         not used.[head] && 
                         (random.NextDouble() < computers.[head].GetInfectionProbability) ->
                 used.[head] <- true
-                used |> logger.LogState
+                used |> logger.LogState |> ignore
 
                 nextStep (handleQueue @ graph.[head]) used
             | head :: tail when not used.[head] -> 
-                used |> logger.LogState
+                used |> logger.LogState |> ignore
                 nextStep (handleQueue @ [head]) used
             | head :: tail -> 
                 nextStep tail used
