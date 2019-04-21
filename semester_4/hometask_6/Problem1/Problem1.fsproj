@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <GenerateTailCalls>true</GenerateTailCalls>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="OS\" />
+    <Folder Include="Logger\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Logger\ILogger.fs" />
+    <Compile Include="Logger\ConsoleLogger.fs" />
+    <Compile Include="OS\IOperationSystem.fs" />
+    <Compile Include="OS\OsLinux.fs" />
+    <Compile Include="OS\OsWindows.fs" />
+    <Compile Include="Simulator.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+</Project>
