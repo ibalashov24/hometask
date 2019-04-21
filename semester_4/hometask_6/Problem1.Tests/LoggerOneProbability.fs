@@ -21,9 +21,7 @@ type LoggerOneProbability() =
             prettyPrintList 1 (state |> List.ofArray)
 
             if stepNumber >= 500 then
-                let s = System.String.Format("sdfsd {0}", stepNumber)
-                //failwith "Simulation was not stopped, but probability == 1!"
-                failwith s
+                failwith "Simulation was not stopped, but probability == 1!"
             else
                 isSomeoneHealthy <- Array.exists ((=) false) state
                 stepNumber <- stepNumber + 1
