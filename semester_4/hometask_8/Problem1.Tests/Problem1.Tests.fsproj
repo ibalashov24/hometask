@@ -5,6 +5,10 @@
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Include="UnitTests.fs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FsUnit" Version="3.4.0" />
@@ -15,10 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Problem1\Problem1.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="UnitTests.fs" />
   </ItemGroup>
 
 </Project>
