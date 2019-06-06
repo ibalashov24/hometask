@@ -9,19 +9,11 @@ module Main =
     let serializationFileName = "serialized.data"
 
     /// Reads and inserts new record to the phonebook
-    let addRecord records =
-        printf "Enter new record (name phone): "
-        let input = Console.ReadLine().Split([|' '|])
-
-        if (Array.length input) <> 2 then
-            printfn("Invalid record!")
-            records
-        else
-            printfn("Success!")
-            (input.[0], input.[1]) :: records
+    let addRecord name phone records =
+            (name, phone) :: records
 
     /// Finds phone by name in the phonebook
-    let findPhoneByName records = 
+    let findPhoneByName name records = 
         let rec finder sampleName records =
             match records with
                 | (name, phone) :: tail when name = sampleName ->
@@ -29,15 +21,10 @@ module Main =
                 | (_, _) :: tail -> tail |> finder sampleName
                 | _ -> None
 
-        printf "Enter name: "
-        let name = Console.ReadLine()
-
-        match (finder name records) with
-            | None -> printfn "Phone not found"
-            | Some phone -> phone |> printfn "Phone: %s" 
+        finder name records
 
     /// Finds name by phone in the phonebook
-    let findNameByPhone records = 
+    let findNameByPhone phone records = 
         let rec finder samplePhone records =
             match records with
                 | (name, phone) :: tail when phone = samplePhone ->
@@ -45,12 +32,7 @@ module Main =
                 | (_, _) :: tail -> tail |> finder samplePhone
                 | _ -> None
 
-        printf "Enter phone: "
-        let phone = Console.ReadLine()
-
-        match (finder phone records) with
-            | None -> printfn "Name not found"
-            | Some name -> name |> printfn "Name: %s" 
+        finder phone records
 
     /// Prints all the records in the phonebook
     let printAllRecords records = 
@@ -73,8 +55,6 @@ module Main =
         let result = unbox<(string * string) list>(formatter.Deserialize(inStream))
         inStream.Close()
 
-        printfn "Successfully imported from the file"
-
         result @ records
 
     /// Exports phonebook to the file
@@ -83,8 +63,6 @@ module Main =
         let formatter = new BinaryFormatter()
         formatter.Serialize(outStream, records)
         outStream.Close()
-
-        printfn "Successfully exported to the file"
 
     /// Prints help
     let printHelp () =
@@ -102,20 +80,44 @@ module Main =
         let cmd = Console.ReadLine()
         match cmd with 
             | "1" -> true
-            | "2" -> addRecord records |> mainLoop
+            | "2" -> 
+                printf "Enter new record (name phone): "
+                let input = Console.ReadLine().Split([|' '|])
+
+                if (Array.length input) <> 2 then
+                    printfn "Invalid record!"
+                    records |> mainLoop
+                else
+                    printfn "Success!"
+                    records |> addRecord input.[0] input.[1] |> mainLoop
             | "3" -> 
-                findPhoneByName records 
+                printf "Enter name: "
+                let name = Console.ReadLine()
+
+                match (findPhoneByName name records) with
+                    | None -> printfn "Phone not found"
+                    | Some phone -> phone |> printfn "Phone: %s" 
+                    
                 records |> mainLoop
             | "4" -> 
-                findNameByPhone records
+                printf "Enter phone: "
+                let phone = Console.ReadLine()
+
+                match (findNameByPhone phone records) with
+                    | None -> printfn "Name not found"
+                    | Some name -> name |> printfn "Name: %s" 
+
                 records |> mainLoop
             | "5" -> 
                 printAllRecords records
                 records |> mainLoop
             | "6" -> 
+                printfn "Successfully exported to the file"
                 exportToFile records
                 records |> mainLoop
-            | "7" -> importFromFile records |> mainLoop
+            | "7" -> 
+                printfn "Successfully imported from the file"
+                importFromFile records |> mainLoop
             | _ -> 
                 printHelp ()
                 records |> mainLoop
