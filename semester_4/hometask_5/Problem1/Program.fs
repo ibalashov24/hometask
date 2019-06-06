@@ -1,26 +1,26 @@
 ﻿namespace Problem1
 
 module Main =
-    open Stack
+    /// Represent available pairs of brackets
+    let brackets () = Map.ofList [ (')', '('); ('}', '{'); ('>', '<') ]
+
+    /// Checks if bracket is closing one
+    let isClosingBracket bracket =
+        brackets () |> Map.containsKey bracket
 
     // Checks bracket sequence for correctness
     let isBracketsCorrect (seq : string) =
-        let rec checker seq openBrackets =
+        let rec checker seq openBrackets =  
             match seq with
-                | [] when (openBrackets |> Stack.isEmpty) -> true
-                | '(' :: tail -> checker tail (openBrackets |> Stack.push '(')
-                | '{' :: tail -> checker tail (openBrackets |> Stack.push '{')
-                | '<' :: tail -> checker tail (openBrackets |> Stack.push '<')
-                | _ when (openBrackets |> Stack.isEmpty) -> false
-                | ')' :: tail when (openBrackets |> Stack.top) = '(' ->
-                        checker tail (openBrackets |> Stack.pop) 
-                | '}' :: tail when (openBrackets |> Stack.top) = '{' ->
-                        checker tail (openBrackets |> Stack.pop) 
-                | '>' :: tail when (openBrackets |> Stack.top) = '<' ->
-                        checker tail (openBrackets |> Stack.pop) 
+                | [] when (openBrackets |> List.isEmpty) -> true
+                | bracket :: tail when not (bracket |> isClosingBracket) -> 
+                    checker tail (bracket :: openBrackets)
+                | _ when (openBrackets |> List.isEmpty) -> false
+                | bracket :: tail when (brackets ()).[bracket] = (openBrackets |> List.head) ->
+                    checker tail (openBrackets |> List.tail)
                 | _ -> false
 
-        checker (seq |> Seq.toList) Stack.EmptyStack
+        checker (seq |> Seq.toList) List.empty
 
-    "{}" |> isBracketsCorrect |> printfn "%b"
+    "(<>))" |> isBracketsCorrect |> printfn "%b"
     
