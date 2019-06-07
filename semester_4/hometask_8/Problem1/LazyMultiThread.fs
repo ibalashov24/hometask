@@ -11,14 +11,15 @@ type LazyMultiThread<'a>(supplier : unit -> 'a) =
     interface LazyInterface.ILazy<'a> with
         /// Launches the calculation and returns the result
         member this.Get () =
-            Monitor.Enter lockObject
-            try 
-                match result with
-                | None -> 
-                    let value = supplier ()
-                    result <- Some value
-                    value
-                | Some value ->
-                    value
-            finally
-                    Monitor.Exit lockObject
+            match result with
+            | None -> 
+                lock lockObject (fun () ->
+                        match result with
+                        | Some x -> x
+                        | None ->
+                            let value = supplier ()
+                            result <- Some value
+                            value
+                    )
+            | Some value ->
+                value

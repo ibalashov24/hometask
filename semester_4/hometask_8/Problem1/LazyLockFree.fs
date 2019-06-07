@@ -10,13 +10,14 @@ type LazyLockFree<'a>(supplier : unit -> 'a) =
     interface LazyInterface.ILazy<'a> with
         /// Launches the calculation and returns the result
         member this.Get () =
-            let rec getRecursive () =
-                match result with
-                | None -> 
-                    let value = supplier ()
-                    Interlocked.CompareExchange(&result, Some value, emptyResult) |> ignore
-                    getRecursive ()
-                | Some value ->
-                    value
+            match result with
+            | None -> 
+                let value = supplier ()
+                Interlocked.CompareExchange(&result, Some value, emptyResult) |> ignore
 
-            getRecursive ()
+                match result with
+                | Some x -> x
+                | None -> value
+            | Some value ->
+                value
+                
